@@ -28,23 +28,28 @@ public class SAVOP {
     private final static String[] COD_REGIOES = {"AVE", "BEJ", "BRG", "BRA", "CAS", "COI", "EVO", "FAR", "GUA", "LEI", "LIS", "PTL", "PRT", "SAN", "SET", "VIA", "VRL", "VIS", "ACO", "MAD"};
 
     public static void main(String[] args) {
+        
+        
         Scanner ler = new Scanner(System.in);
         String[][] deputados = new String[230][4];
         int numeroDeputados = 0;
-
         int opcao;
-
+numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
         do {
-            System.out.println("Insira opção: ");
+            System.out.println("\nInsira opção: "
+                + "\n1 - Ler ficheiro Deputados.txt e guardar na memória principal"
+                + "\n2 - Mostrar dados Deputados paginado");
             opcao = ler.nextInt();
             ler.nextLine();
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
                     numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
+                    System.out.println("Ficheiro lido com sucesso!");
                     break;
                 case 2:
                     /*Visualizar ficheiro deputados existente em memória (depois de iniciada a opção 1) usando paginação*/
+                    numeroDeputados = mostraDeputadosPaginado(deputados, numeroDeputados);
                     break;
                 case 3:
                     /*Alterar informação de um deputado (depois de iniciada a opção 1)*/
@@ -132,32 +137,68 @@ public class SAVOP {
         }
     }
 
-    public static void mostraDeputadosPaginado(String[][] deputados, int numeroDeputados, int linhasPorPagina) {
-        System.out.println("Total de páginas: " + devolveNumeroPaginas(deputados, numeroDeputados, linhasPorPagina));
-        System.out.println("Total de resultados por página: " + linhasPorPagina);
+    public static int mostraDeputadosPaginado(String[][] deputados, int numeroDeputados) {
+        if (numeroDeputados == 0) {
+            System.out.println("Não existem dados para mostrar. Faça uma leitura prévia de dados (Opção 1 do menu principal) através de um ficheiro válido e com elementos válidos.");
+        } else {
+            int totalPaginas = devolveNumeroPaginas(deputados, numeroDeputados);
+            System.out.println("Total de páginas: " + totalPaginas);
+            System.out.println("Total de resultados por página: " + MAX_LINHAS_PAGINA);
 
-        int[] iniciosPagina = devolveIniciosPagina(deputados, numeroDeputados, linhasPorPagina);
-        
-        int posicao = 0;
-        
-        Scanner ler = new Scanner(System.in);
-        
-        System.out.println("Insira número de página pretendida");
+            int[] iniciosPagina = devolveIniciosPagina(deputados, numeroDeputados);
+
+            int posicao = 0;
+            String acao;
+
+            do {
+                System.out.println("- Insira \"ENTER\" para visualizar página seguinte \n- \"Número Página + ENTER\" para apresentar resultados \n- Para terminar visualização insira \"F + ENTER\"");
+                Scanner ler = new Scanner(System.in);
+                acao = ler.nextLine();
+                if (acao.isEmpty()) {
+                    posicao++;
+                    imprimeEcraCabecalhoDeputados();
+                    for (int i = iniciosPagina[posicao]; i < (i + MAX_LINHAS_PAGINA); i++) {
+                        for (int j = 0; j < 4; j++) {
+                            System.out.println(deputados[i][j]);
+                        }
+                    }
+                } else {
+                    int acaoNum = Integer.parseInt(acao);
+                    if (acaoNum > 0 || acaoNum <= totalPaginas) {
+                        posicao = acaoNum;
+                        imprimeEcraCabecalhoDeputados();
+                        for (int i = iniciosPagina[posicao]; i < (i + MAX_LINHAS_PAGINA); i++) {
+                            for (int j = 0; j < 4; j++) {
+                                System.out.println(deputados[i][j]);
+                            }
+                        }
+                    } else {
+                        System.out.println("Número de página inválido!");
+                    }
+                }
+            } while (!acao.equalsIgnoreCase("f"));
+        }
+        return numeroDeputados;
     }
 
-    public static int[] devolveIniciosPagina(String[][] deputados, int numeroDeputados, int linhasPorPagina) {
-        int numeroPaginas = devolveNumeroPaginas(deputados, numeroDeputados, linhasPorPagina);
+    public static void imprimeEcraCabecalhoDeputados() {
+        System.out.println("\n|| ID    || NOME                          || PARTIDO || DATA NASC   ||\n"
+            + "----------------------------------------------------------------------\n");
+    }
+
+    public static int[] devolveIniciosPagina(String[][] deputados, int numeroDeputados) {
+        int numeroPaginas = devolveNumeroPaginas(deputados, numeroDeputados);
         int[] iniciosPagina = new int[numeroPaginas];
         int pagina = 0;
         for (int i = 0; i < numeroPaginas; i++) {
             iniciosPagina[i] = pagina;
-            pagina += linhasPorPagina;
+            pagina += MAX_LINHAS_PAGINA;
         }
         return iniciosPagina;
     }
 
-    public static int devolveNumeroPaginas(String[][] deputados, int numeroDeputados, int linhasPorPagina) {
-        int numeroPaginas = (numeroDeputados % linhasPorPagina) + 1;
+    public static int devolveNumeroPaginas(String[][] deputados, int numeroDeputados) {
+        int numeroPaginas = (numeroDeputados % MAX_LINHAS_PAGINA) + 1;
         return numeroPaginas;
     }
 }
