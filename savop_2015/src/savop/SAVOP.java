@@ -28,10 +28,51 @@ public class SAVOP {
     private final static String[] COD_REGIOES = {"AVE", "BEJ", "BRG", "BRA", "CAS", "COI", "EVO", "FAR", "GUA", "LEI", "LIS", "PTL", "PRT", "SAN", "SET", "VIA", "VRL", "VIS", "ACO", "MAD"};
 
     public static void main(String[] args) {
+        Scanner ler = new Scanner(System.in);
         String[][] deputados = new String[230][4];
         int numeroDeputados = 0;
-        numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
-        System.out.println(deputados);
+
+        int opcao;
+
+        do {
+            System.out.println("Insira opção: ");
+            opcao = ler.nextInt();
+            ler.nextLine();
+            switch (opcao) {
+                case 1:
+                    /*Ler ficheiro deputados e armazená-la na memória principal*/
+                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
+                    break;
+                case 2:
+                    /*Visualizar ficheiro deputados existente em memória (depois de iniciada a opção 1) usando paginação*/
+                    break;
+                case 3:
+                    /*Alterar informação de um deputado (depois de iniciada a opção 1)*/
+                    break;
+                case 4:
+                    /*Ler de um ficheiro de texto selecionado pelo utilizador a informação referente a uma votação ocorrrida */
+                    break;
+                case 5:
+                    /*Visualizar informação da opção 4 mas ordenada alfabeticamente pelo código de identificação*/
+                    break;
+                case 6:
+                    /*Visualizar no ECRÃ os resultados da última votação introduzida e guardar dados num ficheiro de texto cujo nome seja a palavra Resultados, concatenada com o título da votação*/
+                    break;
+                case 7:
+                    /*Visualizar votação em função da faixa etária*/
+                    break;
+                case 8:
+                    /*Visualizar em HTML os resultados da última votação introduzida*/
+                    break;
+                case 9:
+                    /*Terminar o programa*/
+                    System.out.println("Programa terminado!");
+                    break;
+                default:
+                    System.out.println("Inseriu opção inválida!");
+                    break;
+            }
+        } while (opcao != 9);
     }
 
     /*Método para ler para a memória central o ficheiro "Deputados.txt". Valida o facto do nome do ficheiro ter de ter o nome "Deputados.txt". Valida a passagem de um número máximo de 230 linhas para o array FICHEIRO_DEPUTADOS. Utiliza as validações inerentes do método "guardarDadosDeputado", que utiliza.*/
@@ -89,5 +130,34 @@ public class SAVOP {
             System.out.println("A linha " + (numeroDeputados + 1) + " é uma linha inválida, dado não ter número de colunas suficientes.");
             return numeroDeputados;
         }
+    }
+
+    public static void mostraDeputadosPaginado(String[][] deputados, int numeroDeputados, int linhasPorPagina) {
+        System.out.println("Total de páginas: " + devolveNumeroPaginas(deputados, numeroDeputados, linhasPorPagina));
+        System.out.println("Total de resultados por página: " + linhasPorPagina);
+
+        int[] iniciosPagina = devolveIniciosPagina(deputados, numeroDeputados, linhasPorPagina);
+        
+        int posicao = 0;
+        
+        Scanner ler = new Scanner(System.in);
+        
+        System.out.println("Insira número de página pretendida");
+    }
+
+    public static int[] devolveIniciosPagina(String[][] deputados, int numeroDeputados, int linhasPorPagina) {
+        int numeroPaginas = devolveNumeroPaginas(deputados, numeroDeputados, linhasPorPagina);
+        int[] iniciosPagina = new int[numeroPaginas];
+        int pagina = 0;
+        for (int i = 0; i < numeroPaginas; i++) {
+            iniciosPagina[i] = pagina;
+            pagina += linhasPorPagina;
+        }
+        return iniciosPagina;
+    }
+
+    public static int devolveNumeroPaginas(String[][] deputados, int numeroDeputados, int linhasPorPagina) {
+        int numeroPaginas = (numeroDeputados % linhasPorPagina) + 1;
+        return numeroPaginas;
     }
 }
