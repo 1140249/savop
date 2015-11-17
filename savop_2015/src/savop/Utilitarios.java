@@ -5,6 +5,13 @@
  */
 package savop;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author RicardoMoreira(11402
@@ -87,6 +94,32 @@ public class Utilitarios {
         } else {
             return false;
         }
+    }
+
+    /*Obtem o nome de um ficheiro selecionado pelo utilizador através de um objeto do tipo JFileChooser*/
+    public static String selecionarFicheiro() throws FileNotFoundException {
+        String userDir = System.getProperty("user.home");
+        JFileChooser fc = new JFileChooser(userDir);
+        fc.setDialogTitle("Selecione ficheiro para leitura");
+        fc.showOpenDialog(fc);
+        return fc.getSelectedFile().getAbsolutePath();
+    }
+
+    /*Retorna um vetor de Strings com o conteúdo de um ficheiro cujo nome é dado como parâmetro. O vetor tem tamanho máximo de 230 linhas mas terá o tamanho correspondente ao número de linhas não vazias que o ficheiro tiver e respetivo conteúdo*/
+    public static String[] lerFicheiro(String ficheiro) throws FileNotFoundException {
+        Scanner ler = new Scanner(new File(ficheiro));
+        String conteudo[] = new String[230];
+        int numeroLinhasCarregadas = 0;
+        while (ler.hasNextLine() && numeroLinhasCarregadas <= 230) {
+            if (!ler.nextLine().isEmpty()) {
+                conteudo[numeroLinhasCarregadas] = ler.nextLine();
+                numeroLinhasCarregadas++;
+            }
+        }
+        ler.close();
+        String[] retorno = new String[numeroLinhasCarregadas];
+        System.arraycopy(conteudo, 0, retorno, 0, numeroLinhasCarregadas);
+        return retorno;
     }
 
 }

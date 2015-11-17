@@ -5,6 +5,7 @@
  */
 package savop;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -28,23 +29,28 @@ public class SAVOP {
     private final static String[] COD_REGIOES = {"AVE", "BEJ", "BRG", "BRA", "CAS", "COI", "EVO", "FAR", "GUA", "LEI", "LIS", "PTL", "PRT", "SAN", "SET", "VIA", "VRL", "VIS", "ACO", "MAD"};
 
     public static void main(String[] args) {
-        
-        
+
         Scanner ler = new Scanner(System.in);
         String[][] deputados = new String[230][4];
         int numeroDeputados = 0;
         int opcao;
-numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
         do {
             System.out.println("\nInsira opção: "
-                + "\n1 - Ler ficheiro Deputados.txt e guardar na memória principal"
-                + "\n2 - Mostrar dados Deputados paginado");
+                + "\n1 - Ler ficheiro Deputados e guardar na memória principal"
+                + "\n2 - Mostrar listagem Deputados paginada"
+                + "\n3 - Alterar informação deputado"
+                + "\n4 - Ler ficheiro votação"
+                + "\n5 - Visualisar votação ordenada por ID deputado"
+                + "\n6 - Visualizar resultados última votação"
+                + "\n7 - Visualisar votação por faixa etária"
+                + "\n8 - Visualizar resultados última votação em página HTML"
+                + "\n9 - Terminar o programa"
+            );
             opcao = ler.nextInt();
             ler.nextLine();
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
-                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
                     System.out.println("Ficheiro lido com sucesso!");
                     break;
                 case 2:
@@ -81,31 +87,14 @@ numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
     }
 
     /*Método para ler para a memória central o ficheiro "Deputados.txt". Valida o facto do nome do ficheiro ter de ter o nome "Deputados.txt". Valida a passagem de um número máximo de 230 linhas para o array FICHEIRO_DEPUTADOS. Utiliza as validações inerentes do método "guardarDadosDeputado", que utiliza.*/
-    public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, int numeroDeputados) {
-        String userDir = System.getProperty("user.home");
-        JFileChooser fc = new JFileChooser(userDir);
-        fc.setDialogTitle("Selecione ficheiro para leitura");
-        fc.showOpenDialog(null);
-        String nomeFicheiro = fc.getSelectedFile().getAbsolutePath();
-        if (nomeFicheiro.endsWith(FILE_DEPUTADOS)) {
-            Scanner lerFicheiro;
-            try {
-                lerFicheiro = new Scanner(new File(nomeFicheiro));
-                while (lerFicheiro.hasNextLine() && numeroDeputados < MAX_DEPUTADOS) {
-                    String conteudo = lerFicheiro.nextLine();
-                    if (!conteudo.isEmpty()) {
-                        numeroDeputados = guardarDadosDeputado(conteudo, deputados, numeroDeputados);
-                    }
-                }
-                lerFicheiro.close();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(SAVOP.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, int numeroDeputados) throws FileNotFoundException {
+        String ficheiro = Utilitarios.selecionarFicheiro();
+        if (ficheiro.endsWith(FILE_DEPUTADOS)) {
+            String [] conteudoFicheiro = Utilitarios.lerFicheiro(ficheiro);
         } else {
             System.out.println("Para leitura para a memória, o ficheiro selecionado tem de ter o nome \"Deputados.txt\".");
         }
         return numeroDeputados;
-
     }
     /*Método para passar os dados de uma linha presente no ficheiro de texto Deputados.txt para a matriz da memória principal "deputados". Para essa linha ser passada para a matriz, a mesma não pode ser vazia; tem de ter o número de colunas certas; na coluna do ID, o ID tem de ser válido (recorre-se ao método "validaID") e o ID dessa linha não pode já estar presente na matriz "deputados" (recorre-se ao método "validaIDUnico")*/
 
@@ -141,7 +130,7 @@ numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
         if (numeroDeputados == 0) {
             System.out.println("Não existem dados para mostrar. Faça uma leitura prévia de dados (Opção 1 do menu principal) através de um ficheiro válido e com elementos válidos.");
         } else {
-            int totalPaginas = devolveNumeroPaginas(deputados, numeroDeputados);
+            int totalPaginas = devolveNumeroPaginas(numeroDeputados);
             System.out.println("Total de páginas: " + totalPaginas);
             System.out.println("Total de resultados por página: " + MAX_LINHAS_PAGINA);
 
@@ -157,9 +146,11 @@ numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
                 if (acao.isEmpty()) {
                     posicao++;
                     imprimeEcraCabecalhoDeputados();
-                    for (int i = iniciosPagina[posicao]; i < (i + MAX_LINHAS_PAGINA); i++) {
+                    int inicio = iniciosPagina[posicao];
+                    int limite = inicio+MAX_LINHAS_PAGINA;
+                    for (int i = inicio; i<=limite ; i++) {
                         for (int j = 0; j < 4; j++) {
-                            System.out.println(deputados[i][j]);
+                            System.out.printf(deputados[i][j]);
                         }
                     }
                 } else {
@@ -187,7 +178,7 @@ numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
     }
 
     public static int[] devolveIniciosPagina(String[][] deputados, int numeroDeputados) {
-        int numeroPaginas = devolveNumeroPaginas(deputados, numeroDeputados);
+        int numeroPaginas = devolveNumeroPaginas(numeroDeputados);
         int[] iniciosPagina = new int[numeroPaginas];
         int pagina = 0;
         for (int i = 0; i < numeroPaginas; i++) {
@@ -197,8 +188,8 @@ numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, numeroDeputados);
         return iniciosPagina;
     }
 
-    public static int devolveNumeroPaginas(String[][] deputados, int numeroDeputados) {
-        int numeroPaginas = (numeroDeputados % MAX_LINHAS_PAGINA) + 1;
+    public static int devolveNumeroPaginas(int numeroDeputados) {
+        int numeroPaginas = (numeroDeputados/MAX_LINHAS_PAGINA) + 1;
         return numeroPaginas;
     }
 }
