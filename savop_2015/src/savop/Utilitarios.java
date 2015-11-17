@@ -122,4 +122,28 @@ public class Utilitarios {
         return retorno;
     }
 
+    /*Retorna um vetor de booleans contendo as posicões do ficheiro passado por parâmetro que têm conteúdo a false e as que estão vazias a true. É útil para, por exemplo, poder especificar em que linhas do ficheiro existem erros ou obter o número total de linhas de um ficheiro, através do método length aplicado ao vetor retornado*/
+    public static boolean[] linhasVaziasFicheiro(String ficheiro) throws FileNotFoundException {
+        Scanner ler1 = new Scanner(new File(ficheiro));
+        int totalLinhas = 0;
+        while (ler1.hasNextLine()) {
+            totalLinhas++;
+        }
+        ler1.close();
+
+        Scanner ler2 = new Scanner(new File(ficheiro));
+        boolean[] linhasVazias = new boolean[totalLinhas];
+        for (int i = 0; i < totalLinhas; i++) {
+            linhasVazias[i] = false;
+        }
+        int linha = 0;
+        while (ler2.hasNextLine()) {
+            if (ler2.nextLine().isEmpty()) {
+                linhasVazias[linha] = true;
+            }
+            linha++;
+        }
+        totalLinhas++;
+        return linhasVazias;
+    }
 }
