@@ -83,13 +83,13 @@ public class Utilitarios {
         return true;
     }
 
-    /*valida que o id recebido como parâmetro ainda não se encontra presente na listagem de deputados*/
-    public static boolean validaIDUnico(String id, String[][] deputados, int numeroDeputados) {
+    /*valida que o "id" recebido como parâmetro ainda não se encontra presente na listagem "deputados" enviada como parâmetro até à linha indicada como parâmetro na variável "maxProcura"*/
+    public static boolean validaIDUnico(String id, String[][] deputados, int maxProcura) {
         int posicao = 0;
-        while (posicao < numeroDeputados && !id.equals(deputados[posicao][0])) {
+        while (posicao < maxProcura && !deputados[posicao][0].equals(id)) {
             posicao++;
         }
-        if (posicao == numeroDeputados) {
+        if (posicao == maxProcura) {
             return true;
         } else {
             return false;

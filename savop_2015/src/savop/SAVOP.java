@@ -87,43 +87,48 @@ public class SAVOP {
     }
 
     /*Método para ler para a memória central o ficheiro "Deputados.txt". Valida o facto do nome do ficheiro ter de ter o nome "Deputados.txt". Valida a passagem de um número máximo de 230 linhas para o array FICHEIRO_DEPUTADOS. Utiliza as validações inerentes do método "guardarDadosDeputado", que utiliza.*/
-    public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, int numeroDeputados) throws FileNotFoundException {
+    public static String[][] lerParaMemoriaFicheiroDeputados() throws FileNotFoundException {
         String ficheiro = Utilitarios.selecionarFicheiro();
         if (ficheiro.endsWith(FILE_DEPUTADOS)) {
-            String [] conteudoFicheiro = Utilitarios.lerFicheiro(ficheiro);
+            String[] conteudoFicheiro = Utilitarios.lerFicheiro(ficheiro);
+            String[][] deputados = guardarDadosDeputados(conteudoFicheiro);
+            return deputados;
         } else {
+            String[][] deputadosVazio = new String[1][1];
             System.out.println("Para leitura para a memória, o ficheiro selecionado tem de ter o nome \"Deputados.txt\".");
+            return deputadosVazio;
         }
-        return numeroDeputados;
     }
     /*Método para passar os dados de uma linha presente no ficheiro de texto Deputados.txt para a matriz da memória principal "deputados". Para essa linha ser passada para a matriz, a mesma não pode ser vazia; tem de ter o número de colunas certas; na coluna do ID, o ID tem de ser válido (recorre-se ao método "validaID") e o ID dessa linha não pode já estar presente na matriz "deputados" (recorre-se ao método "validaIDUnico")*/
 
     /*TODO: corrigir a linha específica onde é detetado um erro. atualmente se um ficheiro tiver mais que uma linha errada, a mensagem de erro vai dar um número errado quanto ao número da linha do erro.*/
-    private static int guardarDadosDeputado(String linha, String[][] deputados, int numeroDeputados) {
-        String[] temp = linha.split(";");
-        if (temp.length == 4) {
-            String id = temp[0].trim();
-            if (Utilitarios.validaID(id, COD_REGIOES)) {
-                if (Utilitarios.validaIDUnico(id, deputados, numeroDeputados)) {
-                    deputados[numeroDeputados][0] = id;
-                    deputados[numeroDeputados][1] = temp[1].trim();
-                    deputados[numeroDeputados][2] = temp[2].trim();
-                    deputados[numeroDeputados][3] = temp[3].trim();
-                    numeroDeputados++;
-                    return numeroDeputados;
+    public static String[][] guardarDadosDeputados(String[] linhasFicheiro) {
+        String[][] deputados = new String[linhasFicheiro.length][4];
+        int linhasValidas = 0;
+        for (int i = 0; i < linhasFicheiro.length; i++) {
+            String[] temp = linhasFicheiro[i].split(";");
+            if (temp.length == 4) {
+                String id = temp[0].trim();
+                if (Utilitarios.validaID(id, COD_REGIOES)) {
+                    if (Utilitarios.validaIDUnico(id, deputados, linhasValidas)) {
+                        deputados[i][0] = id;
+                        deputados[i][1] = temp[1].trim();
+                        deputados[i][2] = temp[2].trim();
+                        deputados[i][3] = temp[3].trim();
+                        linhasValidas++;
+                    } else {
+                        System.out.println("A linha " + (linhasValidas + 1) + " é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.");
+                    }
                 } else {
-                    System.out.println("A linha " + (numeroDeputados + 1) + " é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.");
-                    return numeroDeputados;
+                    System.out.println("A linha " + (linhasValidas + 1) + " é uma linha inválida, dado o ID ser inválido.");
                 }
             } else {
-                System.out.println("A linha " + (numeroDeputados + 1) + " é uma linha inválida, dado o ID ser inválido.");
-                return numeroDeputados;
+                System.out.println("A linha " + (linhasValidas + 1) + " é uma linha inválida, dado não ter número de colunas suficientes.");
             }
-
-        } else {
-            System.out.println("A linha " + (numeroDeputados + 1) + " é uma linha inválida, dado não ter número de colunas suficientes.");
-            return numeroDeputados;
         }
+        String[][] retorno = new String[linhasValidas][4];
+        System.arraycopy(deputados, 0, retorno, 0, linhasValidas);
+        return retorno;
     }
 
     public static int mostraDeputadosPaginado(String[][] deputados, int numeroDeputados) {
@@ -147,8 +152,8 @@ public class SAVOP {
                     posicao++;
                     imprimeEcraCabecalhoDeputados();
                     int inicio = iniciosPagina[posicao];
-                    int limite = inicio+MAX_LINHAS_PAGINA;
-                    for (int i = inicio; i<=limite ; i++) {
+                    int limite = inicio + MAX_LINHAS_PAGINA;
+                    for (int i = inicio; i <= limite; i++) {
                         for (int j = 0; j < 4; j++) {
                             System.out.printf(deputados[i][j]);
                         }
@@ -189,7 +194,7 @@ public class SAVOP {
     }
 
     public static int devolveNumeroPaginas(int numeroDeputados) {
-        int numeroPaginas = (numeroDeputados/MAX_LINHAS_PAGINA) + 1;
+        int numeroPaginas = (numeroDeputados / MAX_LINHAS_PAGINA) + 1;
         return numeroPaginas;
     }
 }
