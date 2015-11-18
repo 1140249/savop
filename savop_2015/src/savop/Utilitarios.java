@@ -8,8 +8,6 @@ package savop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
@@ -97,9 +95,7 @@ public class Utilitarios {
     }
 
     /*Obtem o nome de um ficheiro selecionado pelo utilizador através de um objeto do tipo JFileChooser*/
-    public static String selecionarFicheiro() throws FileNotFoundException {
-        String userDir = System.getProperty("user.home");
-        JFileChooser fc = new JFileChooser(userDir);
+    public static String selecionarFicheiro(JFileChooser fc) throws FileNotFoundException {
         fc.setDialogTitle("Selecione ficheiro para leitura");
         fc.showOpenDialog(fc);
         return fc.getSelectedFile().getAbsolutePath();
