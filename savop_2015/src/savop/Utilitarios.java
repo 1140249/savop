@@ -107,8 +107,9 @@ public class Utilitarios {
         String conteudo[] = new String[230];
         int numeroLinhasCarregadas = 0;
         while (ler.hasNextLine() && numeroLinhasCarregadas <= 230) {
-            if (!ler.nextLine().isEmpty()) {
-                conteudo[numeroLinhasCarregadas] = ler.nextLine();
+            String aux = ler.nextLine();
+            if (!aux.isEmpty()) {
+                conteudo[numeroLinhasCarregadas] = aux;
                 numeroLinhasCarregadas++;
             }
         }
