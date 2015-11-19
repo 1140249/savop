@@ -110,10 +110,10 @@ public class SAVOP {
                 String id = temp[0].trim();
                 if (Utilitarios.validaID(id, COD_REGIOES)) {
                     if (Utilitarios.validaIDUnico(id, deputados, linhasValidas)) {
-                        deputados[i][0] = id;
-                        deputados[i][1] = temp[1].trim();
-                        deputados[i][2] = temp[2].trim();
-                        deputados[i][3] = temp[3].trim();
+                        deputados[linhasValidas][0] = id;
+                        deputados[linhasValidas][1] = temp[1].trim();
+                        deputados[linhasValidas][2] = temp[2].trim();
+                        deputados[linhasValidas][3] = temp[3].trim();
                         linhasValidas++;
                     } else {
                         System.out.println("A linha " + (linhasValidas + 1) + " é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.");
