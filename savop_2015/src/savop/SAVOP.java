@@ -155,7 +155,7 @@ public class SAVOP {
                     for (int i = inicio; i <= limite; i++) {
                         System.out.println("");
                         for (int j = 0; j < 4; j++) {
-                            System.out.printf(deputados[i][j]);
+                            Utilitarios.imprimeConteudoLinha(i, j, deputados);
                         }
                     }
                 } else {

@@ -143,4 +143,39 @@ public class Utilitarios {
         totalLinhas++;
         return linhasVazias;
     }
+
+    public static void imprimeConteudoLinha(int linha, int coluna, String[][] deputados) {
+        int quantidadeEspacos;
+        switch (coluna) {
+            case 0:
+                quantidadeEspacos = 3;
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf(deputados[linha][coluna]);
+                break;
+            case 1:
+                quantidadeEspacos = 4;
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf(deputados[linha][coluna]);
+                break;
+            case 2:
+                quantidadeEspacos = 33 - deputados[linha][1].length();
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf(deputados[linha][coluna]);
+                break;
+            case 3:
+                quantidadeEspacos = 11 - deputados[linha][2].length();
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf(deputados[linha][coluna]);
+                break;
+            default:
+                System.out.println("Erro!");
+        }
+
+    }
+
+    public static void imprimeEspacos(int quantidadeEspacos) {
+        for (int i = 0; i < quantidadeEspacos; i++) {
+            System.out.printf(" ");
+        }
+    }
 }
