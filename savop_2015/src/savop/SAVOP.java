@@ -5,6 +5,7 @@
  */
 package savop;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
@@ -25,6 +26,7 @@ public class SAVOP {
     private final static String[] COD_REGIOES = {"AVE", "BEJ", "BRG", "BRA", "CAS", "COI", "EVO", "FAR", "GUA", "LEI", "LIS", "PTL", "PRT", "SAN", "SET", "VIA", "VRL", "VIS", "ACO", "MAD"};
 
     public static void main(String[] args) throws FileNotFoundException {
+        File logErros = LogErros.criaFicheiroErros();
         String userDir = System.getProperty("user.home");
         JFileChooser fc = new JFileChooser(userDir);
         Scanner ler = new Scanner(System.in);
@@ -48,7 +50,7 @@ public class SAVOP {
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
-                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, fc);
+                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, fc, logErros);
                     System.out.println("Ficheiro lido com sucesso!");
                     break;
                 case 2:
@@ -85,11 +87,11 @@ public class SAVOP {
     }
 
     /*Método para ler para a memória central o ficheiro "Deputados.txt". Valida o facto do nome do ficheiro ter de ter o nome "Deputados.txt". Valida a passagem de um número máximo de 230 linhas para o array FICHEIRO_DEPUTADOS. Utiliza as validações inerentes do método "guardarDadosDeputado", que utiliza.*/
-    public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, JFileChooser fc) throws FileNotFoundException {
+    public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, JFileChooser fc, File logErros) throws FileNotFoundException {
         String ficheiro = Utilitarios.selecionarFicheiro(fc);
         if (ficheiro.endsWith(FILE_DEPUTADOS)) {
             String[] conteudoFicheiro = Utilitarios.lerFicheiro(ficheiro);
-            String[][] deputadosTemp = guardarDadosDeputados(conteudoFicheiro);
+            String[][] deputadosTemp = guardarDadosDeputados(conteudoFicheiro, logErros);
             System.arraycopy(deputadosTemp, 0, deputados, 0, deputadosTemp.length);
             return deputadosTemp.length;
         } else {
@@ -100,7 +102,7 @@ public class SAVOP {
     /*Método para passar os dados de uma linha presente no ficheiro de texto Deputados.txt para a matriz da memória principal "deputados". Para essa linha ser passada para a matriz, a mesma não pode ser vazia; tem de ter o número de colunas certas; na coluna do ID, o ID tem de ser válido (recorre-se ao método "validaID") e o ID dessa linha não pode já estar presente na matriz "deputados" (recorre-se ao método "validaIDUnico")*/
 
     /*TODO: corrigir a linha específica onde é detetado um erro. atualmente se um ficheiro tiver mais que uma linha errada, a mensagem de erro vai dar um número errado quanto ao número da linha do erro.*/
-    public static String[][] guardarDadosDeputados(String[] linhasFicheiro) {
+    public static String[][] guardarDadosDeputados(String[] linhasFicheiro, File logErros) throws FileNotFoundException {
         int numLinhas = linhasFicheiro.length;
         String[][] deputados = new String[numLinhas][4];
         int linhasValidas = 0;
@@ -116,7 +118,8 @@ public class SAVOP {
                         deputados[linhasValidas][3] = temp[3].trim();
                         linhasValidas++;
                     } else {
-                        System.out.println("A linha " + (linhasValidas + 1) + " é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.");
+                        String erro = "A linha ".concat(Integer.toString(linhasValidas + 1)).concat(" é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.");
+                        LogErros.escreveNoFicheiroErros(logErros, erro);
                     }
                 } else {
                     System.out.println("A linha " + (linhasValidas + 1) + " é uma linha inválida, dado o ID ser inválido.");
