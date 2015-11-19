@@ -48,7 +48,7 @@ public class SAVOP {
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
-                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados,fc);
+                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, fc);
                     System.out.println("Ficheiro lido com sucesso!");
                     break;
                 case 2:
@@ -144,15 +144,16 @@ public class SAVOP {
             String acao;
 
             do {
-                System.out.println("- Insira \"ENTER\" para visualizar página seguinte \n- \"Número Página + ENTER\" para apresentar resultados \n- Para terminar visualização insira \"F + ENTER\"");
+                System.out.println("\n\nInsira \"ENTER\" para visualizar página seguinte \nInsira \"Número Página + ENTER\" para apresentar resultados \n---    Para terminar visualização insira \"F + ENTER\"    ---");
                 Scanner ler = new Scanner(System.in);
                 acao = ler.nextLine();
                 if (acao.isEmpty()) {
                     posicao++;
-                    imprimeEcraCabecalhoDeputados();
                     int inicio = iniciosPagina[posicao];
                     int limite = inicio + MAX_LINHAS_PAGINA;
+                    imprimeEcraCabecalhoDeputados();
                     for (int i = inicio; i <= limite; i++) {
+                        System.out.println("");
                         for (int j = 0; j < 4; j++) {
                             System.out.printf(deputados[i][j]);
                         }
@@ -178,7 +179,7 @@ public class SAVOP {
 
     public static void imprimeEcraCabecalhoDeputados() {
         System.out.println("\n|| ID    || NOME                          || PARTIDO || DATA NASC   ||\n"
-            + "----------------------------------------------------------------------\n");
+            + "----------------------------------------------------------------------");
     }
 
     public static int[] devolveIniciosPagina(String[][] deputados, int numeroDeputados) {
