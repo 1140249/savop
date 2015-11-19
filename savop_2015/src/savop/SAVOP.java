@@ -101,9 +101,10 @@ public class SAVOP {
 
     /*TODO: corrigir a linha específica onde é detetado um erro. atualmente se um ficheiro tiver mais que uma linha errada, a mensagem de erro vai dar um número errado quanto ao número da linha do erro.*/
     public static String[][] guardarDadosDeputados(String[] linhasFicheiro) {
-        String[][] deputados = new String[linhasFicheiro.length][4];
+        int numLinhas = linhasFicheiro.length;
+        String[][] deputados = new String[numLinhas][4];
         int linhasValidas = 0;
-        for (int i = 0; i < linhasFicheiro.length; i++) {
+        for (int i = 0; i < numLinhas; i++) {
             String[] temp = linhasFicheiro[i].split(";");
             if (temp.length == 4) {
                 String id = temp[0].trim();
