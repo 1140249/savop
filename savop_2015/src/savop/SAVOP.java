@@ -123,15 +123,15 @@ public class SAVOP {
                         linhasValidas++;
                     } else {
                         String erro = "A linha ".concat(Integer.toString(linhasValidas + 1)).concat(" é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.");
-                        LogErros.escreveNoFicheiroErros(erro,escrever);
+                        LogErros.escreveNoFicheiroErros(erro, escrever);
                     }
                 } else {
                     String erro = "A linha " + (linhasValidas + 1) + " é uma linha inválida, dado o ID ser inválido.";
-                    LogErros.escreveNoFicheiroErros(erro,escrever);
+                    LogErros.escreveNoFicheiroErros(erro, escrever);
                 }
             } else {
                 String erro = "A linha " + (linhasValidas + 1) + " é uma linha inválida, dado não ter número de colunas suficientes.";
-                LogErros.escreveNoFicheiroErros(erro,escrever);
+                LogErros.escreveNoFicheiroErros(erro, escrever);
                 System.out.println(erro);
             }
         }
@@ -158,29 +158,34 @@ public class SAVOP {
                 System.out.println("\n\nInsira \"ENTER\" para visualizar página seguinte \nInsira \"Número Página + ENTER\" para apresentar resultados \n---    Para terminar visualização insira \"F + ENTER\"    ---");
                 Scanner ler = new Scanner(System.in);
                 acao = ler.nextLine();
-                if (acao.isEmpty()) {
-                    posicao++;
-                    int inicio = iniciosPagina[posicao];
-                    int limite = inicio + MAX_LINHAS_PAGINA;
-                    imprimeEcraCabecalhoDeputados();
-                    for (int i = inicio; i <= limite; i++) {
-                        System.out.println("");
-                        for (int j = 0; j < 4; j++) {
-                            Utilitarios.imprimeConteudoLinha(i, j, deputados);
-                        }
-                    }
-                } else {
-                    int acaoNum = Integer.parseInt(acao);
-                    if (acaoNum > 0 || acaoNum <= totalPaginas) {
-                        posicao = acaoNum;
+                if (!acao.equalsIgnoreCase("f")) {
+                    if (acao.isEmpty()) {
+                        posicao++;
+                        int inicio = iniciosPagina[posicao];
+                        int limite = inicio + MAX_LINHAS_PAGINA;
                         imprimeEcraCabecalhoDeputados();
-                        for (int i = iniciosPagina[posicao]; i < (i + MAX_LINHAS_PAGINA); i++) {
+                        for (int i = inicio; i <= limite; i++) {
+                            System.out.println("");
                             for (int j = 0; j < 4; j++) {
-                                System.out.println(deputados[i][j]);
+                                Utilitarios.imprimeConteudoLinha(i, j, deputados);
                             }
                         }
                     } else {
-                        System.out.println("Número de página inválido!");
+                        int acaoNum = Integer.parseInt(acao);
+                        if (acaoNum > 0 && acaoNum <= totalPaginas) {
+                            posicao = acaoNum;
+                            imprimeEcraCabecalhoDeputados();
+                            int inicio = iniciosPagina[posicao];
+                            int fim = inicio + MAX_LINHAS_PAGINA;
+                            for (int i = inicio; i < fim; i++) {
+                                System.out.println("");
+                                for (int j = 0; j < 4; j++) {
+                                    Utilitarios.imprimeConteudoLinha(i, j, deputados);
+                                }
+                            }
+                        } else {
+                            System.out.println("Número de página inválido!");
+                        }
                     }
                 }
             } while (!acao.equalsIgnoreCase("f"));
