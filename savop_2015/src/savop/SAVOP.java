@@ -142,29 +142,37 @@ public class SAVOP {
     }
 
     public static int mostraDeputadosPaginado(String[][] deputados, int numeroDeputados) {
-        if (numeroDeputados == 0) {
-            System.out.println("Não existem dados para mostrar. Faça uma leitura prévia de dados (Opção 1 do menu principal) através de um ficheiro válido e com elementos válidos.");
+        int paginaAtual = 1;
+        int totalPaginas = devolveNumeroPaginas(numeroDeputados);
+        if (totalPaginas == 0) {
+            System.out.println("\nNão existem dados para mostrar. Faça uma leitura prévia de dados (Opção 1 do menu principal) através de um ficheiro válido e com elementos válidos.");
         } else {
-            int totalPaginas = devolveNumeroPaginas(numeroDeputados);
-            System.out.println("Total de páginas: " + totalPaginas);
+            System.out.println("\nTotal de páginas: " + totalPaginas);
             System.out.println("Total de resultados por página: " + MAX_LINHAS_PAGINA);
 
             int[] iniciosPagina = devolveIniciosPagina(deputados, numeroDeputados);
-
-            int posicao = 0;
             String acao;
+            int inicPrimeira = 0;
+            int limPrimeira = MAX_LINHAS_PAGINA-1;
+            imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+            for (int i = inicPrimeira; i <= limPrimeira; i++) {
+                System.out.println("");
+                for (int j = 0; j < 4; j++) {
+                    Utilitarios.imprimeConteudoLinha(i, j, deputados);
+                }
+            }
 
             do {
-                System.out.println("\n\nInsira \"ENTER\" para visualizar página seguinte \nInsira \"Número Página + ENTER\" para apresentar resultados \n---    Para terminar visualização insira \"F + ENTER\"    ---");
+                imprimeInstrucoes();
                 Scanner ler = new Scanner(System.in);
                 acao = ler.nextLine();
                 if (!acao.equalsIgnoreCase("f")) {
                     if (acao.isEmpty()) {
-                        posicao++;
-                        int inicio = iniciosPagina[posicao];
-                        int limite = inicio + MAX_LINHAS_PAGINA;
-                        imprimeEcraCabecalhoDeputados();
-                        for (int i = inicio; i <= limite; i++) {
+                        paginaAtual++;
+                        int linhaInicial = iniciosPagina[paginaAtual - 1];
+                        int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA-1;
+                        imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                        for (int i = linhaInicial; i < linhaFinal; i++) {
                             System.out.println("");
                             for (int j = 0; j < 4; j++) {
                                 Utilitarios.imprimeConteudoLinha(i, j, deputados);
@@ -173,11 +181,11 @@ public class SAVOP {
                     } else {
                         int acaoNum = Integer.parseInt(acao);
                         if (acaoNum > 0 && acaoNum <= totalPaginas) {
-                            posicao = acaoNum;
-                            imprimeEcraCabecalhoDeputados();
-                            int inicio = iniciosPagina[posicao];
-                            int fim = inicio + MAX_LINHAS_PAGINA;
-                            for (int i = inicio; i < fim; i++) {
+                            paginaAtual = acaoNum;
+                            imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
+                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA-1;
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
                                 System.out.println("");
                                 for (int j = 0; j < 4; j++) {
                                     Utilitarios.imprimeConteudoLinha(i, j, deputados);
@@ -193,9 +201,18 @@ public class SAVOP {
         return numeroDeputados;
     }
 
-    public static void imprimeEcraCabecalhoDeputados() {
+    public static void imprimeEcraCabecalhoDeputados(int paginaAtual, int totalPaginas) {
+        System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
         System.out.println("\n|| ID    || NOME                          || PARTIDO || DATA NASC   ||\n"
             + "----------------------------------------------------------------------");
+    }
+
+    public static void imprimeInstrucoes() {
+        System.out.println("\n"
+            + "----------------------------------------------------------------------"
+            + "\nPágina seguinte: pressione \"ENTER\""
+            + "\nPágina específica: insira \"Número Página\" + pressione \"ENTER\""
+            + "\nTerminar: insira \"F\" + pressione \"ENTER\"");
     }
 
     public static int[] devolveIniciosPagina(String[][] deputados, int numeroDeputados) {
@@ -210,7 +227,12 @@ public class SAVOP {
     }
 
     public static int devolveNumeroPaginas(int numeroDeputados) {
-        int numeroPaginas = (numeroDeputados / MAX_LINHAS_PAGINA) + 1;
+        int numeroPaginas;
+        if (numeroDeputados == 0) {
+            numeroPaginas = 0;
+        } else {
+            numeroPaginas = (numeroDeputados / MAX_LINHAS_PAGINA) + 1;
+        }
         return numeroPaginas;
     }
 }
