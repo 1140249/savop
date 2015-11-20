@@ -23,9 +23,14 @@ public class SAVOP {
     private final static int MAX_DEPUTADOS = 230;
     private final static String FILE_DEPUTADOS = "Deputados230.txt";
     private final static String PAGINA_HTML = "Pagina.html";
-    private final static int MAX_LINHAS_PAGINA = 5;
+    public final static int MAX_LINHAS_PAGINA = 5;
     private final static String[] COD_REGIOES = {"AVE", "BEJ", "BRG", "BRA", "CAS", "COI", "EVO", "FAR", "GUA", "LEI", "LIS", "PTL", "PRT", "SAN", "SET", "VIA", "VRL", "VIS", "ACO", "MAD"};
 
+    /**
+     *
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         File logErros = LogErros.criaFicheiroErros();
         String nomeFicheiro = logErros.getAbsolutePath();
@@ -59,7 +64,7 @@ public class SAVOP {
                     break;
                 case 2:
                     /*Visualizar ficheiro deputados existente em memória (depois de iniciada a opção 1) usando paginação*/
-                    numeroDeputados = mostraDeputadosPaginado(deputados, numeroDeputados);
+                    mostraDeputadosPaginado(deputados, numeroDeputados);
                     break;
                 case 3:
                     /*Alterar informação de um deputado (depois de iniciada a opção 1)*/
@@ -90,7 +95,16 @@ public class SAVOP {
         } while (opcao != 9);
     }
 
-    /*Método para ler para a memória central o ficheiro "Deputados.txt". Valida o facto do nome do ficheiro ter de ter o nome "Deputados.txt". Valida a passagem de um número máximo de 230 linhas para o array FICHEIRO_DEPUTADOS. Utiliza as validações inerentes do método "guardarDadosDeputado", que utiliza.*/
+    /**
+     *
+     * @param deputados
+     * @param fc
+     * @param logErros
+     * @param escrever
+     * @return Método para ler para a memória central o ficheiro
+     * "Deputados.txt". Devolve um inteiro que representa o número de deputados.
+     * @throws FileNotFoundException
+     */
     public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, JFileChooser fc, File logErros, Formatter escrever) throws FileNotFoundException {
         String ficheiro = Utilitarios.selecionarFicheiro(fc);
         if (ficheiro.endsWith(FILE_DEPUTADOS)) {
@@ -103,9 +117,23 @@ public class SAVOP {
             return 0;
         }
     }
-    /*Método para passar os dados de uma linha presente no ficheiro de texto Deputados.txt para a matriz da memória principal "deputados". Para essa linha ser passada para a matriz, a mesma não pode ser vazia; tem de ter o número de colunas certas; na coluna do ID, o ID tem de ser válido (recorre-se ao método "validaID") e o ID dessa linha não pode já estar presente na matriz "deputados" (recorre-se ao método "validaIDUnico")*/
 
-    /*TODO: corrigir a linha específica onde é detetado um erro. atualmente se um ficheiro tiver mais que uma linha errada, a mensagem de erro vai dar um número errado quanto ao número da linha do erro.*/
+    /**
+     *
+     * @param linhasFicheiro
+     * @param logErros
+     * @param escrever
+     * @return Método para passar os dados de uma linha presente no array de
+     * Strings dado como parâmetro para a matriz da memória principal
+     * "deputados". Para essa linha ser passada para a matriz, a mesma não pode
+     * ser vazia; tem de ter o número de colunas certas (4); na coluna do ID, o
+     * ID tem de ser válido (recorre-se ao método "validaID") e o ID dessa linha
+     * não pode já estar presente na matriz "deputados" (recorre-se ao método
+     * "validaIDUnico"). O return é a matriz de deputados. Qualquer erro numa
+     * linha do ficheiro que resulte na mesma em não ser passada é reportado num
+     * ficheiro "log_erros.txt"
+     * @throws FileNotFoundException
+     */
     public static String[][] guardarDadosDeputados(String[] linhasFicheiro, File logErros, Formatter escrever) throws FileNotFoundException {
         int numLinhas = linhasFicheiro.length;
         String[][] deputados = new String[numLinhas][4];
@@ -141,37 +169,42 @@ public class SAVOP {
         return retorno;
     }
 
-    public static int mostraDeputadosPaginado(String[][] deputados, int numeroDeputados) {
+    /**
+     * @param deputados
+     * @param numeroDeputados Método para mostrar a listagem de deputados na
+     * consola de uma forma que permita a paginação. Para alterar o número de
+     * elementos a mostrar por página, basta alterar o valor da constante
+     * MAX_LINHAS_PAGINA.
+     */
+    public static void mostraDeputadosPaginado(String[][] deputados, int numeroDeputados) {
         int paginaAtual = 1;
-        int totalPaginas = devolveNumeroPaginas(numeroDeputados);
+        int totalPaginas = Utilitarios.devolveNumeroPaginas(numeroDeputados);
         if (totalPaginas == 0) {
             System.out.println("\nNão existem dados para mostrar. Faça uma leitura prévia de dados (Opção 1 do menu principal) através de um ficheiro válido e com elementos válidos.");
         } else {
             System.out.println("\nTotal de páginas: " + totalPaginas);
             System.out.println("Total de resultados por página: " + MAX_LINHAS_PAGINA);
-
-            int[] iniciosPagina = devolveIniciosPagina(deputados, numeroDeputados);
+            int[] iniciosPagina = Utilitarios.devolveIniciosPagina(deputados, numeroDeputados);
             String acao;
             int inicPrimeira = 0;
-            int limPrimeira = MAX_LINHAS_PAGINA-1;
-            imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+            int limPrimeira = MAX_LINHAS_PAGINA - 1;
+            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
             for (int i = inicPrimeira; i <= limPrimeira; i++) {
                 System.out.println("");
                 for (int j = 0; j < 4; j++) {
                     Utilitarios.imprimeConteudoLinha(i, j, deputados);
                 }
             }
-
             do {
-                imprimeInstrucoes();
+                Utilitarios.imprimeInstrucoes();
                 Scanner ler = new Scanner(System.in);
                 acao = ler.nextLine();
                 if (!acao.equalsIgnoreCase("f")) {
                     if (acao.isEmpty()) {
                         paginaAtual++;
                         int linhaInicial = iniciosPagina[paginaAtual - 1];
-                        int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA-1;
-                        imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                        int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA - 1;
+                        Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
                         for (int i = linhaInicial; i < linhaFinal; i++) {
                             System.out.println("");
                             for (int j = 0; j < 4; j++) {
@@ -182,9 +215,9 @@ public class SAVOP {
                         int acaoNum = Integer.parseInt(acao);
                         if (acaoNum > 0 && acaoNum <= totalPaginas) {
                             paginaAtual = acaoNum;
-                            imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
                             int linhaInicial = iniciosPagina[paginaAtual - 1];
-                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA-1;
+                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA - 1;
                             for (int i = linhaInicial; i < linhaFinal; i++) {
                                 System.out.println("");
                                 for (int j = 0; j < 4; j++) {
@@ -198,41 +231,5 @@ public class SAVOP {
                 }
             } while (!acao.equalsIgnoreCase("f"));
         }
-        return numeroDeputados;
-    }
-
-    public static void imprimeEcraCabecalhoDeputados(int paginaAtual, int totalPaginas) {
-        System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
-        System.out.println("\n|| ID    || NOME                          || PARTIDO || DATA NASC   ||\n"
-            + "----------------------------------------------------------------------");
-    }
-
-    public static void imprimeInstrucoes() {
-        System.out.println("\n"
-            + "----------------------------------------------------------------------"
-            + "\nPágina seguinte: pressione \"ENTER\""
-            + "\nPágina específica: insira \"Número Página\" + pressione \"ENTER\""
-            + "\nTerminar: insira \"F\" + pressione \"ENTER\"");
-    }
-
-    public static int[] devolveIniciosPagina(String[][] deputados, int numeroDeputados) {
-        int numeroPaginas = devolveNumeroPaginas(numeroDeputados);
-        int[] iniciosPagina = new int[numeroPaginas];
-        int pagina = 0;
-        for (int i = 0; i < numeroPaginas; i++) {
-            iniciosPagina[i] = pagina;
-            pagina += MAX_LINHAS_PAGINA;
-        }
-        return iniciosPagina;
-    }
-
-    public static int devolveNumeroPaginas(int numeroDeputados) {
-        int numeroPaginas;
-        if (numeroDeputados == 0) {
-            numeroPaginas = 0;
-        } else {
-            numeroPaginas = (numeroDeputados / MAX_LINHAS_PAGINA) + 1;
-        }
-        return numeroPaginas;
     }
 }
