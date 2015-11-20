@@ -257,7 +257,7 @@ public class SAVOP {
     public static void alteraDadosDeputado(){
     int coluna = obtemColunaPesquisa();
     String input = obtemInput(coluna);
-    
+        
     
     
     

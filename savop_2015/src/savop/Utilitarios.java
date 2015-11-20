@@ -7,6 +7,7 @@ package savop;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 
@@ -16,13 +17,35 @@ import javax.swing.JFileChooser;
  */
 public class Utilitarios {
 
-    /**
-     *
-     */
     public static void calculaIdade() {
     }
 
-    ;
+    /*método que devolve um vetor de inteiros com ano, mes, dia nas posicoes 0,1,2*/
+    public static int[] devolveDataAtual() {
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int data[] = new int[3];
+        data[0] = year;
+        data[1] = month;
+        data[2] = day;
+        return data;
+    }
+
+    public static int[] converteData(String data) {
+        int[] dataConvertida = new int[3];
+        String ano = data.substring(0, 3);
+        String mes = data.substring(4, 5);
+        String dia = data.substring(6, 7);
+        int anoInt = Integer.parseInt(ano);
+        int mesInt = Integer.parseInt(mes);
+        int diaInt = Integer.parseInt(dia);
+        dataConvertida[0] = anoInt;
+        dataConvertida[1] = mesInt;
+        dataConvertida[2] = diaInt;
+        return dataConvertida;
+    }
 
     /**
      *
@@ -304,8 +327,7 @@ public class Utilitarios {
     }
 
     /**
-     * @param quantidadeEspacos 
-     * Método auxiliar para imprimir tantos espaços
+     * @param quantidadeEspacos Método auxiliar para imprimir tantos espaços
      * quantos o número passado como parâmetro.
      */
     public static void imprimeEspacos(int quantidadeEspacos) {
