@@ -232,4 +232,94 @@ public class SAVOP {
             } while (!acao.equalsIgnoreCase("f"));
         }
     }
+
+    /*Método auxiliar para encontrar o deputado para alterar. Devolve um vetor de inteiros cujos valores correspondem às posicões correspontes às linhas na matriz de deputados dado como parâmetro que satisfazem as condições da String de input dado como parâmetro, na coluna indicada como parâmetro.*/
+    public static int[] encontraDeputadoPorInput(String input, int coluna, String[][] deputados) {
+        int resultadosEncontrados = 0;
+        for (int i = 0; i < deputados.length; i++) {
+            if (deputados[i][coluna].contains(input)) {
+                resultadosEncontrados++;
+            }
+        }
+        int[] deputadosEncontrados = new int[resultadosEncontrados];
+        if (resultadosEncontrados != 0) {
+            resultadosEncontrados = 0;
+            for (int i = 0; i < deputados.length; i++) {
+                if (deputados[i][coluna].contains(input)) {
+                    deputadosEncontrados[resultadosEncontrados] = i;
+                    resultadosEncontrados++;
+                }
+            }
+        }
+        return deputadosEncontrados;
+    }
+
+    public static void alteraDadosDeputado(){
+    int coluna = obtemColunaPesquisa();
+    String input = obtemInput(coluna);
+    
+    
+    
+    
+    }
+    
+    
+    /*Método auxiliar para obter, através da interação com o utilizador, qual a coluna onde efetuar pesquisa. Devolve -1 caso o utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para nome, "2" para partido e "3" para data de nascimento*/
+    public static int obtemColunaPesquisa() {
+        int opcao;
+        do {
+            System.out.println("\nInsira qual o campo a pesquisar:"
+                + "\n1 - ID"
+                + "\n2 - Nome"
+                + "\n3 - Partido"
+                + "\n4 - Data Nascimento"
+                + "\n"
+                + "\n5 - Terminar");
+            Scanner ler = new Scanner(System.in);
+            opcao = ler.nextInt();
+            ler.nextLine();
+            switch (opcao) {
+                case 1:
+                    return 0;
+                case 2:
+                    return 1;
+                case 3:
+                    return 2;
+                case 4:
+                    return 3;
+                case 5:
+                    return -1;
+                default:
+                    System.out.println("Opção inválida!");
+                    break;
+            }
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+        return -1;
+    }
+
+    /*Método auxiliar para obter a string de input que o utilizar quer pesquisar*/
+    public static String obtemInput(int coluna) {
+        String campo = obtemNomeCampo(coluna);
+        System.out.println("\nInsira valor a pesquisar na coluna \"" + campo + "\":");
+        Scanner ler = new Scanner(System.in);
+        String input = ler.nextLine();
+        return input;
+    }
+
+    /*Método auxiliar para obter o campo correspondente à coluna. Devolve ID para 0, Nome para 1, Partido para 2 e Data Nascimento para 3. Devolve String vazia para qualquer outro valor.*/
+    public static String obtemNomeCampo(int coluna) {
+        switch (coluna) {
+            case 0:
+                return "ID";
+            case 1:
+                return "Nome";
+            case 2:
+                return "Partido";
+            case 3:
+                return "Data Nascimento";
+            default:
+                return "";
+        }
+    }
+
 }
