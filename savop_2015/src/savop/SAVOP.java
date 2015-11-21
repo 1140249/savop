@@ -203,7 +203,7 @@ public class SAVOP {
                     if (acao.isEmpty()) {
                         paginaAtual++;
                         if (paginaAtual <= totalPaginas) {
-                            int linhaInicial = iniciosPagina[paginaAtual-1];
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
                             int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA;
                             Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
                             for (int i = linhaInicial; i < linhaFinal; i++) {
@@ -229,11 +229,23 @@ public class SAVOP {
                         }
                     } else {
                         int acaoNum = Integer.parseInt(acao);
-                        if (acaoNum > 0 && acaoNum <= totalPaginas) {
+                        if (acaoNum > 0 && acaoNum < totalPaginas) {
                             paginaAtual = acaoNum;
                             Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
                             int linhaInicial = iniciosPagina[paginaAtual - 1];
-                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA - 1;
+                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA;
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
+                                System.out.println("");
+                                for (int j = 0; j < 4; j++) {
+                                    Utilitarios.imprimeConteudoLinha(i, j, deputados);
+                                }
+                            }
+                        } else if (acaoNum == totalPaginas) {
+                            System.out.println("Fim de listagem!");
+                            paginaAtual = acaoNum;
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
+                            int linhaFinal = numeroDeputados;
                             for (int i = linhaInicial; i < linhaFinal; i++) {
                                 System.out.println("");
                                 for (int j = 0; j < 4; j++) {
@@ -248,8 +260,8 @@ public class SAVOP {
             } while (!acao.equalsIgnoreCase("f"));
         }
     }
-
     /*Método auxiliar para encontrar o deputado para alterar. Devolve um vetor de inteiros cujos valores correspondem às posicões correspontes às linhas na matriz de deputados dado como parâmetro que satisfazem as condições da String de input dado como parâmetro, na coluna indicada como parâmetro.*/
+
     public static int[] encontraDeputadoPorInput(String input, int coluna, String[][] deputados) {
         int resultadosEncontrados = 0;
         for (int i = 0; i < deputados.length; i++) {
