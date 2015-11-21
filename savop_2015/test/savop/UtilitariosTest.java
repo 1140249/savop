@@ -213,20 +213,6 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of linhasVaziasFicheiro method, of class Utilitarios.
-     */
-    @Test
-    public void testLinhasVaziasFicheiro() throws Exception {
-        System.out.println("linhasVaziasFicheiro");
-        String ficheiro = "";
-        boolean[] expResult = null;
-        boolean[] result = Utilitarios.linhasVaziasFicheiro(ficheiro);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of imprimeConteudoLinha method, of class Utilitarios.
      */
     @Test

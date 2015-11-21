@@ -40,7 +40,9 @@ public class SAVOP {
         JFileChooser fc = new JFileChooser(userDir);
         Scanner ler = new Scanner(System.in);
         String[][] deputados = new String[230][4];
+        String[][] votacoes = new String[230][2];
         int numeroDeputados = 0;
+        int numeroVotacoes = 0;
         int opcao;
         do {
             System.out.println("\nInsira opção: "
@@ -71,10 +73,12 @@ public class SAVOP {
                     break;
                 case 4:
                     /*Ler de um ficheiro de texto selecionado pelo utilizador a informação referente a uma votação ocorrrida */
+                    numeroVotacoes = lerVotacoes(votacoes);
                     break;
                 case 5:
                     /*Visualizar informação da opção 4 mas ordenada alfabeticamente pelo código de identificação*/
-                    mostraVotacaoPaginado();
+                    String matrizOrdenada[][] = Utilitarios.devolveMatrizCompletaVotacaoOrdenada(deputados, votacoes);
+                    mostraVotacaoPaginado(matrizOrdenada, votacoes.length);
                     break;
                 case 6:
                     /*Visualizar no ECRÃ os resultados da última votação introduzida e guardar dados num ficheiro de texto cujo nome seja a palavra Resultados, concatenada com o título da votação*/
@@ -374,12 +378,12 @@ public class SAVOP {
                 return "";
         }
     }
-    
+
     /**
      * @param matrizCompletaOrdenada
-     * @param numeroVotos Método para mostrar a listagem de deputados na
-     * consola de uma forma que permita a paginação. Para alterar o número de
-     * elementos a mostrar por página, basta alterar o valor da constante
+     * @param numeroVotos Método para mostrar a listagem de deputados na consola
+     * de uma forma que permita a paginação. Para alterar o número de elementos
+     * a mostrar por página, basta alterar o valor da constante
      * MAX_LINHAS_PAGINA.
      */
     public static void mostraVotacaoPaginado(String[][] matrizCompletaOrdenada, int numeroVotos) {
@@ -465,6 +469,31 @@ public class SAVOP {
                 }
             } while (!acao.equalsIgnoreCase("f"));
         }
+    }
+
+    public static String obterFicheiro() {
+        System.out.println("Insira o nome do ficheiro: ");
+        Scanner ler = new Scanner(System.in);
+        String nomeFicheiro = ler.nextLine();
+        return nomeFicheiro;
+    }
+
+    public static String[][] guardarVotacoes(String[] votacoes) {
+        String[][] retorno = new String[230][2];
+        for (int i = 0; i < votacoes.length; i++) {
+            String ID = votacoes[i].substring(0, 4);
+            String voto = votacoes[i].substring(5);
+            retorno[i][0] = ID;
+            retorno[i][1] = voto;
+        }
+        return retorno;
+    }
+
+    public static int lerVotacoes(String[][] votacoes) throws FileNotFoundException {
+        String nomeFicheiro = obterFicheiro();
+        String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
+        votacoes = guardarVotacoes(conteudoFicheiro);
+        return conteudoFicheiro.length;
     }
 
 }
