@@ -58,7 +58,7 @@ public class SAVOP {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
                     numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, logErros, escrever);
-                    System.out.println("Ficheiro lido com sucesso!");
+                    System.out.println("Ficheiro deputados carregado com sucesso!");
                     break;
                 case 2:
                     /*Visualizar ficheiro deputados existente em memória (depois de iniciada a opção 1) usando paginação*/
@@ -70,6 +70,7 @@ public class SAVOP {
                 case 4:
                     /*Ler de um ficheiro de texto selecionado pelo utilizador a informação referente a uma votação ocorrrida */
                     numeroVotacoes = lerVotacoes(votacoes);
+                    System.out.println("Ficheiro votações carregado com sucesso!");
                     break;
                 case 5:
                     /*Visualizar informação da opção 4 mas ordenada alfabeticamente pelo código de identificação*/

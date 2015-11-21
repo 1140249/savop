@@ -68,7 +68,6 @@ public class Utilitarios {
      *
      */
     public static String[][] ordenaAlfaMatrizColuna(String[][] matriz) {
-
         boolean naoOrdenou = true;
         do {
             naoOrdenou = true;
