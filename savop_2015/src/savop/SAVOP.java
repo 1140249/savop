@@ -202,13 +202,29 @@ public class SAVOP {
                 if (!acao.equalsIgnoreCase("f")) {
                     if (acao.isEmpty()) {
                         paginaAtual++;
-                        int linhaInicial = iniciosPagina[paginaAtual - 1];
-                        int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA - 1;
-                        Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
-                        for (int i = linhaInicial; i < linhaFinal; i++) {
-                            System.out.println("");
-                            for (int j = 0; j < 4; j++) {
-                                Utilitarios.imprimeConteudoLinha(i, j, deputados);
+                        if (paginaAtual <= totalPaginas) {
+                            int linhaInicial = iniciosPagina[paginaAtual-1];
+                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA;
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
+                                if (i < numeroDeputados) {
+                                    System.out.println("");
+                                    for (int j = 0; j < 4; j++) {
+                                        Utilitarios.imprimeConteudoLinha(i, j, deputados);
+                                    }
+                                }
+                            }
+                        } else {
+                            paginaAtual--;
+                            System.out.println("Fim de listagem!");
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
+                            int linhaFinal = numeroDeputados;
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
+                                System.out.println("");
+                                for (int j = 0; j < 4; j++) {
+                                    Utilitarios.imprimeConteudoLinha(i, j, deputados);
+                                }
                             }
                         }
                     } else {
@@ -254,16 +270,12 @@ public class SAVOP {
         return deputadosEncontrados;
     }
 
-    public static void alteraDadosDeputado(){
-    int coluna = obtemColunaPesquisa();
-    String input = obtemInput(coluna);
-        
-    
-    
-    
+    public static void alteraDadosDeputado() {
+        int coluna = obtemColunaPesquisa();
+        String input = obtemInput(coluna);
+
     }
-    
-    
+
     /*Método auxiliar para obter, através da interação com o utilizador, qual a coluna onde efetuar pesquisa. Devolve -1 caso o utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para nome, "2" para partido e "3" para data de nascimento*/
     public static int obtemColunaPesquisa() {
         int opcao;
