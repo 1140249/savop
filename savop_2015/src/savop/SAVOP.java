@@ -282,10 +282,34 @@ public class SAVOP {
         return deputadosEncontrados;
     }
 
-    public static void alteraDadosDeputado() {
-        int coluna = obtemColunaPesquisa();
-        String input = obtemInput(coluna);
-
+    public static void alteraDadosDeputado(String[][] deputados) {
+        boolean terminar = true;
+        do {
+            int coluna = obtemColunaPesquisa();
+            String input = obtemInput(coluna);
+            int[] posicoesEncontradas = encontraDeputadoPorInput(input, coluna, deputados);
+            if (posicoesEncontradas.length == 0) {
+                String resposta;
+                System.out.println("\nNão existem nenhuns resultados que satisfaçam a sua pesquisa!");
+                do {
+                    System.out.println("\nPretende continuar a sua pesquisa? (S/N)");
+                    Scanner ler = new Scanner(System.in);
+                    resposta = ler.nextLine();
+                    if (resposta.equalsIgnoreCase("n")) {
+                        terminar = true;
+                    } else if (resposta.equalsIgnoreCase("s")) {
+                        terminar = false;
+                    } else {
+                        System.out.println("Resposta inválida! "
+                            + "\nPrima \"S\" para continuar pesquisa."
+                            + "\nPrima \"N\" para terminar pesquisa.");
+                    }
+                } while (resposta.equalsIgnoreCase("s") && resposta.equalsIgnoreCase("n"));
+            } else if (posicoesEncontradas.length == 1) {
+                
+            } else {
+            }
+        } while (terminar == false);
     }
 
     /*Método auxiliar para obter, através da interação com o utilizador, qual a coluna onde efetuar pesquisa. Devolve -1 caso o utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para nome, "2" para partido e "3" para data de nascimento*/
