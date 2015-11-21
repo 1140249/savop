@@ -185,20 +185,6 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of selecionarFicheiro method, of class Utilitarios.
-     */
-    @Test
-    public void testSelecionarFicheiro() throws Exception {
-        System.out.println("selecionarFicheiro");
-        JFileChooser fc = null;
-        String expResult = "";
-        String result = Utilitarios.selecionarFicheiro(fc);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of lerFicheiro method, of class Utilitarios.
      */
     @Test

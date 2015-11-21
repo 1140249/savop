@@ -21,7 +21,7 @@ public class SAVOP {
      * @param args the command line arguments
      */
     private final static int MAX_DEPUTADOS = 230;
-    private final static String FILE_DEPUTADOS = "Deputados230.txt";
+    private final static String FILE_DEPUTADOS = "Deputados.txt";
     private final static String PAGINA_HTML = "Pagina.html";
     public final static int MAX_LINHAS_PAGINA = 5;
     private final static String[] COD_REGIOES = {"AVE", "BEJ", "BRG", "BRA", "CAS", "COI", "EVO", "FAR", "GUA", "LEI", "LIS", "PTL", "PRT", "SAN", "SET", "VIA", "VRL", "VIS", "ACO", "MAD"};
@@ -33,11 +33,7 @@ public class SAVOP {
      */
     public static void main(String[] args) throws FileNotFoundException {
         File logErros = LogErros.criaFicheiroErros();
-        String nomeFicheiro = logErros.getAbsolutePath();
-        Formatter escrever = new Formatter(nomeFicheiro);
-
-        String userDir = System.getProperty("user.home");
-        JFileChooser fc = new JFileChooser(userDir);
+        Formatter escrever = new Formatter(logErros);
         Scanner ler = new Scanner(System.in);
         String[][] deputados = new String[230][4];
         String[][] votacoes = new String[230][2];
@@ -61,7 +57,7 @@ public class SAVOP {
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
-                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, fc, logErros, escrever);
+                    numeroDeputados = lerParaMemoriaFicheiroDeputados(deputados, logErros, escrever);
                     System.out.println("Ficheiro lido com sucesso!");
                     break;
                 case 2:
@@ -110,36 +106,29 @@ public class SAVOP {
      * "Deputados.txt". Devolve um inteiro que representa o número de deputados.
      * @throws FileNotFoundException
      */
-    public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, JFileChooser fc, File logErros, Formatter escrever) throws FileNotFoundException {
-        String ficheiro = Utilitarios.selecionarFicheiro(fc);
-        if (ficheiro.endsWith(FILE_DEPUTADOS)) {
-            String[] conteudoFicheiro = Utilitarios.lerFicheiro(ficheiro);
-            String[][] deputadosTemp = guardarDadosDeputados(conteudoFicheiro, logErros, escrever);
-            System.arraycopy(deputadosTemp, 0, deputados, 0, deputadosTemp.length);
-            return deputadosTemp.length;
-        } else {
-            System.out.println("Para leitura para a memória, o ficheiro selecionado tem de ter o nome \"Deputados.txt\".");
-            return 0;
-        }
+    public static int lerParaMemoriaFicheiroDeputados(String[][] deputados, File logErros, Formatter escrever) throws FileNotFoundException {
+        String[] conteudoFicheiro = Utilitarios.lerFicheiro(FILE_DEPUTADOS);
+        String[][] deputadosTemp = guardarDadosDeputados(conteudoFicheiro, logErros, escrever);
+        System.arraycopy(deputadosTemp, 0, deputados, 0, deputadosTemp.length);
+        return deputadosTemp.length;
     }
 
-    /**
-     *
-     * @param linhasFicheiro
-     * @param logErros
-     * @param escrever
-     * @return Método para passar os dados de uma linha presente no array de
-     * Strings dado como parâmetro para a matriz da memória principal
-     * "deputados". Para essa linha ser passada para a matriz, a mesma não pode
-     * ser vazia; tem de ter o número de colunas certas (4); na coluna do ID, o
-     * ID tem de ser válido (recorre-se ao método "validaID") e o ID dessa linha
-     * não pode já estar presente na matriz "deputados" (recorre-se ao método
-     * "validaIDUnico"). O return é a matriz de deputados. Qualquer erro numa
-     * linha do ficheiro que resulte na mesma em não ser passada é reportado num
-     * ficheiro "log_erros.txt"
-     * @throws FileNotFoundException
-     */
-    public static String[][] guardarDadosDeputados(String[] linhasFicheiro, File logErros, Formatter escrever) throws FileNotFoundException {
+/**
+ *
+ * @param linhasFicheiro
+ * @param logErros
+ * @param escrever
+ * @return Método para passar os dados de uma linha presente no array de Strings
+ * dado como parâmetro para a matriz da memória principal "deputados". Para essa
+ * linha ser passada para a matriz, a mesma não pode ser vazia; tem de ter o
+ * número de colunas certas (4); na coluna do ID, o ID tem de ser válido
+ * (recorre-se ao método "validaID") e o ID dessa linha não pode já estar
+ * presente na matriz "deputados" (recorre-se ao método "validaIDUnico"). O
+ * return é a matriz de deputados. Qualquer erro numa linha do ficheiro que
+ * resulte na mesma em não ser passada é reportado num ficheiro "log_erros.txt"
+ * @throws FileNotFoundException
+ */
+public static String[][] guardarDadosDeputados(String[] linhasFicheiro, File logErros, Formatter escrever) throws FileNotFoundException {
         int numLinhas = linhasFicheiro.length;
         String[][] deputados = new String[numLinhas][4];
         int linhasValidas = 0;

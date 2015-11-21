@@ -273,19 +273,20 @@ public class Utilitarios {
     }
 
     /**
-     *
+     * método inativado dado o método de leitura do ficheiro de deputados passar a requerer apenas o ficheiro local e não o ficheiro selecionado pelo utilizador
      * @param fc
      * @return
      * @throws FileNotFoundException Obtém o nome de um ficheiro selecionado
      * pelo utilizador através de um objeto do tipo JFileChooser. Retorna uma
      * String com esse nome.
      */
-    public static String selecionarFicheiro(JFileChooser fc) throws FileNotFoundException {
-        fc.setDialogTitle("Selecione ficheiro para leitura");
-        fc.showOpenDialog(fc);
-        return fc.getSelectedFile().getAbsolutePath();
-    }
-
+    /*
+     public static String selecionarFicheiro(JFileChooser fc) throws FileNotFoundException {
+     fc.setDialogTitle("Selecione ficheiro para leitura");
+     fc.showOpenDialog(fc);
+     return fc.getSelectedFile().getAbsolutePath();
+     }
+     */
     /**
      *
      * @param ficheiro

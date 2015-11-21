@@ -17,13 +17,25 @@ public class LogErros {
 
     /**
      * @return Método auxiliar para criar um objeto do tipo File cujo caminho do
-     * ficheiro é [home_utilizador]\Desktop\log_erros.txt. Devolve esse objeto.
+     * ficheiro é [home_utilizador]/log_erros.txt. Devolve esse objeto.
+     * Diferencia as barras de endereçamento para Windows e outros sistemas
+     * operativos.
      */
     public static File criaFicheiroErros() {
         String userDir = System.getProperty("user.home");
-        String nomeFicheiro = userDir.concat("\\Desktop\\log_erros.txt");
+        String sistemaOperativo = System.getProperty("os.name");
+        String nomeFicheiro;
+        if (sistemaOperativo.startsWith("Windows")) {
+            nomeFicheiro = userDir.concat("\\log_erros.txt");
+        } else {
+            nomeFicheiro = userDir.concat("/log_erros.txt");
+        }
         File logErros = new File(nomeFicheiro);
         return logErros;
+    }
+
+    public static String nomeSistemaOperativo () {
+        return System.getProperty("os.name");
     }
 
     /**
