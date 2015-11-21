@@ -7,6 +7,7 @@ package savop;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
@@ -66,17 +67,74 @@ public class Utilitarios {
     /**
      *
      */
-    public static void ordenaMatrizColuna() {
+    public static String[][] ordenaAlfaMatrizColuna(String[][] matriz) {
+
+        boolean naoOrdenou = true;
+        do {
+            naoOrdenou = true;
+            for (int i = 0; i < matriz.length - 1; i++) {
+                if (matriz[i][0].compareToIgnoreCase(matriz[i + 1][0]) > 0) {
+                    String aux1 = matriz[i][0];
+                    String aux2 = matriz[i][1];
+                    matriz[i][0] = matriz[i + 1][0];
+                    matriz[i][1] = matriz[i + 1][1];
+                    matriz[i + 1][0] = aux1;
+                    matriz[i + 1][1] = aux2;
+                    naoOrdenou = false;
+                }
+            }
+        } while (!naoOrdenou);
+        return matriz;
     }
 
     ;
   
-      /**
+    public static String[] devolveInfoVotosByID(String[][] deputados, String[][] matrizVotos, String id) {
+        int linha = 0;
+        String[] impressao = new String[4];
+        while (!id.equalsIgnoreCase(matrizVotos[linha][0]) && linha < matrizVotos.length) {
+            linha++;
+        }
+        impressao[0] = matrizVotos[linha][0];
+        impressao[3] = matrizVotos[linha][1];
+
+        linha = 0;
+        while (!id.equalsIgnoreCase(deputados[linha][0]) && linha < deputados.length) {
+            linha++;
+        }
+        String[] primeiroUltimo = obtemPrimeiroUltimoNome(deputados[linha][1]);
+        String nomePrimeiroUltimo = primeiroUltimo[0].concat(" ").concat(primeiroUltimo[1]);
+        impressao[1] = nomePrimeiroUltimo;
+        impressao[2] = deputados[linha][2];
+        return impressao;
+    }
+
+    public static String[][] devolveMatrizCompletaVotacaoOrdenada(String deputados[][], String[][] matrizVotos) {
+        String[][] matrizVotosOrdenada = ordenaAlfaMatrizColuna(matrizVotos);
+        String[][] matrizCompletaOrdenada = new String[matrizVotosOrdenada.length][4];
+        for (int i = 0; i < matrizVotos.length; i++) {
+            String[] resultadoLinha = devolveInfoVotosByID(deputados, matrizVotos, matrizVotosOrdenada[i][0]);
+            matrizCompletaOrdenada[i][0] = resultadoLinha[0];
+            matrizCompletaOrdenada[i][1] = resultadoLinha[1];
+            matrizCompletaOrdenada[i][2] = resultadoLinha[2];
+            matrizCompletaOrdenada[i][3] = resultadoLinha[3];
+        }
+        return matrizCompletaOrdenada;
+    }
+
+    public static String[] obtemPrimeiroUltimoNome(String nomeCompleto) {
+        String[] nomes = nomeCompleto.split(" ");
+        String primeiro = nomes[0];
+        String ultimo = nomes[nomes.length - 1];
+        String primeiroUltimo[] = {primeiro, ultimo};
+        return primeiroUltimo;
+    }
+
+    /**
      * @param paginaAtual
-     * @param totalPaginas 
-     * Método auxiliar que imprime um cabeçalho consoante o
-     * número da página atual e do número total de páginas dados como
-     * parâmetros para a paginação deputados.
+     * @param totalPaginas Método auxiliar que imprime um cabeçalho consoante o
+     * número da página atual e do número total de páginas dados como parâmetros
+     * para a paginação deputados.
      */
     public static void imprimeEcraCabecalhoDeputados(int paginaAtual, int totalPaginas) {
         System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
@@ -253,6 +311,7 @@ public class Utilitarios {
         String[] retorno = new String[numeroLinhasCarregadas];
         System.arraycopy(conteudo, 0, retorno, 0, numeroLinhasCarregadas);
         return retorno;
+
     }
 
     /**

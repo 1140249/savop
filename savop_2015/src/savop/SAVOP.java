@@ -74,6 +74,7 @@ public class SAVOP {
                     break;
                 case 5:
                     /*Visualizar informação da opção 4 mas ordenada alfabeticamente pelo código de identificação*/
+                    mostraVotacaoPaginado();
                     break;
                 case 6:
                     /*Visualizar no ECRÃ os resultados da última votação introduzida e guardar dados num ficheiro de texto cujo nome seja a palavra Resultados, concatenada com o título da votação*/
@@ -282,12 +283,16 @@ public class SAVOP {
         return deputadosEncontrados;
     }
 
-    public static void alteraDadosDeputado(String[][] deputados) {
+    public static void mostraDeputadosDeListaLinhas(int[] posicoesEncontradas, String[][] deputados) {
+        for (int i = 0; i < posicoesEncontradas.length; i++) {
+            System.out.println("");
+        }
+
+    }
+
+    public static void selecionaDeputadoDeLista(String[][] deputados, int[] posicoesEncontradas) {
         boolean terminar = true;
         do {
-            int coluna = obtemColunaPesquisa();
-            String input = obtemInput(coluna);
-            int[] posicoesEncontradas = encontraDeputadoPorInput(input, coluna, deputados);
             if (posicoesEncontradas.length == 0) {
                 String resposta;
                 System.out.println("\nNão existem nenhuns resultados que satisfaçam a sua pesquisa!");
@@ -306,7 +311,7 @@ public class SAVOP {
                     }
                 } while (resposta.equalsIgnoreCase("s") && resposta.equalsIgnoreCase("n"));
             } else if (posicoesEncontradas.length == 1) {
-                
+
             } else {
             }
         } while (terminar == false);
@@ -367,6 +372,98 @@ public class SAVOP {
                 return "Data Nascimento";
             default:
                 return "";
+        }
+    }
+    
+    /**
+     * @param matrizCompletaOrdenada
+     * @param numeroVotos Método para mostrar a listagem de deputados na
+     * consola de uma forma que permita a paginação. Para alterar o número de
+     * elementos a mostrar por página, basta alterar o valor da constante
+     * MAX_LINHAS_PAGINA.
+     */
+    public static void mostraVotacaoPaginado(String[][] matrizCompletaOrdenada, int numeroVotos) {
+        int paginaAtual = 1;
+        int totalPaginas = Utilitarios.devolveNumeroPaginas(numeroVotos);
+        if (totalPaginas == 0) {
+            System.out.println("\nNão existem dados para mostrar. Faça uma leitura prévia de dados (Opção 1 do menu principal) através de um ficheiro válido e com elementos válidos.");
+        } else {
+            System.out.println("\nTotal de páginas: " + totalPaginas);
+            System.out.println("Total de resultados por página: " + MAX_LINHAS_PAGINA);
+            int[] iniciosPagina = Utilitarios.devolveIniciosPagina(matrizCompletaOrdenada, numeroVotos);
+            String acao;
+            int inicPrimeira = 0;
+            int limPrimeira = MAX_LINHAS_PAGINA - 1;
+            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+            for (int i = inicPrimeira; i <= limPrimeira; i++) {
+                System.out.println("");
+                for (int j = 0; j < 4; j++) {
+                    Utilitarios.imprimeConteudoLinha(i, j, matrizCompletaOrdenada);
+                }
+            }
+            do {
+                Utilitarios.imprimeInstrucoes();
+                Scanner ler = new Scanner(System.in);
+                acao = ler.nextLine();
+                if (!acao.equalsIgnoreCase("f")) {
+                    if (acao.isEmpty()) {
+                        paginaAtual++;
+                        if (paginaAtual <= totalPaginas) {
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
+                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA;
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
+                                if (i < numeroVotos) {
+                                    System.out.println("");
+                                    for (int j = 0; j < 4; j++) {
+                                        Utilitarios.imprimeConteudoLinha(i, j, matrizCompletaOrdenada);
+                                    }
+                                }
+                            }
+                        } else {
+                            paginaAtual--;
+                            System.out.println("Fim de listagem!");
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
+                            int linhaFinal = numeroVotos;
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
+                                System.out.println("");
+                                for (int j = 0; j < 4; j++) {
+                                    Utilitarios.imprimeConteudoLinha(i, j, matrizCompletaOrdenada);
+                                }
+                            }
+                        }
+                    } else {
+                        int acaoNum = Integer.parseInt(acao);
+                        if (acaoNum > 0 && acaoNum < totalPaginas) {
+                            paginaAtual = acaoNum;
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
+                            int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA;
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
+                                System.out.println("");
+                                for (int j = 0; j < 4; j++) {
+                                    Utilitarios.imprimeConteudoLinha(i, j, matrizCompletaOrdenada);
+                                }
+                            }
+                        } else if (acaoNum == totalPaginas) {
+                            System.out.println("Fim de listagem!");
+                            paginaAtual = acaoNum;
+                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            int linhaInicial = iniciosPagina[paginaAtual - 1];
+                            int linhaFinal = numeroVotos;
+                            for (int i = linhaInicial; i < linhaFinal; i++) {
+                                System.out.println("");
+                                for (int j = 0; j < 4; j++) {
+                                    Utilitarios.imprimeConteudoLinha(i, j, matrizCompletaOrdenada);
+                                }
+                            }
+                        } else {
+                            System.out.println("Número de página inválido!");
+                        }
+                    }
+                }
+            } while (!acao.equalsIgnoreCase("f"));
         }
     }
 
