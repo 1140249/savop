@@ -390,7 +390,7 @@ public class SAVOP {
             String acao;
             int inicPrimeira = 0;
             int limPrimeira = MAX_LINHAS_PAGINA - 1;
-            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+            Utilitarios.imprimeEcraCabecalhoVotacoes(paginaAtual, totalPaginas);
             for (int i = inicPrimeira; i <= limPrimeira; i++) {
                 System.out.println("");
                 for (int j = 0; j < 4; j++) {
@@ -419,7 +419,7 @@ public class SAVOP {
                         } else {
                             paginaAtual--;
                             System.out.println("Fim de listagem!");
-                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            Utilitarios.imprimeEcraCabecalhoVotacoes(paginaAtual, totalPaginas);
                             int linhaInicial = iniciosPagina[paginaAtual - 1];
                             int linhaFinal = numeroVotos;
                             for (int i = linhaInicial; i < linhaFinal; i++) {
@@ -433,7 +433,7 @@ public class SAVOP {
                         int acaoNum = Integer.parseInt(acao);
                         if (acaoNum > 0 && acaoNum < totalPaginas) {
                             paginaAtual = acaoNum;
-                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            Utilitarios.imprimeEcraCabecalhoVotacoes(paginaAtual, totalPaginas);
                             int linhaInicial = iniciosPagina[paginaAtual - 1];
                             int linhaFinal = linhaInicial + MAX_LINHAS_PAGINA;
                             for (int i = linhaInicial; i < linhaFinal; i++) {
@@ -445,7 +445,7 @@ public class SAVOP {
                         } else if (acaoNum == totalPaginas) {
                             System.out.println("Fim de listagem!");
                             paginaAtual = acaoNum;
-                            Utilitarios.imprimeEcraCabecalhoDeputados(paginaAtual, totalPaginas);
+                            Utilitarios.imprimeEcraCabecalhoVotacoes(paginaAtual, totalPaginas);
                             int linhaInicial = iniciosPagina[paginaAtual - 1];
                             int linhaFinal = numeroVotos;
                             for (int i = linhaInicial; i < linhaFinal; i++) {

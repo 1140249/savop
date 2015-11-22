@@ -151,6 +151,18 @@ public class Utilitarios {
     }
 
     /**
+     * @param paginaAtual
+     * @param totalPaginas Método auxiliar que imprime um cabeçalho consoante o
+     * número da página atual e do número total de páginas dados como parâmetros
+     * para a paginação votações.
+     */
+    public static void imprimeEcraCabecalhoVotacoes(int paginaAtual, int totalPaginas) {
+        System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
+        System.out.println("\n|| ID    || NOME                          || PARTIDO || VOTO        ||\n"
+            + "----------------------------------------------------------------------");
+    }
+
+    /**
      * Método auxiliar que faz a impressão das instruções presentes na paginação
      * de deputados.
      */
