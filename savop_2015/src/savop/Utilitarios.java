@@ -67,40 +67,39 @@ public class Utilitarios {
     /**
      *
      */
-    public static String[][] ordenaAlfaMatrizColuna(String[][] matriz) {
+    public static String[][] ordenaAlfaMatrizVotacoesColuna(String[][] matrizVotacoes, int numeroVotacoes) {
         boolean naoOrdenou = true;
         do {
             naoOrdenou = true;
-            for (int i = 0; i < matriz.length - 1; i++) {
-                if (matriz[i][0].compareToIgnoreCase(matriz[i + 1][0]) > 0) {
-                    String aux1 = matriz[i][0];
-                    String aux2 = matriz[i][1];
-                    matriz[i][0] = matriz[i + 1][0];
-                    matriz[i][1] = matriz[i + 1][1];
-                    matriz[i + 1][0] = aux1;
-                    matriz[i + 1][1] = aux2;
+            for (int i = 0; i < numeroVotacoes - 1; i++) {
+                if (matrizVotacoes[i][0].compareToIgnoreCase(matrizVotacoes[i + 1][0]) > 0) {
+                    String aux1 = matrizVotacoes[i][0];
+                    String aux2 = matrizVotacoes[i][1];
+                    matrizVotacoes[i][0] = matrizVotacoes[i + 1][0];
+                    matrizVotacoes[i][1] = matrizVotacoes[i + 1][1];
+                    matrizVotacoes[i + 1][0] = aux1;
+                    matrizVotacoes[i + 1][1] = aux2;
                     naoOrdenou = false;
                 }
             }
         } while (!naoOrdenou);
-        return matriz;
+        return matrizVotacoes;
     }
 
-    ;
-  
     public static String[] devolveInfoVotosByID(String[][] deputados, String[][] matrizVotos, String id) {
         int linha = 0;
         String[] impressao = new String[4];
-        while (!id.equalsIgnoreCase(matrizVotos[linha][0]) && linha < matrizVotos.length) {
+        while (!id.equalsIgnoreCase(matrizVotos[linha][0]) && linha < SAVOP.NUMERO_VOTACOES) {
             linha++;
         }
         impressao[0] = matrizVotos[linha][0];
         impressao[3] = matrizVotos[linha][1];
 
         linha = 0;
-        while (!id.equalsIgnoreCase(deputados[linha][0]) && linha < deputados.length) {
+        while (!id.equalsIgnoreCase(deputados[linha][0]) && linha < SAVOP.NUMERO_DEPUTADOS) {
             linha++;
         }
+       
         String[] primeiroUltimo = obtemPrimeiroUltimoNome(deputados[linha][1]);
         String nomePrimeiroUltimo = primeiroUltimo[0].concat(" ").concat(primeiroUltimo[1]);
         impressao[1] = nomePrimeiroUltimo;
@@ -109,7 +108,7 @@ public class Utilitarios {
     }
 
     public static String[][] devolveMatrizCompletaVotacaoOrdenada(String deputados[][], String[][] matrizVotos) {
-        String[][] matrizVotosOrdenada = ordenaAlfaMatrizColuna(matrizVotos);
+        String[][] matrizVotosOrdenada = ordenaAlfaMatrizVotacoesColuna(matrizVotos, SAVOP.NUMERO_VOTACOES);
         String[][] matrizCompletaOrdenada = new String[matrizVotosOrdenada.length][4];
         for (int i = 0; i < matrizVotos.length; i++) {
             String[] resultadoLinha = devolveInfoVotosByID(deputados, matrizVotos, matrizVotosOrdenada[i][0]);
@@ -123,8 +122,18 @@ public class Utilitarios {
 
     public static String[] obtemPrimeiroUltimoNome(String nomeCompleto) {
         String[] nomes = nomeCompleto.split(" ");
-        String primeiro = nomes[0];
-        String ultimo = nomes[nomes.length - 1];
+        String primeiro;
+        String ultimo;
+        if (nomes.length == 0) {
+            primeiro = "";
+            ultimo = "";
+        } else if (nomes.length == 1) {
+            primeiro = nomes[0];
+            ultimo = "";
+        } else {
+        primeiro = nomes[0];
+        ultimo = nomes[nomes.length-1];
+        }
         String primeiroUltimo[] = {primeiro, ultimo};
         return primeiroUltimo;
     }
@@ -272,7 +281,10 @@ public class Utilitarios {
     }
 
     /**
-     * método inativado dado o método de leitura do ficheiro de deputados passar a requerer apenas o ficheiro local e não o ficheiro selecionado pelo utilizador
+     * método inativado dado o método de leitura do ficheiro de deputados passar
+     * a requerer apenas o ficheiro local e não o ficheiro selecionado pelo
+     * utilizador
+     *
      * @param fc
      * @return
      * @throws FileNotFoundException Obtém o nome de um ficheiro selecionado

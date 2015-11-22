@@ -5,6 +5,7 @@
  */
 package savop;
 
+import java.util.Arrays;
 import javax.swing.JFileChooser;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -98,7 +99,6 @@ public class UtilitariosTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
 
     /**
      * Test of imprimeEcraCabecalhoDeputados method, of class Utilitarios.
@@ -225,17 +225,71 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of ordenaAlfaMatrizColuna method, of class Utilitarios.
+     * Test of ordenaAlfaMatrizVotacoesColuna method, of class Utilitarios.
      */
     @Test
-    public void testOrdenaAlfaMatrizColuna() {
+    public void testOrdenaAlfaMatrizVotacoesColuna() {
         System.out.println("ordenaAlfaMatrizColuna");
-        String[][] matriz = {{"c","3"},{"b","2"},{"a","1"}};
-        String[][] expResult = {{"a","1"},{"b","2"},{"c","3"}};
-        String[][] result = Utilitarios.ordenaAlfaMatrizColuna(matriz);
+        String[][] matriz = {{"c", "3"}, {"b", "2"}, {"a", "1"}};
+        String[][] expResult = {{"a", "1"}, {"b", "2"}, {"c", "3"}};
+        String[][] result = Utilitarios.ordenaAlfaMatrizVotacoesColuna(matriz, SAVOP.NUMERO_VOTACOES);
         assertArrayEquals(expResult, result);
     }
 
+    /**
+     * Test of devolveInfoVotosByID method, of class Utilitarios.
+     */
+    @Test
+    public void testDevolveInfoVotosByID() {
+        System.out.println("devolveInfoVotosByID");
+        String[][] deputados = null;
+        String[][] matrizVotos = null;
+        String id = "";
+        String[] expResult = null;
+        String[] result = Utilitarios.devolveInfoVotosByID(deputados, matrizVotos, id);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
+    /**
+     * Test of devolveMatrizCompletaVotacaoOrdenada method, of class
+     * Utilitarios.
+     */
+    @Test
+    public void testDevolveMatrizCompletaVotacaoOrdenada() {
+        System.out.println("devolveMatrizCompletaVotacaoOrdenada");
+        String[][] deputados = null;
+        String[][] matrizVotos = null;
+        String[][] expResult = null;
+        String[][] result = Utilitarios.devolveMatrizCompletaVotacaoOrdenada(deputados, matrizVotos);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of obtemPrimeiroUltimoNome method, of class Utilitarios.
+     */
+    @Test
+    public void testObtemPrimeiroUltimoNome() {
+        System.out.println("obtemPrimeiroUltimoNome");
+        String nomeCompleto = "Jorge Silva Gomes";
+        String[] expResult = {"Jorge", "Gomes"};
+        String[] result = Utilitarios.obtemPrimeiroUltimoNome(nomeCompleto);
+        assertArrayEquals(expResult, result);
+    }
+
+    /**
+     * Test of linhasVaziasFicheiro method, of class Utilitarios.
+     */
+    @Test
+    public void testLinhasVaziasFicheiro() throws Exception {
+        System.out.println("linhasVaziasFicheiro");
+        String ficheiro = "test_file";
+        boolean[] expResult = {false, true, true, false};
+        boolean[] result = Utilitarios.linhasVaziasFicheiro(ficheiro);
+        Assert.assertTrue(Arrays.equals(expResult, result));
+    }
 
 }
