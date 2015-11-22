@@ -110,7 +110,7 @@ public class Utilitarios {
     public static String[][] devolveMatrizCompletaVotacaoOrdenada(String deputados[][], String[][] matrizVotos) {
         String[][] matrizVotosOrdenada = ordenaAlfaMatrizVotacoesColuna(matrizVotos, SAVOP.NUMERO_VOTACOES);
         String[][] matrizCompletaOrdenada = new String[matrizVotosOrdenada.length][4];
-        for (int i = 0; i < matrizVotos.length; i++) {
+        for (int i = 0; i < SAVOP.NUMERO_VOTACOES; i++) {
             String[] resultadoLinha = devolveInfoVotosByID(deputados, matrizVotos, matrizVotosOrdenada[i][0]);
             matrizCompletaOrdenada[i][0] = resultadoLinha[0];
             matrizCompletaOrdenada[i][1] = resultadoLinha[1];

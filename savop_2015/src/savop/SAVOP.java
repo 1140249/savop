@@ -58,12 +58,8 @@ public class SAVOP {
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
-                    int tamanho = Utilitarios.linhasVaziasFicheiro("teste_linhas_vazias.txt").length;
-                    System.out.println(tamanho);
                     NUMERO_DEPUTADOS = lerParaMemoriaFicheiroDeputados(deputados, logErros, escrever);
-
                     System.out.println("Ficheiro deputados carregado com sucesso!");
-
                     break;
                 case 2:
                     /*Visualizar ficheiro deputados existente em memória (depois de iniciada a opção 1) usando paginação*/
@@ -474,10 +470,10 @@ public class SAVOP {
         return nomeFicheiro;
     }
 
-    public static String[][] guardarVotacoes(String[] votacoes) {
+    public static String[][] guardarVotacoes(String[] votacoes, int numeroVotos) {
         String[][] retorno = new String[230][2];
-        for (int i = 0; i < votacoes.length; i++) {
-            String ID = votacoes[i].substring(0, 4);
+        for (int i = 0; i < numeroVotos; i++) {
+            String ID = votacoes[i].substring(0, 5);
             String voto = votacoes[i].substring(5);
             retorno[i][0] = ID;
             retorno[i][1] = voto;
@@ -488,7 +484,7 @@ public class SAVOP {
     public static int lerVotacoes(String[][] votacoes) throws FileNotFoundException {
         String nomeFicheiro = obterFicheiro();
         String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
-        System.arraycopy(guardarVotacoes(conteudoFicheiro), 0, votacoes, 0, conteudoFicheiro.length);
+        System.arraycopy(guardarVotacoes(conteudoFicheiro,conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
         return conteudoFicheiro.length;
     }
 
