@@ -40,6 +40,7 @@ public class SAVOP {
         String[][] deputados = new String[230][4];
         String[][] votacoes = new String[230][2];
         int opcao;
+
         do {
             System.out.println("\nInsira opção: "
                 + "\n1 - Ler ficheiro Deputados e guardar na memória principal"
@@ -57,8 +58,12 @@ public class SAVOP {
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
+                    int tamanho = Utilitarios.linhasVaziasFicheiro("teste_linhas_vazias.txt").length;
+                    System.out.println(tamanho);
                     NUMERO_DEPUTADOS = lerParaMemoriaFicheiroDeputados(deputados, logErros, escrever);
+
                     System.out.println("Ficheiro deputados carregado com sucesso!");
+
                     break;
                 case 2:
                     /*Visualizar ficheiro deputados existente em memória (depois de iniciada a opção 1) usando paginação*/

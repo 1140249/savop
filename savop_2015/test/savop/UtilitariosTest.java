@@ -286,7 +286,7 @@ public class UtilitariosTest {
     @Test
     public void testLinhasVaziasFicheiro() throws Exception {
         System.out.println("linhasVaziasFicheiro");
-        String ficheiro = "test_file";
+        String ficheiro = "teste_linhas_vazias.txt";
         boolean[] expResult = {false, true, true, false};
         boolean[] result = Utilitarios.linhasVaziasFicheiro(ficheiro);
         Assert.assertTrue(Arrays.equals(expResult, result));

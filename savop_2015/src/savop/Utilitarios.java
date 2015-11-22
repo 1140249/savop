@@ -99,7 +99,7 @@ public class Utilitarios {
         while (!id.equalsIgnoreCase(deputados[linha][0]) && linha < SAVOP.NUMERO_DEPUTADOS) {
             linha++;
         }
-       
+
         String[] primeiroUltimo = obtemPrimeiroUltimoNome(deputados[linha][1]);
         String nomePrimeiroUltimo = primeiroUltimo[0].concat(" ").concat(primeiroUltimo[1]);
         impressao[1] = nomePrimeiroUltimo;
@@ -131,8 +131,8 @@ public class Utilitarios {
             primeiro = nomes[0];
             ultimo = "";
         } else {
-        primeiro = nomes[0];
-        ultimo = nomes[nomes.length-1];
+            primeiro = nomes[0];
+            ultimo = nomes[nomes.length - 1];
         }
         String primeiroUltimo[] = {primeiro, ultimo};
         return primeiroUltimo;
@@ -341,6 +341,7 @@ public class Utilitarios {
         int totalLinhas = 0;
         while (ler1.hasNextLine()) {
             totalLinhas++;
+            ler1.nextLine();
         }
         ler1.close();
         Scanner ler2 = new Scanner(new File(ficheiro));
@@ -355,7 +356,6 @@ public class Utilitarios {
             }
             linha++;
         }
-        totalLinhas++;
         return linhasVazias;
     }
 
