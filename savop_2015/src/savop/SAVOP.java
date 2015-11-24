@@ -257,67 +257,80 @@ public class SAVOP {
             } while (!acao.equalsIgnoreCase("f"));
         }
     }
-    /*Método auxiliar para encontrar o deputado para alterar. Devolve um vetor de inteiros cujos valores correspondem às posicões correspontes às linhas na matriz de deputados dado como parâmetro que satisfazem as condições da String de input dado como parâmetro, na coluna indicada como parâmetro.*/
 
-    public static int[] encontraDeputadoPorInput(String input, int coluna, String[][] deputados) {
-        int resultadosEncontrados = 0;
-        for (int i = 0; i < deputados.length; i++) {
-            if (deputados[i][coluna].contains(input)) {
-                resultadosEncontrados++;
-            }
-        }
-        int[] deputadosEncontrados = new int[resultadosEncontrados];
-        if (resultadosEncontrados != 0) {
-            resultadosEncontrados = 0;
-            for (int i = 0; i < deputados.length; i++) {
-                if (deputados[i][coluna].contains(input)) {
-                    deputadosEncontrados[resultadosEncontrados] = i;
-                    resultadosEncontrados++;
-                }
-            }
-        }
-        return deputadosEncontrados;
-    }
-
-    public static void mostraDeputadosDeListaLinhas(int[] posicoesEncontradas, String[][] deputados) {
-        for (int i = 0; i < posicoesEncontradas.length; i++) {
-            System.out.println("");
-        }
-
-    }
-
-    public static void selecionaDeputadoDeLista(String[][] deputados, int[] posicoesEncontradas) {
-        boolean terminar = true;
+    public static void alteraDados() {
+        String[][] deputados = {{"", ""}};
+        int linhaDeputado = -1;
+        boolean continuaPesquisa = false;
         do {
-            if (posicoesEncontradas.length == 0) {
-                String resposta;
-                System.out.println("\nNão existem nenhuns resultados que satisfaçam a sua pesquisa!");
-                do {
-                    System.out.println("\nPretende continuar a sua pesquisa? (S/N)");
-                    Scanner ler = new Scanner(System.in);
-                    resposta = ler.nextLine();
-                    if (resposta.equalsIgnoreCase("n")) {
-                        terminar = true;
-                    } else if (resposta.equalsIgnoreCase("s")) {
-                        terminar = false;
-                    } else {
-                        System.out.println("Resposta inválida! "
-                            + "\nPrima \"S\" para continuar pesquisa."
-                            + "\nPrima \"N\" para terminar pesquisa.");
-                    }
-                } while (resposta.equalsIgnoreCase("s") && resposta.equalsIgnoreCase("n"));
-            } else if (posicoesEncontradas.length == 1) {
-
+            String idDeputado = obtemInput();
+            int linha = encontraDeputadoPorID(idDeputado, deputados, NUMERO_DEPUTADOS);
+            if (linha == -1) {
+                System.out.println("Não foi encontrado nenhum registo com o ID fornecido. Pretende fazer nova pesquisa? (S/N)");
+                Scanner ler = new Scanner(System.in);
+                String resposta = ler.nextLine();
+                if (resposta.equalsIgnoreCase("s")) {
+                    continuaPesquisa = true;
+                } else if (resposta.equalsIgnoreCase("n")) {
+                    System.out.println("Pesquisa de deputado terminada!");
+                } else {
+                    System.out.println("Inseriu opção inválida! Insira \"S\"+Enter ou \"N\"+Enter");
+                }
             } else {
+                linhaDeputado = linha;
+                continuaPesquisa = true;
             }
-        } while (terminar == false);
+
+        } while (continuaPesquisa);
+        if (linhaDeputado == -1) {
+            System.out.println("Opção de alteração de dados de deputado terminada!");
+        } else {
+            System.out.println("Dados atuais do deputado:");
+            Utilitarios.imprimeEcraCabecalhoDeputados(1, 1);
+            for (int i = 0; i < 4; i++) {
+                Utilitarios.imprimeConteudoLinha(linhaDeputado, i, deputados);
+            };
+        }
+    }
+   /**TODO     
+        boolean continuaAlterar=false;
+        do {
+            int colunaAlterar = obtemColunaAlterar();
+            switch(colunaAlterar){
+                case -1:
+                    System.out.println("Alteração de dados terminada!");
+                case 0:
+                    
+                    
+            }
+        }
+    }
+*/
+    public static String obtemInput() {
+        System.out.println("Insira qual o ID do deputado que pretende alterar:");
+        Scanner ler = new Scanner(System.in);
+        String input = ler.nextLine();
+        return input;
     }
 
-    /*Método auxiliar para obter, através da interação com o utilizador, qual a coluna onde efetuar pesquisa. Devolve -1 caso o utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para nome, "2" para partido e "3" para data de nascimento*/
-    public static int obtemColunaPesquisa() {
+    /*Método para encontrar qual o índice da linha na matriz de deputados que corresponde ao ID dado como parâmetro. Caso não encontrem, retorna -1*/
+    public static int encontraDeputadoPorID(String id, String[][] deputados, int numDeputados) {
+        int posicao = 0;
+        while (!id.equalsIgnoreCase(deputados[posicao][0]) && posicao < SAVOP.NUMERO_DEPUTADOS) {
+            posicao++;
+        }
+        if (posicao == (SAVOP.NUMERO_DEPUTADOS - 1)) {
+            return -1;
+        } else {
+            return posicao;
+        }
+    }
+
+    /*Método auxiliar para obter, através da interação com o utilizador, qual a coluna onde efetuar alterações. Devolve -1 caso o utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para nome, "2" para partido e "3" para data de nascimento*/
+    public static int obtemColunaAlterar() {
         int opcao;
         do {
-            System.out.println("\nInsira qual o campo a pesquisar:"
+            System.out.println("\nInsira qual o campo a alterar:"
                 + "\n1 - ID"
                 + "\n2 - Nome"
                 + "\n3 - Partido"
@@ -484,7 +497,7 @@ public class SAVOP {
     public static int lerVotacoes(String[][] votacoes) throws FileNotFoundException {
         String nomeFicheiro = obterFicheiro();
         String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
-        System.arraycopy(guardarVotacoes(conteudoFicheiro,conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
+        System.arraycopy(guardarVotacoes(conteudoFicheiro, conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
         return conteudoFicheiro.length;
     }
 
