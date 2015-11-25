@@ -199,7 +199,7 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of imprimeConteudoLinha method, of class Utilitarios.
+     * Test of imprimeConteudoCelula method, of class Utilitarios.
      */
     @Test
     public void testImprimeConteudoLinha() {
@@ -207,7 +207,7 @@ public class UtilitariosTest {
         int linha = 0;
         int coluna = 0;
         String[][] deputados = null;
-        Utilitarios.imprimeConteudoLinha(linha, coluna, deputados);
+        Utilitarios.imprimeConteudoCelula(linha, coluna, deputados);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

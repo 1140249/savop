@@ -374,13 +374,13 @@ public class Utilitarios {
     /**
      * @param linha
      * @param coluna
-     * @param deputados Método que imprime para o ecrã o conteúdo da linha dada
-     * como parâmetro no formato adequado para a coluna, dada como parâmetro,
-     * que representa. Este método é útil para apresentar de uma forma correta o
-     * conteúdo da matriz deputados quando a mesma é apresentada na opção 2,
-     * mostrar conteúdo paginado.
+     * @param deputados Método que imprime para o ecrã o conteúdo da linha e
+     * coluna dada como parâmetro no formato adequado da coluna, dada como
+     * parâmetro. Este método é útil para apresentar de uma forma correta o
+     * conteúdo da matriz deputados alinhado com as tabulações do cabeçalho do
+     * mesmo.
      */
-    public static void imprimeConteudoLinha(int linha, int coluna, String[][] deputados) {
+    public static void imprimeConteudoCelula(int linha, int coluna, String[][] deputados) {
         int quantidadeEspacos;
         switch (coluna) {
             case 0:
@@ -417,5 +417,105 @@ public class Utilitarios {
         for (int i = 0; i < quantidadeEspacos; i++) {
             System.out.printf(" ");
         }
+    }
+
+    /*Método auxiliar que devolve true para sim, false para não, consoante a resposta do utilizador à oergunta fornecida como parâmetro*/
+    public static boolean confirmaSimNao(String pergunta) {
+        String resposta;
+        do {
+            System.out.println(pergunta + " (S/N)");
+            Scanner ler = new Scanner(System.in);
+            resposta = ler.nextLine();
+            if (resposta.equalsIgnoreCase("s")) {
+                return true;
+            } else if (resposta.equalsIgnoreCase("n")) {
+                return false;
+            } else {
+                System.out.println("Inseriu opção inválida! Insira \"S\"+Enter ou \"N\"+Enter");
+            }
+        } while (!resposta.equalsIgnoreCase("s") && !resposta.equalsIgnoreCase("n"));
+        return true;
+    }
+
+    /*Método auxiliar que devolve a resposta do utilizador numa String, a uma pergunta enviada como parâmetro*/
+    public static String obtemInput(String pergunta) {
+        System.out.println(pergunta);
+        Scanner ler = new Scanner(System.in);
+        String input = ler.nextLine();
+        return input;
+    }
+
+    /*Método auxiliar para obter o campo correspondente à coluna. Devolve ID para 0, Nome para 1, Partido para 2 e Data Nascimento para 3. Devolve String vazia para qualquer outro valor.*/
+    public static String obtemNomeCampoDeputados(int coluna) {
+        switch (coluna) {
+            case 0:
+                return "ID";
+            case 1:
+                return "Nome";
+            case 2:
+                return "Partido";
+            case 3:
+                return "Data Nascimento";
+            default:
+                return "";
+        }
+    }
+
+    /*Método auxiliar para obter o valor a ser pesquisado na coluna inserida como parâmetro*/
+    public static String obtemValorPesquisa(int coluna) {
+        String campo = Utilitarios.obtemNomeCampoDeputados(coluna);
+        System.out.println("\nInsira valor a pesquisar na coluna \"" + campo + "\":");
+        Scanner ler = new Scanner(System.in);
+        String input = ler.nextLine();
+        return input;
+    }
+
+    /*Método para encontrar qual o índice da linha na matriz de deputados que corresponde ao ID dado como parâmetro. Caso não encontrem, retorna -1*/
+    public static int encontraDeputadoPorID(String id, String[][] deputados, int numDeputados) {
+        int posicao = 0;
+        while (!id.equalsIgnoreCase(deputados[posicao][0]) && posicao < SAVOP.NUMERO_DEPUTADOS) {
+            posicao++;
+        }
+        if (posicao == (SAVOP.NUMERO_DEPUTADOS - 1)) {
+            return -1;
+        } else {
+            return posicao;
+        }
+    }
+
+    /*Método auxiliar para obter, através da interação com o utilizador, qual a coluna onde efetuar alterações. Devolve -1 caso o utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para nome, "2" para partido e "3" para data de nascimento*/
+    public static int obtemColunaAlterarDeputados() {
+        int opcao;
+        do {
+            System.out.println("\n\nInsira opção, para o campo a alterar:"
+                + "\n1 - ID"
+                + "\n2 - Nome"
+                + "\n3 - Partido"
+                + "\n4 - Data Nascimento"
+                + "\n"
+                + "\n5 - Terminar");
+            Scanner ler = new Scanner(System.in);
+            while (!ler.hasNextInt()) {
+                ler.nextLine();
+                System.out.println("Opção inválida!");
+            }
+            opcao = ler.nextInt();
+            switch (opcao) {
+                case 1:
+                    return 0;
+                case 2:
+                    return 1;
+                case 3:
+                    return 2;
+                case 4:
+                    return 3;
+                case 5:
+                    return -1;
+                default:
+                    System.out.println("Opção inválida!");
+                    break;
+            }
+        } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
+        return -1;
     }
 }
