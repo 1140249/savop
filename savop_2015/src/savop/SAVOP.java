@@ -291,21 +291,69 @@ public class SAVOP {
                 Utilitarios.imprimeConteudoLinha(linhaDeputado, i, deputados);
             };
         }
-    }
-   /**TODO     
-        boolean continuaAlterar=false;
+
+        boolean continuaAlterar = false;
         do {
+            Scanner ler = new Scanner(System.in);
+            String novoValor;
             int colunaAlterar = obtemColunaAlterar();
-            switch(colunaAlterar){
+            switch (colunaAlterar) {
                 case -1:
                     System.out.println("Alteração de dados terminada!");
+                    continuaAlterar = true;
+                    break;
                 case 0:
-                    
-                    
+                    System.out.println("Insira novo ID:");
+                    novoValor = ler.nextLine();
+                    break;
+                case 1:
+                    System.out.println("Insira novo nome:");
+                    novoValor = ler.nextLine();
+                    break;
+                case 2:
+                    System.out.println("Insira novo partido:");
+                    novoValor = ler.nextLine();
+                    break;
+                case 3:
+                    System.out.println("Insira novo partido:");
+                    novoValor = ler.nextLine();
+                    break;
+                default:
+                    System.out.println("erro!");
             }
-        }
+            if (continuaAlterar) {
+                System.out.println("Novos dados do deputado:");
+                Utilitarios.imprimeEcraCabecalhoDeputados(1, 1);
+                for (int i = 0; i < 4; i++) {
+                    if (i != colunaAlterar) {
+                        Utilitarios.imprimeConteudoLinha(linhaDeputado, i, deputados);
+                    } else {
+                        Utilitarios.imprimeConteudoLinha(linhaDeputado, colunaAlterar, deputados);
+                    }
+                };
+                continuaAlterar=confirmaSimNao("Pretende gravar alterações?");
+/*TODO*/
+            }
+        } while (continuaAlterar);
     }
-*/
+
+    public static boolean confirmaSimNao(String pergunta) {
+        String resposta;
+        do {
+            System.out.println(pergunta + " (S/N)");
+            Scanner ler = new Scanner(System.in);
+            resposta = ler.nextLine();
+            if (resposta.equalsIgnoreCase("s")) {
+                return true;
+            } else if (resposta.equalsIgnoreCase("n")) {
+                return false;
+            } else {
+                System.out.println("Inseriu opção inválida! Insira \"S\"+Enter ou \"N\"+Enter");
+            }
+        } while (!resposta.equalsIgnoreCase("s") && !resposta.equalsIgnoreCase("n"));
+        return true;
+    }
+
     public static String obtemInput() {
         System.out.println("Insira qual o ID do deputado que pretende alterar:");
         Scanner ler = new Scanner(System.in);
