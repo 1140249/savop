@@ -274,9 +274,6 @@ public class SAVOP {
 
     }
 
-    /*TODO 
-   
-     verificar quando é inserido um id inválido. o programa dá erro.*/
     public static void alteraDadosDeputado(String[][] deputados, int numeroDeputados) {
         int linhaDeputado = -1;
         boolean continuaPesquisa = false;
@@ -287,6 +284,7 @@ public class SAVOP {
                 if (Utilitarios.confirmaSimNao("\nNão foi encontrado nenhum registo com o ID fornecido. Pretende fazer nova pesquisa?")) {
                     continuaPesquisa = true;
                 } else {
+                    continuaPesquisa = false;
                     System.out.println("\nPesquisa de deputado terminada!");
                 }
             } else {

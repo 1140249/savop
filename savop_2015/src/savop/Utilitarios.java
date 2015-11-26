@@ -469,7 +469,7 @@ public class Utilitarios {
         while (!id.equalsIgnoreCase(deputados[posicao][0]) && posicao < SAVOP.NUMERO_DEPUTADOS) {
             posicao++;
         }
-        if (posicao == (SAVOP.NUMERO_DEPUTADOS - 1)) {
+        if (posicao == (SAVOP.NUMERO_DEPUTADOS)) {
             return -1;
         } else {
             return posicao;
