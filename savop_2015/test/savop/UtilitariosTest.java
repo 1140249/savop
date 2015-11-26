@@ -6,7 +6,6 @@
 package savop;
 
 import java.util.Arrays;
-import javax.swing.JFileChooser;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -74,17 +73,6 @@ public class UtilitariosTest {
         int[] expResult = null;
         int[] result = Utilitarios.converteData(data);
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of mostraDataHoje method, of class Utilitarios.
-     */
-    @Test
-    public void testMostraDataHoje() {
-        System.out.println("mostraDataHoje");
-        Utilitarios.mostraDataHoje();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

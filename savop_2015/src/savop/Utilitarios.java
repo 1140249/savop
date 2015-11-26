@@ -51,14 +51,6 @@ public class Utilitarios {
     /**
      *
      */
-    public static void mostraDataHoje() {
-    }
-
-    ;
-
-    /**
-     *
-     */
     public static void reduzNome() {
     }
 
@@ -118,6 +110,7 @@ public class Utilitarios {
             matrizCompletaOrdenada[i][3] = resultadoLinha[3];
         }
         return matrizCompletaOrdenada;
+
     }
 
     public static String[] obtemPrimeiroUltimoNome(String nomeCompleto) {
