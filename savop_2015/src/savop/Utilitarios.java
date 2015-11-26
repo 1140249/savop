@@ -51,14 +51,6 @@ public class Utilitarios {
     /**
      *
      */
-    public static void reduzNome() {
-    }
-
-    ;
-
-    /**
-     *
-     */
     public static String[][] ordenaAlfaMatrizVotacoesColuna(String[][] matrizVotacoes, int numeroVotacoes) {
         boolean naoOrdenou = true;
         do {
@@ -510,5 +502,36 @@ public class Utilitarios {
             }
         } while (opcao != 1 && opcao != 2 && opcao != 3 && opcao != 4 && opcao != 5);
         return -1;
+    }
+
+    /*Método auxiliar que devolve um vetor de Strings com todos os partidos existentes na matriz de deputados*/
+    public static String[] retornaVetorPartidos(String[][] deputados, int numeroDeputados) {
+        String[] vazia = {};
+        if (numeroDeputados <= 0) {
+            return vazia;
+        }
+        String[] partidosAux = new String[numeroDeputados];
+        for (int i = 1; i < numeroDeputados; i++) {
+            partidosAux[i] = "vazio";
+        }
+        partidosAux[0] = deputados[0][2];
+        int contadorPartidos = 1;
+        for (int i = 1; i < numeroDeputados; i++) {
+            boolean novoPartido = true;
+            int j = 0;
+            while (novoPartido == true && j < contadorPartidos) {
+                if (deputados[i][2].equalsIgnoreCase(partidosAux[j])) {
+                    novoPartido = false;
+                }
+                j++;
+            }
+            if (novoPartido) {
+                partidosAux[contadorPartidos] = deputados[i][2];
+                contadorPartidos++;
+            }
+        }
+        String[] partidos = new String[contadorPartidos];
+        System.arraycopy(partidosAux, 0, partidos, 0, contadorPartidos);
+        return partidos;
     }
 }

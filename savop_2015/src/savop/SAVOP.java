@@ -32,6 +32,7 @@ public class SAVOP {
      * @throws FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
+
         File logErros = LogErros.criaFicheiroErros();
         Formatter escrever = new Formatter(logErros);
         Scanner ler = new Scanner(System.in);
@@ -83,17 +84,26 @@ public class SAVOP {
 
                 case 4:
                     /*Ler de um ficheiro de texto selecionado pelo utilizador a informação referente a uma votação ocorrrida */
-                    NUMERO_VOTACOES = lerVotacoes(votacoes);
-                    System.out.println("Ficheiro votações carregado com sucesso!");
-                    FICHEIRO_VOTACAO_CARREGADO = true;
+                    if (!FICHEIRO_DEPUTADOS_CARREGADO) {
+                        System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
+                    } else {
+                        NUMERO_VOTACOES = lerVotacoes(votacoes);
+                        System.out.println("Ficheiro votações carregado com sucesso!");
+                        FICHEIRO_VOTACAO_CARREGADO = true;
+                    }
                     break;
+
                 case 5:
                     /*Visualizar informação da opção 4 mas ordenada alfabeticamente pelo código de identificação*/
-                    if (!SAVOP.FICHEIRO_VOTACAO_CARREGADO) {
-                        System.out.println("Ficheiro de votações ainda não foi carregado! Selecione opção \"4 - Ler ficheiro de votação e carregá-lo na memória principal\" antes de utilizar a corrente opção.");
+                    if (!FICHEIRO_DEPUTADOS_CARREGADO) {
+                        System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
                     } else {
-                        String matrizOrdenada[][] = Utilitarios.devolveMatrizCompletaVotacaoOrdenada(deputados, votacoes);
-                        mostraVotacoesPaginado(matrizOrdenada, NUMERO_VOTACOES);
+                        if (!SAVOP.FICHEIRO_VOTACAO_CARREGADO) {
+                            System.out.println("Ficheiro de votações ainda não foi carregado! Selecione opção \"4 - Ler ficheiro de votação e carregá-lo na memória principal\" antes de utilizar a corrente opção.");
+                        } else {
+                            String matrizOrdenada[][] = Utilitarios.devolveMatrizCompletaVotacaoOrdenada(deputados, votacoes);
+                            mostraVotacoesPaginado(matrizOrdenada, NUMERO_VOTACOES);
+                        }
                     }
                     break;
                 case 6:
@@ -471,4 +481,25 @@ public class SAVOP {
             } while (!acao.equalsIgnoreCase("f"));
         }
     }
+
+    /*
+     public static String[][] retornaResultadoVotacoes(String[][] votacoes,
+     int numeroVotacoes) {
+     String[][] resultadosVotacoes = new String[][];
+
+     }
+     */
+    /*Método auxiliar que devolve uma String referente ao nome do partido do
+     * deputado com o ID enviado como parâmetro. Retorna uma String "-1", caso
+     * não seja encontrado nenhum deputado com o ID enviado como parâmetro
+     */
+    public static String retornaPartidoPorID(String id, String[][] deputados, int numeroDeputados) {
+        int linhaDoId = Utilitarios.encontraDeputadoPorID(id, deputados, numeroDeputados);
+        if (linhaDoId == -1) {
+            return "-1";
+        }
+        String partido = deputados[linhaDoId][2];
+        return partido;
+    }
+
 }
