@@ -23,6 +23,7 @@ public class SAVOP {
     public final static String[] COD_REGIOES = {"AVE", "BEJ", "BRG", "BRA", "CAS", "COI", "EVO", "FAR", "GUA", "LEI", "LIS", "PTL", "PRT", "SAN", "SET", "VIA", "VRL", "VIS", "ACO", "MAD"};
     public static int NUMERO_DEPUTADOS = 0;
     public static int NUMERO_VOTACOES = 0;
+    public static String[] PARTIDOS;
     public static boolean FICHEIRO_DEPUTADOS_CARREGADO = false;
     public static boolean FICHEIRO_VOTACAO_CARREGADO = false;
 
@@ -62,6 +63,7 @@ public class SAVOP {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
                     NUMERO_DEPUTADOS = lerDeputados(deputados, logErros, escrever);
+                    PARTIDOS = Utilitarios.retornaVetorPartidos(deputados,NUMERO_DEPUTADOS);
                     System.out.println("Ficheiro deputados carregado com sucesso!");
                     FICHEIRO_DEPUTADOS_CARREGADO = true;
                     break;
