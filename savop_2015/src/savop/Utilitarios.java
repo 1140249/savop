@@ -504,6 +504,19 @@ public class Utilitarios {
         return -1;
     }
 
+    /*Método auxiliar que devolve uma String referente ao nome do partido do
+     * deputado com o ID enviado como parâmetro. Retorna uma String "-1", caso
+     * não seja encontrado nenhum deputado com o ID enviado como parâmetro
+     */
+    public static String retornaPartidoPorID(String id, String[][] deputados, int numeroDeputados) {
+        int linhaDoId = Utilitarios.encontraDeputadoPorID(id, deputados, numeroDeputados);
+        if (linhaDoId == -1) {
+            return "-1";
+        }
+        String partido = deputados[linhaDoId][2];
+        return partido;
+    }
+
     /*Método auxiliar que devolve um vetor de Strings com todos os partidos existentes na matriz de deputados*/
     public static String[] retornaVetorPartidos(String[][] deputados, int numeroDeputados) {
         String[] vazia = {};
@@ -534,4 +547,20 @@ public class Utilitarios {
         System.arraycopy(partidosAux, 0, partidos, 0, contadorPartidos);
         return partidos;
     }
+
+    public static int[][] criarMatrizVaziaResultadosVotacoes(String vetorPartidos) {
+        int numeroPartidos = vetorPartidos.length();
+        int[][] matriz = new int[numeroPartidos][4];
+        for (int i = 0; i < numeroPartidos; i++) {
+            matriz[i][0] = i;
+        }
+        for (int i = 0; i < numeroPartidos; i++) {
+            for (int j = 1; j < 4; j++) {
+                matriz[i][j] = 0;
+            }
+        }
+        return matriz;
+    }
+    
+    
 }

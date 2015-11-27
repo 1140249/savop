@@ -1,7 +1,7 @@
 PRT01   ;  Jorge Silva Gomes ; PartidoA;   19701212
-PRT02   ;  Jorge Silva Gomes ; PartidoA;   19701212
-PRT03   ;  Jorge Silva Gomes ; PartidoA;   19701212
-PRT02   ;  Jorge Silva Gomes ; PartidoA;   19701212
+PRT02   ;  Jorge Silva Gomes ; PartidoB;   19701212
+PRT03   ;  Jorge Silva Gomes ; PartidoC;   19701212
+PRT02   ;  Jorge Silva Gomes ; PartidoD;   19701212
 PRT05   ;  Jorge Silva Gomes ; PartidoA;   19701212
 PRT06   ;  Jorge Silva Gomes ; PartidoA;   19701212
 PRT07   ;  Jorge Silva Gomes ; PartidoA;   19701212
@@ -36,8 +36,8 @@ PRT35   ;  Jorge Silva Gomes ; PartidoA;   19701212
 PRT36   ;  Jorge Silva Gomes ; PartidoA;   19701212
 PRT37   ;  Jorge Silva Gomes ; PartidoA;   19701212
 PRT38   ;  Jorge Silva Gomes ; PartidoA;   19701212
-PRT39   ;  Jorge Silva Gomes ; PartidoA;   19701212
-PRT40   ;  Jorge Silva Gomes ; PartidoA;   19701212
+PRT39   ;  Jorge Silva Gomes ; PartidoB;   19701212
+PRT40   ;  Jorge Silva Gomes ; PartidoB;   19701212
 PRT41   ;  Jorge Silva Gomes ; PartidoA;   19701212
 PRT42   ;  Jorge Silva Gomes ; PartidoA;   19701212
 PRT43   ;  Jorge Silva Gomes ; PartidoA;   19701212

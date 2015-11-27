@@ -63,7 +63,7 @@ public class SAVOP {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
                     NUMERO_DEPUTADOS = lerDeputados(deputados, logErros, escrever);
-                    PARTIDOS = Utilitarios.retornaVetorPartidos(deputados,NUMERO_DEPUTADOS);
+                    PARTIDOS = Utilitarios.retornaVetorPartidos(deputados, NUMERO_DEPUTADOS);
                     System.out.println("Ficheiro deputados carregado com sucesso!");
                     FICHEIRO_DEPUTADOS_CARREGADO = true;
                     break;
@@ -392,6 +392,15 @@ public class SAVOP {
         return retorno;
     }
 
+    /*
+    public static int[] validaMatrizVotacoes(String[] votacoes) {
+        for (int i = 0; i <votacoes.length;i++) {
+
+        }
+    }
+*/
+    
+    
     /**
      * @param matrizCompletaOrdenada
      * @param numeroVotos Método para mostrar a listagem de deputados na consola
@@ -485,23 +494,11 @@ public class SAVOP {
     }
 
     /*
+    TODO
      public static String[][] retornaResultadoVotacoes(String[][] votacoes,
      int numeroVotacoes) {
      String[][] resultadosVotacoes = new String[][];
 
      }
      */
-    /*Método auxiliar que devolve uma String referente ao nome do partido do
-     * deputado com o ID enviado como parâmetro. Retorna uma String "-1", caso
-     * não seja encontrado nenhum deputado com o ID enviado como parâmetro
-     */
-    public static String retornaPartidoPorID(String id, String[][] deputados, int numeroDeputados) {
-        int linhaDoId = Utilitarios.encontraDeputadoPorID(id, deputados, numeroDeputados);
-        if (linhaDoId == -1) {
-            return "-1";
-        }
-        String partido = deputados[linhaDoId][2];
-        return partido;
-    }
-
 }
