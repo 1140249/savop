@@ -42,15 +42,15 @@ public class SAVOP {
         int opcao;
         do {
             System.out.println("\nInsira opção: "
-                    + "\n1 - Ler ficheiro Deputados e guardar na memória principal"
-                    + "\n2 - Mostrar listagem Deputados paginada"
-                    + "\n3 - Alterar informação deputado"
-                    + "\n4 - Ler ficheiro de votação e carregá-lo na memória principal"
-                    + "\n5 - Visualisar votação em memória ordenada por ID deputado"
-                    + "\n6 - Visualizar votação em memória compilada por resultados e escrita dos mesmo para ficheiro"
-                    + "\n7 - Visualisar votação em memória compilada por faixa etária"
-                    + "\n8 - Visualizar votação em memória compilada por resultados em página HTML"
-                    + "\n9 - Terminar o programa"
+                + "\n1 - Ler ficheiro Deputados e guardar na memória principal"
+                + "\n2 - Mostrar listagem Deputados paginada"
+                + "\n3 - Alterar informação deputado"
+                + "\n4 - Ler ficheiro de votação e carregá-lo na memória principal"
+                + "\n5 - Visualisar votação em memória ordenada por ID deputado"
+                + "\n6 - Visualizar votação em memória compilada por resultados e escrita dos mesmo para ficheiro"
+                + "\n7 - Visualisar votação em memória compilada por faixa etária"
+                + "\n8 - Visualizar votação em memória compilada por resultados em página HTML"
+                + "\n9 - Terminar o programa"
             );
 
             while (!ler.hasNextInt()) {
@@ -90,12 +90,9 @@ public class SAVOP {
                         System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
                     } else {
                         NUMERO_VOTACOES = lerVotacoes(votacoes);
-                        System.out.println("Ficheiro votações carregado com sucesso!");
                         FICHEIRO_VOTACAO_CARREGADO = true;
-                        boolean errosVotacoes = mostraErrosVotacoes(votacoes, deputados);
-                        if(errosVotacoes){
-                            System.out.println("Dados incompatíveis entre dados dos deputados e dados das votações poderá resultar em erros nas funcionalidades 6, 7 e 8. Corriga os ID's assinalados no ficheiro de votação e volte a fazer a sua leitura e carregamento.");
-                        }
+                        eliminaErrosVotacoes(votacoes, deputados);
+                        System.out.println("Ficheiro votações carregado com sucesso!");
                     }
                     break;
 
@@ -503,16 +500,25 @@ public class SAVOP {
 
      }
      */
-    public static boolean mostraErrosVotacoes(String[][] votacoes, String [][]deputados) {
+    public static boolean eliminaErrosVotacoes(String[][] votacoes, String[][] deputados) {
         boolean erros = false;
-        for (int i = 0; i < SAVOP.NUMERO_VOTACOES; i++) {
-            String id = votacoes[i][0];
-            boolean valido = Utilitarios.validaID(id, SAVOP.COD_REGIOES);
-            valido = Utilitarios.validaIDUnico(id, deputados, SAVOP.NUMERO_DEPUTADOS);
-            if(!valido){
-                erros = true;
-                System.out.println("Erro para o ID "+ votacoes[i][0] +" da matriz de votações. Dados poderão ser inválidos, incompatíveis com a matriz de deputados carregada ou código de ID não compatível com códigos das regiões administrativas.");
+        int contador = 0;
+        String temp[][] = new String[SAVOP.NUMERO_VOTACOES][2];
+        while (contador < SAVOP.NUMERO_VOTACOES) {
+            String id = votacoes[contador][0];
+            boolean idValido = Utilitarios.validaID(id, SAVOP.COD_REGIOES);
+            if (idValido) {
+                idValido = Utilitarios.validaIDUnico(id, temp, contador);
+                temp[contador][0] = votacoes[contador][0];
             }
+            if (!idValido) {
+                System.out.println("Erro para o ID " + votacoes[contador][0] + " da matriz de votações. Linha removida!");
+                erros = true;
+                String[][] novaVotacoes = Utilitarios.removeLinhaMatriz(contador, votacoes);
+                System.arraycopy(novaVotacoes, 0, votacoes, 0, novaVotacoes.length);
+                SAVOP.NUMERO_VOTACOES--;
+            }
+            contador++;
         }
         return erros;
     }

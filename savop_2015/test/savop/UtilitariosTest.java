@@ -151,14 +151,12 @@ public class UtilitariosTest {
     @Test
     public void testValidaIDUnico() {
         System.out.println("validaIDUnico");
-        String id = "";
-        String[][] deputados = null;
-        int maxProcura = 0;
+        String id = "prt03";
+        String[][] deputados = {{"prt00","s"},{"prt02","s"},{"prt03","s"}};
+        int maxProcura = 3;
         boolean expResult = false;
         boolean result = Utilitarios.validaIDUnico(id, deputados, maxProcura);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

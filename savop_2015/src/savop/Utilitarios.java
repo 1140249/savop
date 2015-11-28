@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  * @author RicardoMoreira(11402
  */
 public class Utilitarios {
-
+    
     public static void calculaIdade() {
     }
 
@@ -33,7 +33,7 @@ public class Utilitarios {
         data[2] = day;
         return data;
     }
-
+    
     public static int[] converteData(String data) {
         int[] dataConvertida = new int[3];
         String ano = data.substring(0, 3);
@@ -69,7 +69,7 @@ public class Utilitarios {
         } while (!naoOrdenou);
         return matrizVotacoes;
     }
-
+    
     public static String[] devolveInfoVotosByID(String[][] deputados, String[][] matrizVotos, String id) {
         int linha = 0;
         String[] impressao = new String[4];
@@ -78,19 +78,19 @@ public class Utilitarios {
         }
         impressao[0] = matrizVotos[linha][0];
         impressao[3] = matrizVotos[linha][1];
-
+        
         linha = 0;
         while (!id.equalsIgnoreCase(deputados[linha][0]) && linha < SAVOP.NUMERO_DEPUTADOS) {
             linha++;
         }
-
+        
         String[] primeiroUltimo = obtemPrimeiroUltimoNome(deputados[linha][1]);
         String nomePrimeiroUltimo = primeiroUltimo[0].concat(" ").concat(primeiroUltimo[1]);
         impressao[1] = nomePrimeiroUltimo;
         impressao[2] = deputados[linha][2];
         return impressao;
     }
-
+    
     public static String[][] devolveMatrizCompletaVotacaoOrdenada(String deputados[][], String[][] matrizVotos) {
         String[][] matrizVotosOrdenada = ordenaAlfaMatrizVotacoesColuna(matrizVotos, SAVOP.NUMERO_VOTACOES);
         String[][] matrizCompletaOrdenada = new String[matrizVotosOrdenada.length][4];
@@ -102,9 +102,9 @@ public class Utilitarios {
             matrizCompletaOrdenada[i][3] = resultadoLinha[3];
         }
         return matrizCompletaOrdenada;
-
+        
     }
-
+    
     public static String[] obtemPrimeiroUltimoNome(String nomeCompleto) {
         String[] nomes = nomeCompleto.split(" ");
         String primeiro;
@@ -224,7 +224,7 @@ public class Utilitarios {
         if (numeroRegiao == COD_REGIOES.length) {
             idValido[1] = false;
         }
-
+        
         String[] algarismos = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         /*valida que o caracter 4 corresponde a um algarismo*/
         int posicao = 0;
@@ -320,7 +320,7 @@ public class Utilitarios {
         String[] retorno = new String[numeroLinhasCarregadas];
         System.arraycopy(conteudo, 0, retorno, 0, numeroLinhasCarregadas);
         return retorno;
-
+        
     }
 
     /**
@@ -391,7 +391,7 @@ public class Utilitarios {
             default:
                 System.out.println("Erro!");
         }
-
+        
     }
 
     /**
@@ -547,7 +547,7 @@ public class Utilitarios {
         System.arraycopy(partidosAux, 0, partidos, 0, contadorPartidos);
         return partidos;
     }
-
+    
     public static int[][] criarMatrizVaziaResultadosVotacoes(String vetorPartidos) {
         int numeroPartidos = vetorPartidos.length();
         int[][] matriz = new int[numeroPartidos][4];
@@ -561,6 +561,25 @@ public class Utilitarios {
         }
         return matriz;
     }
-    
-    
+
+    /*Método que retorna uma nova matriz igual à recebida como parâmetro mas sem a linha correspondente à linha recebida como parâmetro*/
+    public static String[][] removeLinhaMatriz(int linha, String[][] matriz) {
+        int colunas = matriz[0].length;
+        int linhas = matriz.length;
+        String[][] novaMatriz = new String[linhas - 1][colunas];
+        for (int i = 0; i < linha; i++) {
+            for (int j = 0; j < colunas; j++) {
+                novaMatriz[i][j] = matriz[i][j];
+            }
+        }
+        if (linha < linhas - 1) {
+            for (int i = linha + 1; i < linhas; i++) {
+                for (int j = 0; j < colunas; j++) {
+                    novaMatriz[i - 1][j] = matriz[i][j];
+                }
+            }
+        }
+        return novaMatriz;
+    }
+
 }
