@@ -278,4 +278,222 @@ public class UtilitariosTest {
         Assert.assertTrue(Arrays.equals(expResult, result));
     }
 
+    /**
+     * Test of imprimeEcraCabecalhoVotacoes method, of class Utilitarios.
+     */
+    @Test
+    public void testImprimeEcraCabecalhoVotacoes() {
+        System.out.println("imprimeEcraCabecalhoVotacoes");
+        int paginaAtual = 0;
+        int totalPaginas = 0;
+        Utilitarios.imprimeEcraCabecalhoVotacoes(paginaAtual, totalPaginas);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of imprimeConteudoCelula method, of class Utilitarios.
+     */
+    @Test
+    public void testImprimeConteudoCelula() {
+        System.out.println("imprimeConteudoCelula");
+        int linha = 0;
+        int coluna = 0;
+        String[][] deputados = null;
+        Utilitarios.imprimeConteudoCelula(linha, coluna, deputados);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of confirmaSimNao method, of class Utilitarios.
+     */
+    @Test
+    public void testConfirmaSimNao() {
+        System.out.println("confirmaSimNao");
+        String pergunta = "";
+        boolean expResult = false;
+        boolean result = Utilitarios.confirmaSimNao(pergunta);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of obtemInput method, of class Utilitarios.
+     */
+    @Test
+    public void testObtemInput() {
+        System.out.println("obtemInput");
+        String pergunta = "";
+        String expResult = "";
+        String result = Utilitarios.obtemInput(pergunta);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of obtemNomeCampoDeputados method, of class Utilitarios.
+     */
+    @Test
+    public void testObtemNomeCampoDeputados() {
+        System.out.println("obtemNomeCampoDeputados");
+        int coluna = 0;
+        String expResult = "";
+        String result = Utilitarios.obtemNomeCampoDeputados(coluna);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of obtemValorPesquisa method, of class Utilitarios.
+     */
+    @Test
+    public void testObtemValorPesquisa() {
+        System.out.println("obtemValorPesquisa");
+        int coluna = 0;
+        String expResult = "";
+        String result = Utilitarios.obtemValorPesquisa(coluna);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of encontraDeputadoPorID method, of class Utilitarios.
+     */
+    @Test
+    public void testEncontraDeputadoPorID() {
+        System.out.println("encontraDeputadoPorID");
+        String id = "";
+        String[][] deputados = null;
+        int numDeputados = 0;
+        int expResult = 0;
+        int result = Utilitarios.encontraDeputadoPorID(id, deputados, numDeputados);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of obtemColunaAlterarDeputados method, of class Utilitarios.
+     */
+    @Test
+    public void testObtemColunaAlterarDeputados() {
+        System.out.println("obtemColunaAlterarDeputados");
+        int expResult = 0;
+        int result = Utilitarios.obtemColunaAlterarDeputados();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of eliminaErrosVotacoes method, of class Utilitarios.
+     */
+    @Test
+    public void testEliminaErrosVotacoes() {
+        System.out.println("eliminaErrosVotacoes");
+        String[][] votacoes = null;
+        String[][] deputados = null;
+        boolean expResult = false;
+        boolean result = Utilitarios.eliminaErrosVotacoes(votacoes, deputados);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of retornaVetorPartidos method, of class Utilitarios.
+     */
+    @Test
+    public void testRetornaVetorPartidos() {
+        System.out.println("retornaVetorPartidos");
+        String[][] deputados = null;
+        int numeroDeputados = 0;
+        String[] expResult = null;
+        String[] result = Utilitarios.retornaVetorPartidos(deputados, numeroDeputados);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removeLinhaMatriz method, of class Utilitarios.
+     */
+    @Test
+    public void testRemoveLinhaMatriz() {
+        System.out.println("removeLinhaMatriz");
+        int linha = 0;
+        String[][] matriz = null;
+        String[][] expResult = null;
+        String[][] result = Utilitarios.removeLinhaMatriz(linha, matriz);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of retornaPartidoPorID method, of class Utilitarios.
+     */
+    @Test
+    public void testRetornaPartidoPorID() {
+        System.out.println("retornaPartidoPorID");
+        String id = "";
+        String[][] deputados = null;
+        int numeroDeputados = 0;
+        String[] partidos = null;
+        String expResult = "";
+        String result = Utilitarios.retornaPartidoPorID(id, deputados, numeroDeputados, partidos);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of criarMatrizVaziaResultadosVotacoes method, of class Utilitarios.
+     */
+    @Test
+    public void testCriarMatrizVaziaResultadosVotacoes() {
+        System.out.println("criarMatrizVaziaResultadosVotacoes");
+        String vetorPartidos = "";
+        int[][] expResult = null;
+        int[][] result = Utilitarios.criarMatrizVaziaResultadosVotacoes(vetorPartidos);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of retornaLinhaPartidoByNome method, of class Utilitarios.
+     */
+    @Test
+    public void testRetornaLinhaPartidoByNome() {
+        System.out.println("retornaLinhaPartidoByNome");
+        String nomePartido = "ABC";
+        String[] partidos = {"ab","cda","AB"};
+        Utilitarios instance = new Utilitarios();
+        int expResult = -1;
+        int result = instance.retornaLinhaPartidoByNome(nomePartido, partidos);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of calculaResultadosVotacoes method, of class Utilitarios.
+     */
+    @Test
+    public void testCalculaResultadosVotacoes() {
+        System.out.println("calculaResultadosVotacoes");
+        int[][] matrizResultadosVotacoes = null;
+        String[][] votacoes = null;
+        int numeroVotacoes = 0;
+        String[][] deputados = null;
+        int numeroDeputados = 0;
+        Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes, votacoes, numeroVotacoes, deputados, numeroDeputados);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

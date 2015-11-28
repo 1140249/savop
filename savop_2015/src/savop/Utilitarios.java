@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  * @author RicardoMoreira(11402
  */
 public class Utilitarios {
-    
+
     public static void calculaIdade() {
     }
 
@@ -33,7 +33,7 @@ public class Utilitarios {
         data[2] = day;
         return data;
     }
-    
+
     public static int[] converteData(String data) {
         int[] dataConvertida = new int[3];
         String ano = data.substring(0, 3);
@@ -69,7 +69,7 @@ public class Utilitarios {
         } while (!naoOrdenou);
         return matrizVotacoes;
     }
-    
+
     public static String[] devolveInfoVotosByID(String[][] deputados, String[][] matrizVotos, String id) {
         int linha = 0;
         String[] impressao = new String[4];
@@ -78,19 +78,19 @@ public class Utilitarios {
         }
         impressao[0] = matrizVotos[linha][0];
         impressao[3] = matrizVotos[linha][1];
-        
+
         linha = 0;
         while (!id.equalsIgnoreCase(deputados[linha][0]) && linha < SAVOP.NUMERO_DEPUTADOS) {
             linha++;
         }
-        
+
         String[] primeiroUltimo = obtemPrimeiroUltimoNome(deputados[linha][1]);
         String nomePrimeiroUltimo = primeiroUltimo[0].concat(" ").concat(primeiroUltimo[1]);
         impressao[1] = nomePrimeiroUltimo;
         impressao[2] = deputados[linha][2];
         return impressao;
     }
-    
+
     public static String[][] devolveMatrizCompletaVotacaoOrdenada(String deputados[][], String[][] matrizVotos) {
         String[][] matrizVotosOrdenada = ordenaAlfaMatrizVotacoesColuna(matrizVotos, SAVOP.NUMERO_VOTACOES);
         String[][] matrizCompletaOrdenada = new String[matrizVotosOrdenada.length][4];
@@ -102,9 +102,9 @@ public class Utilitarios {
             matrizCompletaOrdenada[i][3] = resultadoLinha[3];
         }
         return matrizCompletaOrdenada;
-        
+
     }
-    
+
     public static String[] obtemPrimeiroUltimoNome(String nomeCompleto) {
         String[] nomes = nomeCompleto.split(" ");
         String primeiro;
@@ -224,7 +224,7 @@ public class Utilitarios {
         if (numeroRegiao == COD_REGIOES.length) {
             idValido[1] = false;
         }
-        
+
         String[] algarismos = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         /*valida que o caracter 4 corresponde a um algarismo*/
         int posicao = 0;
@@ -320,7 +320,7 @@ public class Utilitarios {
         String[] retorno = new String[numeroLinhasCarregadas];
         System.arraycopy(conteudo, 0, retorno, 0, numeroLinhasCarregadas);
         return retorno;
-        
+
     }
 
     /**
@@ -391,7 +391,7 @@ public class Utilitarios {
             default:
                 System.out.println("Erro!");
         }
-        
+
     }
 
     /**
@@ -504,17 +504,28 @@ public class Utilitarios {
         return -1;
     }
 
-    /*Método auxiliar que devolve uma String referente ao nome do partido do
-     * deputado com o ID enviado como parâmetro. Retorna uma String "-1", caso
-     * não seja encontrado nenhum deputado com o ID enviado como parâmetro
-     */
-    public static String retornaPartidoPorID(String id, String[][] deputados, int numeroDeputados) {
-        int linhaDoId = Utilitarios.encontraDeputadoPorID(id, deputados, numeroDeputados);
-        if (linhaDoId == -1) {
-            return "-1";
+    /*Método que elimina da matriz de votacoes as linhas cujos IDs sejam inválidos. Avisa o utilizador das linhas removidas.*/
+    public static boolean eliminaErrosVotacoes(String[][] votacoes, String[][] deputados) {
+        boolean erros = false;
+        int contador = 0;
+        String temp[][] = new String[SAVOP.NUMERO_VOTACOES][2];
+        while (contador < SAVOP.NUMERO_VOTACOES) {
+            String id = votacoes[contador][0];
+            boolean idValido = Utilitarios.validaID(id, SAVOP.COD_REGIOES);
+            if (idValido) {
+                idValido = Utilitarios.validaIDUnico(id, temp, contador);
+                temp[contador][0] = votacoes[contador][0];
+            }
+            if (!idValido) {
+                System.out.println("Erro para o ID " + votacoes[contador][0] + " da matriz de votações. Linha removida!");
+                erros = true;
+                String[][] novaVotacoes = Utilitarios.removeLinhaMatriz(contador, votacoes);
+                System.arraycopy(novaVotacoes, 0, votacoes, 0, novaVotacoes.length);
+                SAVOP.NUMERO_VOTACOES--;
+            }
+            contador++;
         }
-        String partido = deputados[linhaDoId][2];
-        return partido;
+        return erros;
     }
 
     /*Método auxiliar que devolve um vetor de Strings com todos os partidos existentes na matriz de deputados*/
@@ -547,20 +558,6 @@ public class Utilitarios {
         System.arraycopy(partidosAux, 0, partidos, 0, contadorPartidos);
         return partidos;
     }
-    
-    public static int[][] criarMatrizVaziaResultadosVotacoes(String vetorPartidos) {
-        int numeroPartidos = vetorPartidos.length();
-        int[][] matriz = new int[numeroPartidos][4];
-        for (int i = 0; i < numeroPartidos; i++) {
-            matriz[i][0] = i;
-        }
-        for (int i = 0; i < numeroPartidos; i++) {
-            for (int j = 1; j < 4; j++) {
-                matriz[i][j] = 0;
-            }
-        }
-        return matriz;
-    }
 
     /*Método que retorna uma nova matriz igual à recebida como parâmetro mas sem a linha correspondente à linha recebida como parâmetro*/
     public static String[][] removeLinhaMatriz(int linha, String[][] matriz) {
@@ -580,6 +577,81 @@ public class Utilitarios {
             }
         }
         return novaMatriz;
+    }
+
+
+    /*Método auxiliar que devolve uma String referente ao nome do partido do
+     * deputado com o ID enviado como parâmetro. Retorna uma String "-1", caso
+     * não seja encontrado nenhum deputado com o ID enviado como parâmetro
+     */
+    public static String retornaPartidoPorID(String id, String[][] deputados, int numeroDeputados, String[] partidos) {
+        int linhaDoId = Utilitarios.encontraDeputadoPorID(id, deputados, numeroDeputados);
+        if (linhaDoId == -1) {
+            return "-1";
+        }
+        String partido = deputados[linhaDoId][2];
+        int contador = 0;
+        while (!partido.equalsIgnoreCase(partidos[contador]) && contador < partidos.length) {
+            contador++;
+        }
+        if (contador == partidos.length) {
+            return "-1";
+        }
+
+        partido = partidos[contador];
+        return partido;
+    }
+
+    /*Método para criar uma matriz de 4 colunas e x linhas, sendo x o total de partidos+1. A primeira coluna representa a posicao do partido no vetor partidos. É portanto preenchida com os valores 0,1,2, etc. até ao total de linhas antes da última linha. A última linha desta mesma coluna não tem significado nenhum a não ser para identificar que é o "total". Recebe assim o valor de -1. Todas as outras células recebem o valor de 0, sendo que a 2.ª coluna representa os votos a favor, a 3.ª coluna os contra e a 4.ª as asbstenções. A última linha de cada uma destas colunas representa o total da soma dos elementos respetivos da coluna, sendo portanto preenchida igualmente com o valor 0*/
+    public static int[][] criarMatrizVaziaResultadosVotacoes(String vetorPartidos) {
+        int numeroPartidos = vetorPartidos.length();
+        int[][] matriz = new int[numeroPartidos + 1][4];
+        for (int i = 0; i < numeroPartidos; i++) {
+            matriz[i][0] = i;
+        }
+        for (int i = 0; i < numeroPartidos; i++) {
+            for (int j = 1; j < 4; j++) {
+                matriz[i][j] = 0;
+            }
+        }
+        return matriz;
+    }
+
+    /*Método auxiliar para, através do nome do partido fornecido como parâmetro, encontrar qual a sua posição no vetor de vetor de partidos. caso não encontre o partido, devolve -1*/
+    public static int retornaLinhaPartidoByNome(String nomePartido, String[] partidos) {
+        int contador = 0;
+        while (contador < partidos.length && !nomePartido.equalsIgnoreCase(partidos[contador])) {
+            contador++;
+        }
+        if (contador == partidos.length) {
+            return -1;
+        }
+        return contador;
+    }
+
+    public static void calculaResultadosVotacoes(int[][] matrizResultadosVotacoes, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
+        for (int i = 0; i < numeroVotacoes; i++) {
+            String id = votacoes[i][0];
+            String voto = votacoes[i][1];
+            String partido = Utilitarios.retornaPartidoPorID(id, deputados, numeroDeputados, SAVOP.PARTIDOS);
+            int linhaPartido = Utilitarios.retornaLinhaPartidoByNome(partido, SAVOP.PARTIDOS);
+            int tipoVoto = tipoVoto(voto);
+        }
+    }
+
+    /*Método auxiliar que devolve 1 caso o voto sejam "s" (sim), devolve 2 caso o voto sejam "n" (nao), devolve 3 caso o voto sejam "a" (abstencão), devolve -1 caso o voto seja uma string diferente das anteriores*/
+    public static int tipoVoto(String voto) {
+        voto = voto.toLowerCase();
+        switch (voto) {
+            case "s":
+                return 1;
+            case "n":
+                return 2;
+            case "a":
+                return 3;
+            default:
+                return -1;
+        }
     }
 
 }

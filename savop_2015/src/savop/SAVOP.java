@@ -91,7 +91,7 @@ public class SAVOP {
                     } else {
                         NUMERO_VOTACOES = lerVotacoes(votacoes);
                         FICHEIRO_VOTACAO_CARREGADO = true;
-                        eliminaErrosVotacoes(votacoes, deputados);
+                        Utilitarios.eliminaErrosVotacoes(votacoes, deputados);
                         System.out.println("Ficheiro votações carregado com sucesso!");
                     }
                     break;
@@ -499,28 +499,7 @@ public class SAVOP {
      String[][] resultadosVotacoes = new String[][];
 
      }
+    
      */
-    public static boolean eliminaErrosVotacoes(String[][] votacoes, String[][] deputados) {
-        boolean erros = false;
-        int contador = 0;
-        String temp[][] = new String[SAVOP.NUMERO_VOTACOES][2];
-        while (contador < SAVOP.NUMERO_VOTACOES) {
-            String id = votacoes[contador][0];
-            boolean idValido = Utilitarios.validaID(id, SAVOP.COD_REGIOES);
-            if (idValido) {
-                idValido = Utilitarios.validaIDUnico(id, temp, contador);
-                temp[contador][0] = votacoes[contador][0];
-            }
-            if (!idValido) {
-                System.out.println("Erro para o ID " + votacoes[contador][0] + " da matriz de votações. Linha removida!");
-                erros = true;
-                String[][] novaVotacoes = Utilitarios.removeLinhaMatriz(contador, votacoes);
-                System.arraycopy(novaVotacoes, 0, votacoes, 0, novaVotacoes.length);
-                SAVOP.NUMERO_VOTACOES--;
-            }
-            contador++;
-        }
-        return erros;
-    }
-
+    
 }
