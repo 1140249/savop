@@ -635,11 +635,23 @@ public class Utilitarios {
             String voto = votacoes[i][1];
             String partido = Utilitarios.retornaPartidoPorID(id, deputados, numeroDeputados, SAVOP.PARTIDOS);
             int linhaPartido = Utilitarios.retornaLinhaPartidoByNome(partido, SAVOP.PARTIDOS);
-            int tipoVoto = tipoVoto(voto);
+            int colunaVoto = tipoVoto(voto);
+            matrizResultadosVotacoes[linhaPartido][colunaVoto]++;
         }
+        matrizResultadosVotacoes[numeroVotacoes][1] = somaColuna(matrizResultadosVotacoes, 1, 0, numeroVotacoes - 1);
+        matrizResultadosVotacoes[numeroVotacoes][2] = somaColuna(matrizResultadosVotacoes, 2, 0, numeroVotacoes - 1);
+        matrizResultadosVotacoes[numeroVotacoes][3] = somaColuna(matrizResultadosVotacoes, 3, 0, numeroVotacoes - 1);        
     }
 
+    public static int somaColuna(int[][] matriz, int coluna, int linhaInicio, int LinhaFim) {
+        int soma = 0;
+        for (int i = linhaInicio; i <= LinhaFim; i++) {
+            soma += matriz[coluna][i];
+        }
+        return soma;
+    }
     /*Método auxiliar que devolve 1 caso o voto sejam "s" (sim), devolve 2 caso o voto sejam "n" (nao), devolve 3 caso o voto sejam "a" (abstencão), devolve -1 caso o voto seja uma string diferente das anteriores*/
+
     public static int tipoVoto(String voto) {
         voto = voto.toLowerCase();
         switch (voto) {
