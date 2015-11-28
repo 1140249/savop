@@ -555,8 +555,26 @@ public class Utilitarios {
             }
         }
         String[] partidos = new String[contadorPartidos];
+
         System.arraycopy(partidosAux, 0, partidos, 0, contadorPartidos);
         return partidos;
+    }
+
+    /*Devolve um vetor de inteiros que contém a quantidade de deputados existentes de cada partido do vetor de pertidos enviado como parâmetro. A ordem dos resultados é a mesma da ordem do vetor de partidos*/
+    public static int[] contaTotalDeputadosPorPartido(String[] vetorPartidos, String[][] deputados) {
+        int totalPartidos = vetorPartidos.length;
+        int[] totalDeputadosPorPartido = new int[totalPartidos];
+        for (int i = 0; i < totalDeputadosPorPartido.length; i++) {
+            totalDeputadosPorPartido[i] = 0;
+        }
+        for (int i = 0; i < totalPartidos; i++) {
+            for (int j = 0; j < SAVOP.NUMERO_DEPUTADOS; i++) {
+                if (deputados[j][2].equalsIgnoreCase(vetorPartidos[i])) {
+                    totalDeputadosPorPartido[i]++;
+                }
+            }
+        }
+        return totalDeputadosPorPartido;
     }
 
     /*Método que retorna uma nova matriz igual à recebida como parâmetro mas sem a linha correspondente à linha recebida como parâmetro*/
@@ -640,7 +658,19 @@ public class Utilitarios {
         }
         matrizResultadosVotacoes[numeroVotacoes][1] = somaColuna(matrizResultadosVotacoes, 1, 0, numeroVotacoes - 1);
         matrizResultadosVotacoes[numeroVotacoes][2] = somaColuna(matrizResultadosVotacoes, 2, 0, numeroVotacoes - 1);
-        matrizResultadosVotacoes[numeroVotacoes][3] = somaColuna(matrizResultadosVotacoes, 3, 0, numeroVotacoes - 1);        
+        matrizResultadosVotacoes[numeroVotacoes][3] = somaColuna(matrizResultadosVotacoes, 3, 0, numeroVotacoes - 1);
+    }
+
+    public static void apresentaEcraResultadosVotacoes(int[][] matrizResultadosVotacoes) {
+
+        System.out.println("\nVotação de: " + SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO + "\n");
+
+        System.out.println("");
+
+    }
+
+    public static void apresentaLinhaResultados(int linha, int[][] matrizResultadosVotacoes) {
+
     }
 
     public static int somaColuna(int[][] matriz, int coluna, int linhaInicio, int LinhaFim) {

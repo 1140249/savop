@@ -26,6 +26,7 @@ public class SAVOP {
     public static String[] PARTIDOS;
     public static boolean FICHEIRO_DEPUTADOS_CARREGADO = false;
     public static boolean FICHEIRO_VOTACAO_CARREGADO = false;
+    public static String NOME_FICHEIRO_VOTACOES_CARREGADO;
 
     /**
      *
@@ -379,6 +380,7 @@ public class SAVOP {
         String nomeFicheiro = Utilitarios.obtemInput("Insira o nome do ficheiro:");
         String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
         System.arraycopy(guardarVotacoes(conteudoFicheiro, conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
+        SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO=nomeFicheiro;
         return conteudoFicheiro.length;
     }
 

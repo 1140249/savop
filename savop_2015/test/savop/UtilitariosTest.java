@@ -496,4 +496,73 @@ public class UtilitariosTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of contaTotalDeputadosPorPartido method, of class Utilitarios.
+     */
+    @Test
+    public void testContaTotalDeputadosPorPartido() {
+        System.out.println("contaTotalDeputadosPorPartido");
+        String[] vetorPartidos = {"a","b","c"};
+        String[][] deputados = {{"PRT01", "Jorge Silva Gomes", "a", "19701212"}, {"PRT02", "Jorge Silva Gomes", "b", "19701212"}, {"PRT03", "Jorge Silva Gomes", "a", "19701212"}, {"PRT04", "Jorge Silva Gomes", "b", "19701212"}, {"PRT05", "Jorge Silva Gomes", "c", "19701212"}, {"PRT06", "Jorge Silva Gomes", "b", "19701212"}, {"PRT07", "Jorge Silva Gomes", "c", "19701212"}, {"PRT08", "Jorge Silva Gomes", "c", "19701212"}, {"PRT09", "Jorge Silva Gomes", "a", "19701212"}, {"PRT10", "Jorge Silva Gomes", "b", "19701212"}};
+        int[] expResult = {4,3,3};
+        int[] result = Utilitarios.contaTotalDeputadosPorPartido(vetorPartidos, deputados);
+        assertArrayEquals(expResult, result);
+    }
+
+    /**
+     * Test of apresentaEcraResultadosVotacoes method, of class Utilitarios.
+     */
+    @Test
+    public void testApresentaEcraResultadosVotacoes() {
+        System.out.println("apresentaEcraResultadosVotacoes");
+        int[][] matrizResultadosVotacoes = null;
+        Utilitarios.apresentaEcraResultadosVotacoes(matrizResultadosVotacoes);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of apresentaLinhaResultados method, of class Utilitarios.
+     */
+    @Test
+    public void testApresentaLinhaResultados() {
+        System.out.println("apresentaLinhaResultados");
+        int linha = 0;
+        int[][] matrizResultadosVotacoes = null;
+        Utilitarios.apresentaLinhaResultados(linha, matrizResultadosVotacoes);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of somaColuna method, of class Utilitarios.
+     */
+    @Test
+    public void testSomaColuna() {
+        System.out.println("somaColuna");
+        int[][] matriz = null;
+        int coluna = 0;
+        int linhaInicio = 0;
+        int LinhaFim = 0;
+        int expResult = 0;
+        int result = Utilitarios.somaColuna(matriz, coluna, linhaInicio, LinhaFim);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of tipoVoto method, of class Utilitarios.
+     */
+    @Test
+    public void testTipoVoto() {
+        System.out.println("tipoVoto");
+        String voto = "";
+        int expResult = 0;
+        int result = Utilitarios.tipoVoto(voto);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }
