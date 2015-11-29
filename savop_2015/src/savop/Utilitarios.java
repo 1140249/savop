@@ -577,36 +577,22 @@ public class Utilitarios {
         return totalDeputadosPorPartido;
     }
 
+    /*Método para ordenar por número de deputados e, em caso de empate, por ordem alfabética, o vetor de partidos*/
     public static void ordenaVetorPartidosPorTotalDeputados(String[] vetorPartidos, String[][] deputados, int totalDeputados) {
-        int[] totalDeputadosPorPartidoOriginal = contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
-        int[] totalDeputadosPorPartidoCopia = contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
+        vetorPartidos = ordenaVetorAlfabeticamente(vetorPartidos);
+        int[] totalDeputadosPorPartido = contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
         int[] ordemCorreta = new int[vetorPartidos.length];
         int contaMaiores = 0;
-        while (contaMaiores <= vetorPartidos.length) {
+        while (contaMaiores < vetorPartidos.length) {
             int maior = -1;
             int posicao = -1;
-            for (int i = 0; i < totalDeputadosPorPartidoCopia.length; i++) {
-                if (totalDeputadosPorPartidoCopia[i] > maior) {
-                    maior = totalDeputadosPorPartidoCopia[i];
+            for (int i = 0; i < totalDeputadosPorPartido.length; i++) {
+                if (totalDeputadosPorPartido[i] > maior) {
+                    maior = totalDeputadosPorPartido[i];
                     posicao = i;
                 }
             }
-
-            boolean existeRepetidos = false;
-            for (int i = 0; i < totalDeputadosPorPartidoCopia.length; i++) {
-                int[] repetidos = new int[totalDeputadosPorPartidoCopia.length];
-                for (int j = 0; j < repetidos.length; j++) {
-                    repetidos[j] = -1;
-                }
-                if (maior == totalDeputadosPorPartidoCopia[i] && i != posicao) {
-                    repetidos[i] = i;
-                    existeRepetidos = true;
-                }
-            }
-            if (existeRepetidos) {
-
-            }
-            totalDeputadosPorPartidoCopia[posicao] = -1;
+            totalDeputadosPorPartido[posicao] = -1;
             ordemCorreta[contaMaiores] = posicao;
             contaMaiores++;
         }

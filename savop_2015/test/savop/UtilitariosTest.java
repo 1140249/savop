@@ -572,12 +572,10 @@ public class UtilitariosTest {
     @Test
     public void testOrdenaVetorPartidosPorTotalDeputados() {
         System.out.println("ordenaVetorPartidosPorTotalDeputados");
-        String[] vetorPartidos = null;
-        String[][] deputados = null;
-        int totalDeputados = 0;
+        String[] vetorPartidos = {"d","b","c","a"};
+        String[][] deputados = {{"PRT01", "Jorge Silva Gomes", "a", "19701212"}, {"PRT02", "Jorge Silva Gomes", "b", "19701212"}, {"PRT03", "Jorge Silva Gomes", "a", "19701212"}, {"PRT04", "Jorge Silva Gomes", "b", "19701212"}, {"PRT05", "Jorge Silva Gomes", "c", "19701212"}, {"PRT06", "Jorge Silva Gomes", "b", "19701212"}, {"PRT07", "Jorge Silva Gomes", "c", "19701212"}, {"PRT08", "Jorge Silva Gomes", "c", "19701212"}, {"PRT09", "Jorge Silva Gomes", "a", "19701212"}, {"PRT10", "Jorge Silva Gomes", "b", "19701212"}};
+        int totalDeputados = 10;
         Utilitarios.ordenaVetorPartidosPorTotalDeputados(vetorPartidos, deputados, totalDeputados);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

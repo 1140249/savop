@@ -65,6 +65,7 @@ public class SAVOP {
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
                     NUMERO_DEPUTADOS = lerDeputados(deputados, logErros, escrever);
                     PARTIDOS = Utilitarios.retornaVetorPartidos(deputados, NUMERO_DEPUTADOS);
+                    Utilitarios.ordenaVetorPartidosPorTotalDeputados(PARTIDOS, deputados, NUMERO_DEPUTADOS);
                     System.out.println("Ficheiro deputados carregado com sucesso!");
                     FICHEIRO_DEPUTADOS_CARREGADO = true;
                     break;
