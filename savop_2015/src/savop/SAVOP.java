@@ -114,8 +114,8 @@ public class SAVOP {
                     break;
                 case 6:
                     /*Visualizar no ECRÃ os resultados da última votação introduzida e guardar dados num ficheiro de texto cujo nome seja a palavra Resultados, concatenada com o título da votação*/
-                    matrizResultadosVotacoes=Utilitarios.criarMatrizVaziaResultadosVotacoes(PARTIDOS);
-                    Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes,votacoes,NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
+                    matrizResultadosVotacoes = Utilitarios.criarMatrizVaziaResultadosVotacoes(PARTIDOS);
+                    Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
                     apresentaEcraResultadosVotacoes(matrizResultadosVotacoes);
                     break;
                 case 7:
@@ -497,10 +497,29 @@ public class SAVOP {
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
             System.out.println("");
             for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
-                Utilitarios.imprimeConteudoCelulaVotos(i, j, matrizResultadosVotacoes);
+                Utilitarios.imprimeConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS);
+            }
+            if (i == matrizResultadosVotacoes.length - 2) {
+                System.out.println("");
             }
         }
         System.out.println("");
     }
 
+    /*TODO
+    public static File apresentaFicheiroResultadosVotacoes(int[][] matrizResultadosVotacoes) {
+        
+        System.out.println("\nVotação de: " + SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO + "\n");
+        for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
+            System.out.println("");
+            for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
+                Utilitarios.imprimeConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS);
+            }
+            if (i == matrizResultadosVotacoes.length - 2) {
+                System.out.println("");
+            }
+        }
+        System.out.println("");
+    }
+    */
 }

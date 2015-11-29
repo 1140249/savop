@@ -667,7 +667,7 @@ public class Utilitarios {
     }
 
     /*Método para criar uma matriz de 4 colunas e x linhas, sendo x o total de partidos+1. A primeira coluna representa a posicao do partido no vetor partidos. É portanto preenchida com os valores 0,1,2, etc. até ao total de linhas antes da última linha. A última linha desta mesma coluna não tem significado nenhum a não ser para identificar que é o "total". Recebe assim o valor de -1. Todas as outras células recebem o valor de 0, sendo que a 2.ª coluna representa os votos a favor, a 3.ª coluna os contra e a 4.ª as asbstenções. A última linha de cada uma destas colunas representa o total da soma dos elementos respetivos da coluna, sendo portanto preenchida igualmente com o valor 0*/
-    public static int[][] criarMatrizVaziaResultadosVotacoes(String [] vetorPartidos) {
+    public static int[][] criarMatrizVaziaResultadosVotacoes(String[] vetorPartidos) {
         int numeroPartidos = vetorPartidos.length;
         int[][] matriz = new int[numeroPartidos + 1][4];
         for (int i = 0; i < numeroPartidos; i++) {
@@ -702,17 +702,15 @@ public class Utilitarios {
             int colunaVoto = tipoVoto(voto);
             matrizResultadosVotacoes[linhaPartido][colunaVoto]++;
         }
-        matrizResultadosVotacoes[matrizResultadosVotacoes.length-1][1] = somaColuna(matrizResultadosVotacoes, 1, 0, matrizResultadosVotacoes.length-2);
-        matrizResultadosVotacoes[matrizResultadosVotacoes.length-1][2] = somaColuna(matrizResultadosVotacoes, 2, 0, matrizResultadosVotacoes.length-2);
-        matrizResultadosVotacoes[matrizResultadosVotacoes.length-1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length-2);
+        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][1] = somaColuna(matrizResultadosVotacoes, 1, 0, matrizResultadosVotacoes.length - 2);
+        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][2] = somaColuna(matrizResultadosVotacoes, 2, 0, matrizResultadosVotacoes.length - 2);
+        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
     }
-
-
 
     public static int somaColuna(int[][] matriz, int coluna, int linhaInicio, int LinhaFim) {
         int soma = 0;
         for (int i = linhaInicio; i <= LinhaFim; i++) {
-            soma += matriz[coluna][i];
+            soma += matriz[i][coluna];
         }
         return soma;
     }
@@ -741,32 +739,32 @@ public class Utilitarios {
      * conteúdo da matriz deputados alinhado com as tabulações do cabeçalho do
      * mesmo.
      */
-    public static void imprimeConteudoCelulaVotos(int linha, int coluna, int[][] votacoes) {
+    public static void imprimeConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos) {
         int quantidadeEspacos;
         switch (coluna) {
             case 0:
                 if (linha != (votacoes.length - 1)) {
-                    quantidadeEspacos = 3;
-                    imprimeEspacos(quantidadeEspacos);
                     System.out.printf(SAVOP.PARTIDOS[votacoes[linha][coluna]] + ";");
                 } else {
-                    quantidadeEspacos = 3;
-                    imprimeEspacos(quantidadeEspacos);
                     System.out.printf("Totais;");
                 }
                 break;
             case 1:
-                quantidadeEspacos = 3;
+                if (linha == (votacoes.length - 1)) {
+                    quantidadeEspacos = 14;
+                } else {
+                    quantidadeEspacos = 20 - (partidos[votacoes[linha][coluna - 1]].length());
+                }
                 imprimeEspacos(quantidadeEspacos);
                 System.out.printf("Votos a favor: " + votacoes[linha][coluna] + ";");
                 break;
             case 2:
-                quantidadeEspacos = 3;
+                quantidadeEspacos = 10 - (Integer.toString(votacoes[linha][coluna - 1]).length());
                 imprimeEspacos(quantidadeEspacos);
                 System.out.printf("Votos contra: " + votacoes[linha][coluna] + ";");
                 break;
             case 3:
-                quantidadeEspacos = 3;
+                quantidadeEspacos = 11 - (Integer.toString(votacoes[linha][coluna - 1]).length());
                 imprimeEspacos(quantidadeEspacos);
                 System.out.printf("Abstenções: " + votacoes[linha][coluna] + ".");
                 break;
