@@ -1,0 +1,4 @@
+
+A linha 4 é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.
+A linha 199 é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.
+A linha 228 é uma linha inválida, dado o ID desta linha já existir para outro deputado registado previamente.

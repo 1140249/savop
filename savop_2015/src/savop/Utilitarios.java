@@ -841,5 +841,28 @@ public class Utilitarios {
         }
         return nomeFicheiro;
     }
-
+    
+    public static void escreveHTMLConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
+        int quantidadeEspacos;
+        switch (coluna) {
+            case 0:
+                if (linha != (votacoes.length - 1)) {
+                    escreve.format("<td>"+SAVOP.PARTIDOS[votacoes[linha][coluna]]+";"+"</td>");
+                } else {
+                    escreve.format("<td>"+"Totais;"+"</td>");
+                }
+                break;
+            case 1:
+                escreve.format("<td>"+"Votos a favor: " + votacoes[linha][coluna] + ";"+"</td>");
+                break;
+            case 2:
+                escreve.format("<td>"+"Votos contra: " + votacoes[linha][coluna] + ";"+"</td>");
+                break;
+            case 3:
+                escreve.format("<td>"+"Abstenções: " + votacoes[linha][coluna] + "."+"</td>");
+                break;
+            default:
+                escreve.format("<td>"+"Erro!"+"</td>");
+        }
+    }
 }

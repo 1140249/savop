@@ -29,7 +29,7 @@ public class PaginaHTML {
         pag.format("<meta charset='utf-8'>%n");
         pag.format("<title>%s</title>%n", titulo);
         pag.format("</head>%n");
-        pag.format("<body>");
+        pag.format("<body>%n");
     }
 
     /**

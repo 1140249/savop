@@ -22,6 +22,9 @@ public class LogErros {
      * operativos.
      */
     public static File criaFicheiroErros() {
+        
+        /* código para colocar o ficheiro de log erros noutra localização qualquer que não a pasta src do programa. Aponta para a pasta home do utilizador. Código comentado devido ao objetivo ser colocar os ficheiros na src do programa*/
+        /*        
         String userDir = System.getProperty("user.home");
         String sistemaOperativo = System.getProperty("os.name");
         String nomeFicheiro;
@@ -30,7 +33,8 @@ public class LogErros {
         } else {
             nomeFicheiro = userDir.concat("/log_erros.txt");
         }
-        File logErros = new File(nomeFicheiro);
+        */
+        File logErros = new File("LogErros.txt");
         return logErros;
     }
 
