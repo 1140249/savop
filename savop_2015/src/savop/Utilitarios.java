@@ -561,14 +561,14 @@ public class Utilitarios {
     }
 
     /*Devolve um vetor de inteiros que contém a quantidade de deputados existentes de cada partido do vetor de pertidos enviado como parâmetro. A ordem dos resultados é a mesma da ordem do vetor de partidos*/
-    public static int[] contaTotalDeputadosPorPartido(String[] vetorPartidos, String[][] deputados) {
+    public static int[] contaTotalDeputadosPorPartido(String[] vetorPartidos, String[][] deputados, int totalDeputados) {
         int totalPartidos = vetorPartidos.length;
         int[] totalDeputadosPorPartido = new int[totalPartidos];
         for (int i = 0; i < totalDeputadosPorPartido.length; i++) {
             totalDeputadosPorPartido[i] = 0;
         }
         for (int i = 0; i < totalPartidos; i++) {
-            for (int j = 0; j < SAVOP.NUMERO_DEPUTADOS; i++) {
+            for (int j = 0; j < totalDeputados; j++) {
                 if (deputados[j][2].equalsIgnoreCase(vetorPartidos[i])) {
                     totalDeputadosPorPartido[i]++;
                 }
@@ -577,7 +577,69 @@ public class Utilitarios {
         return totalDeputadosPorPartido;
     }
 
+    public static void ordenaVetorPartidosPorTotalDeputados(String[] vetorPartidos, String[][] deputados, int totalDeputados) {
+        int[] totalDeputadosPorPartidoOriginal = contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
+        int[] totalDeputadosPorPartidoCopia = contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
+        int[] ordemCorreta = new int[vetorPartidos.length];
+        int contaMaiores = 0;
+        while (contaMaiores <= vetorPartidos.length) {
+            int maior = -1;
+            int posicao = -1;
+            for (int i = 0; i < totalDeputadosPorPartidoCopia.length; i++) {
+                if (totalDeputadosPorPartidoCopia[i] > maior) {
+                    maior = totalDeputadosPorPartidoCopia[i];
+                    posicao = i;
+                }
+            }
+
+            boolean existeRepetidos = false;
+            for (int i = 0; i < totalDeputadosPorPartidoCopia.length; i++) {
+                int[] repetidos = new int[totalDeputadosPorPartidoCopia.length];
+                for (int j = 0; j < repetidos.length; j++) {
+                    repetidos[j] = -1;
+                }
+                if (maior == totalDeputadosPorPartidoCopia[i] && i != posicao) {
+                    repetidos[i] = i;
+                    existeRepetidos = true;
+                }
+            }
+            if (existeRepetidos) {
+
+            }
+            totalDeputadosPorPartidoCopia[posicao] = -1;
+            ordemCorreta[contaMaiores] = posicao;
+            contaMaiores++;
+        }
+        String[] vetorPartidosOrdenado = new String[vetorPartidos.length];
+        for (int i = 0; i < ordemCorreta.length; i++) {
+            vetorPartidosOrdenado[i] = vetorPartidos[ordemCorreta[i]];
+        }
+        System.arraycopy(vetorPartidosOrdenado, 0, vetorPartidos, 0, vetorPartidos.length);
+    }
+
+    
+    /*Método auxiliar para ordenar um vetor por ordem alfabética crescente*/
+    public static String[] ordenaVetorAlfabeticamente(String[] vetor) {
+        int tamanhoVetor = vetor.length;
+        if (tamanhoVetor < 2) {
+            return vetor;
+        }
+        boolean alterou;
+        do {
+            alterou = false;
+            for (int i = tamanhoVetor - 1; i > 0; i--) {
+                if (vetor[i].compareToIgnoreCase(vetor[i - 1]) < 0) {
+                    String aux = vetor[i];
+                    vetor[i] = vetor[i - 1];
+                    vetor[i - 1] = aux;
+                    alterou = true;
+                }
+            }
+        } while (alterou);
+        return vetor;
+    }
     /*Método que retorna uma nova matriz igual à recebida como parâmetro mas sem a linha correspondente à linha recebida como parâmetro*/
+
     public static String[][] removeLinhaMatriz(int linha, String[][] matriz) {
         int colunas = matriz[0].length;
         int linhas = matriz.length;

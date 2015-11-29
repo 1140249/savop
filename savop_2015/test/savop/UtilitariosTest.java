@@ -502,10 +502,11 @@ public class UtilitariosTest {
     @Test
     public void testContaTotalDeputadosPorPartido() {
         System.out.println("contaTotalDeputadosPorPartido");
+        int totalDeputados = 10;
         String[] vetorPartidos = {"a","b","c"};
         String[][] deputados = {{"PRT01", "Jorge Silva Gomes", "a", "19701212"}, {"PRT02", "Jorge Silva Gomes", "b", "19701212"}, {"PRT03", "Jorge Silva Gomes", "a", "19701212"}, {"PRT04", "Jorge Silva Gomes", "b", "19701212"}, {"PRT05", "Jorge Silva Gomes", "c", "19701212"}, {"PRT06", "Jorge Silva Gomes", "b", "19701212"}, {"PRT07", "Jorge Silva Gomes", "c", "19701212"}, {"PRT08", "Jorge Silva Gomes", "c", "19701212"}, {"PRT09", "Jorge Silva Gomes", "a", "19701212"}, {"PRT10", "Jorge Silva Gomes", "b", "19701212"}};
-        int[] expResult = {4,3,3};
-        int[] result = Utilitarios.contaTotalDeputadosPorPartido(vetorPartidos, deputados);
+        int[] expResult = {3,4,3};
+        int[] result = Utilitarios.contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
         assertArrayEquals(expResult, result);
     }
 
@@ -563,6 +564,32 @@ public class UtilitariosTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of ordenaVetorPartidosPorTotalDeputados method, of class Utilitarios.
+     */
+    @Test
+    public void testOrdenaVetorPartidosPorTotalDeputados() {
+        System.out.println("ordenaVetorPartidosPorTotalDeputados");
+        String[] vetorPartidos = null;
+        String[][] deputados = null;
+        int totalDeputados = 0;
+        Utilitarios.ordenaVetorPartidosPorTotalDeputados(vetorPartidos, deputados, totalDeputados);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of ordenaVetorAlfabeticamente method, of class Utilitarios.
+     */
+    @Test
+    public void testOrdenaVetorAlfabeticamente() {
+        System.out.println("ordenaVetorAlfabeticamente");
+        String[] vetor = {"c","b","d","a"};
+        String[] expResult = {"a","b","c","d"};
+        String[] result = Utilitarios.ordenaVetorAlfabeticamente(vetor);
+        assertArrayEquals(expResult, result);
     }
 
 }
