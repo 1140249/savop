@@ -40,6 +40,7 @@ public class SAVOP {
         Scanner ler = new Scanner(System.in);
         String[][] deputados = new String[230][4];
         String[][] votacoes = new String[230][2];
+        int[][] matrizResultadosVotacoes;
         int opcao;
         do {
             System.out.println("\nInsira opção: "
@@ -113,6 +114,9 @@ public class SAVOP {
                     break;
                 case 6:
                     /*Visualizar no ECRÃ os resultados da última votação introduzida e guardar dados num ficheiro de texto cujo nome seja a palavra Resultados, concatenada com o título da votação*/
+                    matrizResultadosVotacoes=Utilitarios.criarMatrizVaziaResultadosVotacoes(PARTIDOS);
+                    Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes,votacoes,NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
+                    apresentaEcraResultadosVotacoes(matrizResultadosVotacoes);
                     break;
                 case 7:
                     /*Visualizar votação em função da faixa etária*/
@@ -220,7 +224,7 @@ public class SAVOP {
         for (int i = inicPrimeira; i <= limPrimeira; i++) {
             System.out.println("");
             for (int j = 0; j < 4; j++) {
-                Utilitarios.imprimeConteudoCelula(i, j, deputados);
+                Utilitarios.imprimeConteudoCelulaDeputados(i, j, deputados);
             }
         }
         do {
@@ -238,7 +242,7 @@ public class SAVOP {
                             if (i < numeroDeputados) {
                                 System.out.println("");
                                 for (int j = 0; j < 4; j++) {
-                                    Utilitarios.imprimeConteudoCelula(i, j, deputados);
+                                    Utilitarios.imprimeConteudoCelulaDeputados(i, j, deputados);
                                 }
                             }
                         }
@@ -251,7 +255,7 @@ public class SAVOP {
                         for (int i = linhaInicial; i < linhaFinal; i++) {
                             System.out.println("");
                             for (int j = 0; j < 4; j++) {
-                                Utilitarios.imprimeConteudoCelula(i, j, deputados);
+                                Utilitarios.imprimeConteudoCelulaDeputados(i, j, deputados);
                             }
                         }
                     }
@@ -265,7 +269,7 @@ public class SAVOP {
                         for (int i = linhaInicial; i < linhaFinal; i++) {
                             System.out.println("");
                             for (int j = 0; j < 4; j++) {
-                                Utilitarios.imprimeConteudoCelula(i, j, deputados);
+                                Utilitarios.imprimeConteudoCelulaDeputados(i, j, deputados);
                             }
                         }
                     } else if (acaoNum == totalPaginas) {
@@ -277,7 +281,7 @@ public class SAVOP {
                         for (int i = linhaInicial; i < linhaFinal; i++) {
                             System.out.println("");
                             for (int j = 0; j < 4; j++) {
-                                Utilitarios.imprimeConteudoCelula(i, j, deputados);
+                                Utilitarios.imprimeConteudoCelulaDeputados(i, j, deputados);
                             }
                         }
                     } else {
@@ -314,7 +318,7 @@ public class SAVOP {
             System.out.println("\nDADOS ATUAIS DO DEPUTADO:");
             Utilitarios.imprimeEcraCabecalhoDeputados(1, 1);
             for (int i = 0; i < 4; i++) {
-                Utilitarios.imprimeConteudoCelula(linhaDeputado, i, deputados);
+                Utilitarios.imprimeConteudoCelulaDeputados(linhaDeputado, i, deputados);
             }
             boolean continuaAlterar = false;
             do {
@@ -350,12 +354,12 @@ public class SAVOP {
                     Utilitarios.imprimeEcraCabecalhoDeputados(1, 1);
                     for (int i = 0; i < 4; i++) {
                         if (i != colunaAlterar) {
-                            Utilitarios.imprimeConteudoCelula(linhaDeputado, i, deputados);
+                            Utilitarios.imprimeConteudoCelulaDeputados(linhaDeputado, i, deputados);
                         } else {
                             String[][] deputadosTemp = new String[1][4];
                             deputadosTemp[0] = deputados[linhaDeputado];
                             deputadosTemp[0][colunaAlterar] = novoValor;
-                            Utilitarios.imprimeConteudoCelula(0, colunaAlterar, deputadosTemp);
+                            Utilitarios.imprimeConteudoCelulaDeputados(0, colunaAlterar, deputadosTemp);
                         }
                     }
 
@@ -381,7 +385,7 @@ public class SAVOP {
         String nomeFicheiro = Utilitarios.obtemInput("Insira o nome do ficheiro:");
         String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
         System.arraycopy(guardarVotacoes(conteudoFicheiro, conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
-        SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO=nomeFicheiro;
+        SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO = nomeFicheiro;
         return conteudoFicheiro.length;
     }
 
@@ -396,13 +400,6 @@ public class SAVOP {
         return retorno;
     }
 
-    /*
-     public static int[] validaMatrizVotacoes(String[] votacoes) {
-     for (int i = 0; i <votacoes.length;i++) {
-
-     }
-     }
-     */
     /**
      * @param matrizCompletaOrdenada
      * @param numeroVotos Método para mostrar a listagem de deputados na consola
@@ -426,7 +423,7 @@ public class SAVOP {
             for (int i = inicPrimeira; i <= limPrimeira; i++) {
                 System.out.println("");
                 for (int j = 0; j < 4; j++) {
-                    Utilitarios.imprimeConteudoCelula(i, j, matrizCompletaOrdenada);
+                    Utilitarios.imprimeConteudoCelulaDeputados(i, j, matrizCompletaOrdenada);
                 }
             }
             do {
@@ -444,7 +441,7 @@ public class SAVOP {
                                 if (i < numeroVotos) {
                                     System.out.println("");
                                     for (int j = 0; j < 4; j++) {
-                                        Utilitarios.imprimeConteudoCelula(i, j, matrizCompletaOrdenada);
+                                        Utilitarios.imprimeConteudoCelulaDeputados(i, j, matrizCompletaOrdenada);
                                     }
                                 }
                             }
@@ -457,7 +454,7 @@ public class SAVOP {
                             for (int i = linhaInicial; i < linhaFinal; i++) {
                                 System.out.println("");
                                 for (int j = 0; j < 4; j++) {
-                                    Utilitarios.imprimeConteudoCelula(i, j, matrizCompletaOrdenada);
+                                    Utilitarios.imprimeConteudoCelulaDeputados(i, j, matrizCompletaOrdenada);
                                 }
                             }
                         }
@@ -471,7 +468,7 @@ public class SAVOP {
                             for (int i = linhaInicial; i < linhaFinal; i++) {
                                 System.out.println("");
                                 for (int j = 0; j < 4; j++) {
-                                    Utilitarios.imprimeConteudoCelula(i, j, matrizCompletaOrdenada);
+                                    Utilitarios.imprimeConteudoCelulaDeputados(i, j, matrizCompletaOrdenada);
                                 }
                             }
                         } else if (acaoNum == totalPaginas) {
@@ -483,7 +480,7 @@ public class SAVOP {
                             for (int i = linhaInicial; i < linhaFinal; i++) {
                                 System.out.println("");
                                 for (int j = 0; j < 4; j++) {
-                                    Utilitarios.imprimeConteudoCelula(i, j, matrizCompletaOrdenada);
+                                    Utilitarios.imprimeConteudoCelulaDeputados(i, j, matrizCompletaOrdenada);
                                 }
                             }
                         } else {
@@ -495,14 +492,15 @@ public class SAVOP {
         }
     }
 
-    /*
-     TODO
-     public static String[][] retornaResultadoVotacoes(String[][] votacoes,
-     int numeroVotacoes) {
-     String[][] resultadosVotacoes = new String[][];
+    public static void apresentaEcraResultadosVotacoes(int[][] matrizResultadosVotacoes) {
+        System.out.println("\nVotação de: " + SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO + "\n");
+        for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
+            System.out.println("");
+            for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
+                Utilitarios.imprimeConteudoCelulaVotos(i, j, matrizResultadosVotacoes);
+            }
+        }
+        System.out.println("");
+    }
 
-     }
-    
-     */
-    
 }

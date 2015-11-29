@@ -174,7 +174,7 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of imprimeConteudoCelula method, of class Utilitarios.
+     * Test of imprimeConteudoCelulaDeputados method, of class Utilitarios.
      */
     @Test
     public void testImprimeConteudoLinha() {
@@ -182,7 +182,7 @@ public class UtilitariosTest {
         int linha = 0;
         int coluna = 0;
         String[][] deputados = null;
-        Utilitarios.imprimeConteudoCelula(linha, coluna, deputados);
+        Utilitarios.imprimeConteudoCelulaDeputados(linha, coluna, deputados);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -292,7 +292,7 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of imprimeConteudoCelula method, of class Utilitarios.
+     * Test of imprimeConteudoCelulaDeputados method, of class Utilitarios.
      */
     @Test
     public void testImprimeConteudoCelula() {
@@ -300,7 +300,7 @@ public class UtilitariosTest {
         int linha = 0;
         int coluna = 0;
         String[][] deputados = null;
-        Utilitarios.imprimeConteudoCelula(linha, coluna, deputados);
+        Utilitarios.imprimeConteudoCelulaDeputados(linha, coluna, deputados);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -458,7 +458,7 @@ public class UtilitariosTest {
     @Test
     public void testCriarMatrizVaziaResultadosVotacoes() {
         System.out.println("criarMatrizVaziaResultadosVotacoes");
-        String vetorPartidos = "";
+        String [] vetorPartidos = {};
         int[][] expResult = null;
         int[][] result = Utilitarios.criarMatrizVaziaResultadosVotacoes(vetorPartidos);
         assertArrayEquals(expResult, result);
@@ -508,31 +508,6 @@ public class UtilitariosTest {
         int[] expResult = {3,4,3};
         int[] result = Utilitarios.contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
         assertArrayEquals(expResult, result);
-    }
-
-    /**
-     * Test of apresentaEcraResultadosVotacoes method, of class Utilitarios.
-     */
-    @Test
-    public void testApresentaEcraResultadosVotacoes() {
-        System.out.println("apresentaEcraResultadosVotacoes");
-        int[][] matrizResultadosVotacoes = null;
-        Utilitarios.apresentaEcraResultadosVotacoes(matrizResultadosVotacoes);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of apresentaLinhaResultados method, of class Utilitarios.
-     */
-    @Test
-    public void testApresentaLinhaResultados() {
-        System.out.println("apresentaLinhaResultados");
-        int linha = 0;
-        int[][] matrizResultadosVotacoes = null;
-        Utilitarios.apresentaLinhaResultados(linha, matrizResultadosVotacoes);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
