@@ -117,6 +117,7 @@ public class SAVOP {
                     matrizResultadosVotacoes = Utilitarios.criarMatrizVaziaResultadosVotacoes(PARTIDOS);
                     Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
                     apresentaEcraResultadosVotacoes(matrizResultadosVotacoes);
+                    apresentaFicheiroResultadosVotacoes(matrizResultadosVotacoes);
                     break;
                 case 7:
                     /*Visualizar votação em função da faixa etária*/
@@ -493,7 +494,8 @@ public class SAVOP {
     }
 
     public static void apresentaEcraResultadosVotacoes(int[][] matrizResultadosVotacoes) {
-        System.out.println("\nVotação de: " + SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO + "\n");
+        String nomeFicheiro = Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);     
+        System.out.println("\nVotação de: " + nomeFicheiro + "\n");
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
             System.out.println("");
             for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
@@ -506,20 +508,23 @@ public class SAVOP {
         System.out.println("");
     }
 
-    /*TODO
-    public static File apresentaFicheiroResultadosVotacoes(int[][] matrizResultadosVotacoes) {
-        
-        System.out.println("\nVotação de: " + SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO + "\n");
+
+    public static void apresentaFicheiroResultadosVotacoes(int[][] matrizResultadosVotacoes) throws FileNotFoundException {
+        String nomeFicheiro = "Resultados"+Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO)+".txt";
+        File ficheiro = new File(nomeFicheiro);
+        Formatter escrever = new Formatter(ficheiro);
+        escrever.format("\nVotação de: " + SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO + "\n");
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
-            System.out.println("");
+            escrever.format("");
             for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
-                Utilitarios.imprimeConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS);
+                Utilitarios.escreveFicheiroConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS,ficheiro,escrever);
             }
             if (i == matrizResultadosVotacoes.length - 2) {
-                System.out.println("");
+                escrever.format("");
             }
         }
-        System.out.println("");
+        escrever.format("");
+        escrever.close();
     }
-    */
+
 }

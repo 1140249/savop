@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Formatter;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 
@@ -404,6 +405,13 @@ public class Utilitarios {
         }
     }
 
+    public static void imprimeEspacosFicheiro (int quantidadeEspacos, File ficheiro, Formatter escrever) {
+        for (int i = 0; i < quantidadeEspacos; i++) {
+            escrever.format(" ");
+        }
+    }
+
+
     /*Método auxiliar que devolve true para sim, false para não, consoante a resposta do utilizador à oergunta fornecida como parâmetro*/
     public static boolean confirmaSimNao(String pergunta) {
         String resposta;
@@ -772,6 +780,66 @@ public class Utilitarios {
                 System.out.println("Erro!");
         }
 
+    }
+
+    public static void escreveFicheiroConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
+        int quantidadeEspacos;
+        switch (coluna) {
+            case 0:
+                if (linha != (votacoes.length - 1)) {
+                    escreve.format(SAVOP.PARTIDOS[votacoes[linha][coluna]] + ";");
+                } else {
+                    escreve.format("Totais;");
+                }
+                break;
+            case 1:
+                if (linha == (votacoes.length - 1)) {
+                    quantidadeEspacos = 14;
+                } else {
+                    quantidadeEspacos = 20 - (partidos[votacoes[linha][coluna - 1]].length());
+                }
+                imprimeEspacosFicheiro(quantidadeEspacos,ficheiro,escreve);
+                escreve.format("Votos a favor: " + votacoes[linha][coluna] + ";");
+                break;
+            case 2:
+                quantidadeEspacos = 10 - (Integer.toString(votacoes[linha][coluna - 1]).length());
+                imprimeEspacosFicheiro(quantidadeEspacos,ficheiro,escreve);
+                escreve.format("Votos contra: " + votacoes[linha][coluna] + ";");
+                break;
+            case 3:
+                quantidadeEspacos = 11 - (Integer.toString(votacoes[linha][coluna - 1]).length());
+                imprimeEspacosFicheiro(quantidadeEspacos,ficheiro,escreve);
+                escreve.format("Abstenções: " + votacoes[linha][coluna] + ".");
+                break;
+            default:
+                escreve.format("Erro!");
+        }
+    }
+
+    /*Método auxiliar para, à String entregue como parâmetro, retirar a extensão correspondente ao tipo de ficheiro. Devolve o nome sem essa mesma extensão*/
+    public static String removerExtensaoFicheiro(String nomeFicheiro) {
+        if (!nomeFicheiro.contains(".")) {
+            return nomeFicheiro;
+        }
+        String[] nomes = nomeFicheiro.split(".");
+        if (nomes.length == 1) {
+            return nomeFicheiro;
+        }
+        int posicaoUltimoPonto = 0;
+        for (int i = 0; i < nomes.length; i++) {
+            if (nomes[i].equals(".")) {
+                posicaoUltimoPonto = i;
+            }
+        }
+        if (posicaoUltimoPonto == nomes.length - 1) {
+            return nomeFicheiro;
+        }
+
+        nomeFicheiro = "";
+        for (int i = 0; i < posicaoUltimoPonto; i++) {
+            nomeFicheiro = nomeFicheiro.concat(nomes[i]);
+        }
+        return nomeFicheiro;
     }
 
 }
