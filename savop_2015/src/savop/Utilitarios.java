@@ -787,7 +787,7 @@ public class Utilitarios {
         switch (coluna) {
             case 0:
                 if (linha != (votacoes.length - 1)) {
-                    escreve.format(SAVOP.PARTIDOS[votacoes[linha][coluna]] + ";");
+                    escreve.format(SAVOP.PARTIDOS[votacoes[linha][coluna]]+";");
                 } else {
                     escreve.format("Totais;");
                 }
@@ -821,13 +821,13 @@ public class Utilitarios {
         if (!nomeFicheiro.contains(".")) {
             return nomeFicheiro;
         }
-        String[] nomes = nomeFicheiro.split(".");
+        char[] nomes = nomeFicheiro.toCharArray();
         if (nomes.length == 1) {
             return nomeFicheiro;
         }
         int posicaoUltimoPonto = 0;
         for (int i = 0; i < nomes.length; i++) {
-            if (nomes[i].equals(".")) {
+            if (nomes[i]=='.') {
                 posicaoUltimoPonto = i;
             }
         }
@@ -837,7 +837,7 @@ public class Utilitarios {
 
         nomeFicheiro = "";
         for (int i = 0; i < posicaoUltimoPonto; i++) {
-            nomeFicheiro = nomeFicheiro.concat(nomes[i]);
+            nomeFicheiro = nomeFicheiro.concat(String.valueOf(nomes[i]));
         }
         return nomeFicheiro;
     }

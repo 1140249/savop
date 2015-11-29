@@ -513,14 +513,14 @@ public class SAVOP {
         String nomeFicheiro = "Resultados"+Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO)+".txt";
         File ficheiro = new File(nomeFicheiro);
         Formatter escrever = new Formatter(ficheiro);
-        escrever.format("\nVotação de: " + SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO + "\n");
+        escrever.format("\nVotação de: "+Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO)+"\n");
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
-            escrever.format("");
+            escrever.format("\n");
             for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
                 Utilitarios.escreveFicheiroConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS,ficheiro,escrever);
             }
             if (i == matrizResultadosVotacoes.length - 2) {
-                escrever.format("");
+                escrever.format("\n");
             }
         }
         escrever.format("");

@@ -5,7 +5,9 @@
  */
 package savop;
 
+import java.io.File;
 import java.util.Arrays;
+import java.util.Formatter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -563,6 +565,78 @@ public class UtilitariosTest {
         String[] expResult = {"a","b","c","d"};
         String[] result = Utilitarios.ordenaVetorAlfabeticamente(vetor);
         assertArrayEquals(expResult, result);
+    }
+
+    /**
+     * Test of imprimeConteudoCelulaDeputados method, of class Utilitarios.
+     */
+    @Test
+    public void testImprimeConteudoCelulaDeputados() {
+        System.out.println("imprimeConteudoCelulaDeputados");
+        int linha = 0;
+        int coluna = 0;
+        String[][] deputados = null;
+        Utilitarios.imprimeConteudoCelulaDeputados(linha, coluna, deputados);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of imprimeEspacosFicheiro method, of class Utilitarios.
+     */
+    @Test
+    public void testImprimeEspacosFicheiro() {
+        System.out.println("imprimeEspacosFicheiro");
+        int quantidadeEspacos = 0;
+        File ficheiro = null;
+        Formatter escrever = null;
+        Utilitarios.imprimeEspacosFicheiro(quantidadeEspacos, ficheiro, escrever);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of imprimeConteudoCelulaVotos method, of class Utilitarios.
+     */
+    @Test
+    public void testImprimeConteudoCelulaVotos() {
+        System.out.println("imprimeConteudoCelulaVotos");
+        int linha = 0;
+        int coluna = 0;
+        int[][] votacoes = null;
+        String[] partidos = null;
+        Utilitarios.imprimeConteudoCelulaVotos(linha, coluna, votacoes, partidos);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of escreveFicheiroConteudoCelulaVotos method, of class Utilitarios.
+     */
+    @Test
+    public void testEscreveFicheiroConteudoCelulaVotos() throws Exception {
+        System.out.println("escreveFicheiroConteudoCelulaVotos");
+        int linha = 0;
+        int coluna = 0;
+        int[][] votacoes = null;
+        String[] partidos = null;
+        File ficheiro = null;
+        Formatter escreve = null;
+        Utilitarios.escreveFicheiroConteudoCelulaVotos(linha, coluna, votacoes, partidos, ficheiro, escreve);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of removerExtensaoFicheiro method, of class Utilitarios.
+     */
+    @Test
+    public void testRemoverExtensaoFicheiro() {
+        System.out.println("removerExtensaoFicheiro");
+        String nomeFicheiro = "abc.txt";
+        String expResult = "abc";
+        String result = Utilitarios.removerExtensaoFicheiro(nomeFicheiro);
+        assertEquals(expResult, result);
     }
 
 }
