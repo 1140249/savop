@@ -135,10 +135,13 @@ public class SAVOP {
                     if (!FICHEIRO_DEPUTADOS_CARREGADO) {
                         System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
                     } else {
-                        NUMERO_VOTACOES = lerVotacoes(votacoes);
+                        int ficheiroExiste = lerVotacoes(votacoes);
+                        if(ficheiroExiste!=-1){
+                        NUMERO_VOTACOES = ficheiroExiste;
                         FICHEIRO_VOTACAO_CARREGADO = true;
                         Utilitarios.eliminaErrosVotacoes(votacoes, deputados);
                         System.out.println("Ficheiro votações carregado com sucesso!");
+                        } 
                     }
                     break;
 
@@ -463,7 +466,6 @@ public class SAVOP {
         }
     }
 
-    /*TODO pode ser validado o nome do ficheiro recebido como parâmetro (file exists?)*/
     /**
      *
      * @param votacoes
@@ -473,10 +475,16 @@ public class SAVOP {
      */
     public static int lerVotacoes(String[][] votacoes) throws FileNotFoundException {
         String nomeFicheiro = Utilitarios.obtemInput("Insira o nome do ficheiro:");
+        File existe = new File(nomeFicheiro);
+        if(existe.exists()){
         String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
         System.arraycopy(preencheMatrizVotacoes(conteudoFicheiro, conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
         SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO = nomeFicheiro;
         return conteudoFicheiro.length;
+        } else {
+            System.out.println("\nNão existe nenhum ficheiro carregado com o nome introduzido. Insira por favor o nome de um ficheiro válido!");
+            return -1;
+        }
     }
 
     /**
