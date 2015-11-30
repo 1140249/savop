@@ -18,22 +18,20 @@ import javax.swing.JFileChooser;
  * @author RicardoMoreira(11402
  */
 public class Utilitarios {
-
-    /** TODO
-    public static int calculaIdade(int[]dataHoje, int []dataNascimento) {
+/*TODO *
+    public static int calculaIdade(int[] dataHoje, int[] dataNascimento) {
         int idade;
-        if(dataHoje[1]>dataNascimento[1]){
-        idade=dataHoje[0]-dataNascimento[0];
-        return idade;
+        if (dataHoje[1] > dataNascimento[1]) {
+            idade = dataHoje[0] - dataNascimento[0];
+            return idade;
         }
-        if(dataHoje[1]==dataNascimento[1]){
-        if(dataHoje[2]>=dataNascimento[2]){
-        
-        }
+        if (dataHoje[1] == dataNascimento[1]) {
+            if (dataHoje[2] >= dataNascimento[2]) {
+id
+            }
         }
     }
-*/
-    
+
     /*método que devolve um vetor de inteiros com ano, mes, dia nas posicoes 0,1,2*/
     public static int[] devolveDataAtual() {
         Calendar calendar = Calendar.getInstance();
@@ -743,21 +741,21 @@ public class Utilitarios {
     }
 
     /*TODO necessita métodos auxiliares primeiro antes de se concluir
-        public static void calculaResultadosVotacoesFaixaEtaria (int[][] matrizResultadosVotacoesFaixaEtaria, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
-        for (int i = 0; i < numeroVotacoes; i++) {
-            String id = votacoes[i][0];
-            String voto = votacoes[i][1];
-            String partido = Utilitarios.retornaPartidoPorID(id, deputados, numeroDeputados, SAVOP.PARTIDOS);
-            int linhaPartido = Utilitarios.retornaLinhaPartidoByNome(partido, SAVOP.PARTIDOS);
-            int colunaVoto = tipoVoto(voto);
-            matrizResultadosVotacoes[linhaPartido][colunaVoto]++;
-        }
-        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][1] = somaColuna(matrizResultadosVotacoes, 1, 0, matrizResultadosVotacoes.length - 2);
-        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][2] = somaColuna(matrizResultadosVotacoes, 2, 0, matrizResultadosVotacoes.length - 2);
-        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
-    }
+     public static void calculaResultadosVotacoesFaixaEtaria (int[][] matrizResultadosVotacoesFaixaEtaria, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
+     for (int i = 0; i < numeroVotacoes; i++) {
+     String id = votacoes[i][0];
+     String voto = votacoes[i][1];
+     String partido = Utilitarios.retornaPartidoPorID(id, deputados, numeroDeputados, SAVOP.PARTIDOS);
+     int linhaPartido = Utilitarios.retornaLinhaPartidoByNome(partido, SAVOP.PARTIDOS);
+     int colunaVoto = tipoVoto(voto);
+     matrizResultadosVotacoes[linhaPartido][colunaVoto]++;
+     }
+     matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][1] = somaColuna(matrizResultadosVotacoes, 1, 0, matrizResultadosVotacoes.length - 2);
+     matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][2] = somaColuna(matrizResultadosVotacoes, 2, 0, matrizResultadosVotacoes.length - 2);
+     matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
+     }
 
-    */
+     */
     public static int somaColuna(int[][] matriz, int coluna, int linhaInicio, int LinhaFim) {
         int soma = 0;
         for (int i = linhaInicio; i <= LinhaFim; i++) {
