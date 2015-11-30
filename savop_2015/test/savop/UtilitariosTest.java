@@ -42,17 +42,6 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of calculaIdade method, of class Utilitarios.
-     */
-    @Test
-    public void testCalculaIdade() {
-        System.out.println("calculaIdade");
-        Utilitarios.calculaIdade();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of devolveDataAtual method, of class Utilitarios.
      */
     @Test
