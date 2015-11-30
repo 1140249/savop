@@ -19,9 +19,21 @@ import javax.swing.JFileChooser;
  */
 public class Utilitarios {
 
-    public static void calculaIdade() {
+    /** TODO
+    public static int calculaIdade(int[]dataHoje, int []dataNascimento) {
+        int idade;
+        if(dataHoje[1]>dataNascimento[1]){
+        idade=dataHoje[0]-dataNascimento[0];
+        return idade;
+        }
+        if(dataHoje[1]==dataNascimento[1]){
+        if(dataHoje[2]>=dataNascimento[2]){
+        
+        }
+        }
     }
-
+*/
+    
     /*método que devolve um vetor de inteiros com ano, mes, dia nas posicoes 0,1,2*/
     public static int[] devolveDataAtual() {
         Calendar calendar = Calendar.getInstance();
@@ -405,7 +417,7 @@ public class Utilitarios {
         }
     }
 
-    public static void imprimeEspacosFicheiro (int quantidadeEspacos, File ficheiro, Formatter escrever) {
+    public static void imprimeEspacosFicheiro(int quantidadeEspacos, File ficheiro, Formatter escrever) {
         for (int i = 0; i < quantidadeEspacos; i++) {
             escrever.format(" ");
         }
@@ -689,6 +701,21 @@ public class Utilitarios {
         return matriz;
     }
 
+    /*Método auxiliar para criar uma matriz vazia de resultados por faixa etária. A matriz tem dimensão 4x4 e é prenchida a 0 em toda a dimensão com a exceção da primeira coluna que recebe o valor correspondente à linha em que se encontra*/
+    public static int[][] criarMatrizVaziaResultadosVotacoesFaixaEtaria(String[] vetorPartidos) {
+        int numeroPartidos = vetorPartidos.length;
+        int[][] matriz = new int[4][4];
+        for (int i = 0; i < 4; i++) {
+            matriz[i][0] = i;
+        }
+        for (int i = 0; i < numeroPartidos; i++) {
+            for (int j = 1; j < 4; j++) {
+                matriz[i][j] = 0;
+            }
+        }
+        return matriz;
+    }
+
     /*Método auxiliar para, através do nome do partido fornecido como parâmetro, encontrar qual a sua posição no vetor de vetor de partidos. caso não encontre o partido, devolve -1*/
     public static int retornaLinhaPartidoByNome(String nomePartido, String[] partidos) {
         int contador = 0;
@@ -715,6 +742,22 @@ public class Utilitarios {
         matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
     }
 
+    /*TODO necessita métodos auxiliares primeiro antes de se concluir
+        public static void calculaResultadosVotacoesFaixaEtaria (int[][] matrizResultadosVotacoesFaixaEtaria, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
+        for (int i = 0; i < numeroVotacoes; i++) {
+            String id = votacoes[i][0];
+            String voto = votacoes[i][1];
+            String partido = Utilitarios.retornaPartidoPorID(id, deputados, numeroDeputados, SAVOP.PARTIDOS);
+            int linhaPartido = Utilitarios.retornaLinhaPartidoByNome(partido, SAVOP.PARTIDOS);
+            int colunaVoto = tipoVoto(voto);
+            matrizResultadosVotacoes[linhaPartido][colunaVoto]++;
+        }
+        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][1] = somaColuna(matrizResultadosVotacoes, 1, 0, matrizResultadosVotacoes.length - 2);
+        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][2] = somaColuna(matrizResultadosVotacoes, 2, 0, matrizResultadosVotacoes.length - 2);
+        matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
+    }
+
+    */
     public static int somaColuna(int[][] matriz, int coluna, int linhaInicio, int LinhaFim) {
         int soma = 0;
         for (int i = linhaInicio; i <= LinhaFim; i++) {
@@ -787,7 +830,7 @@ public class Utilitarios {
         switch (coluna) {
             case 0:
                 if (linha != (votacoes.length - 1)) {
-                    escreve.format(SAVOP.PARTIDOS[votacoes[linha][coluna]]+";");
+                    escreve.format(SAVOP.PARTIDOS[votacoes[linha][coluna]] + ";");
                 } else {
                     escreve.format("Totais;");
                 }
@@ -798,17 +841,17 @@ public class Utilitarios {
                 } else {
                     quantidadeEspacos = 20 - (partidos[votacoes[linha][coluna - 1]].length());
                 }
-                imprimeEspacosFicheiro(quantidadeEspacos,ficheiro,escreve);
+                imprimeEspacosFicheiro(quantidadeEspacos, ficheiro, escreve);
                 escreve.format("Votos a favor: " + votacoes[linha][coluna] + ";");
                 break;
             case 2:
                 quantidadeEspacos = 10 - (Integer.toString(votacoes[linha][coluna - 1]).length());
-                imprimeEspacosFicheiro(quantidadeEspacos,ficheiro,escreve);
+                imprimeEspacosFicheiro(quantidadeEspacos, ficheiro, escreve);
                 escreve.format("Votos contra: " + votacoes[linha][coluna] + ";");
                 break;
             case 3:
                 quantidadeEspacos = 11 - (Integer.toString(votacoes[linha][coluna - 1]).length());
-                imprimeEspacosFicheiro(quantidadeEspacos,ficheiro,escreve);
+                imprimeEspacosFicheiro(quantidadeEspacos, ficheiro, escreve);
                 escreve.format("Abstenções: " + votacoes[linha][coluna] + ".");
                 break;
             default:
@@ -827,7 +870,7 @@ public class Utilitarios {
         }
         int posicaoUltimoPonto = 0;
         for (int i = 0; i < nomes.length; i++) {
-            if (nomes[i]=='.') {
+            if (nomes[i] == '.') {
                 posicaoUltimoPonto = i;
             }
         }
@@ -841,28 +884,28 @@ public class Utilitarios {
         }
         return nomeFicheiro;
     }
-    
+
     public static void escreveHTMLConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
         int quantidadeEspacos;
         switch (coluna) {
             case 0:
                 if (linha != (votacoes.length - 1)) {
-                    escreve.format("<td>"+SAVOP.PARTIDOS[votacoes[linha][coluna]]+";"+"</td>");
+                    escreve.format("<td>" + SAVOP.PARTIDOS[votacoes[linha][coluna]] + ";" + "</td>");
                 } else {
-                    escreve.format("<td>"+"Totais;"+"</td>");
+                    escreve.format("<td>" + "Totais;" + "</td>");
                 }
                 break;
             case 1:
-                escreve.format("<td>"+"Votos a favor: " + votacoes[linha][coluna] + ";"+"</td>");
+                escreve.format("<td>" + "Votos a favor: " + votacoes[linha][coluna] + ";" + "</td>");
                 break;
             case 2:
-                escreve.format("<td>"+"Votos contra: " + votacoes[linha][coluna] + ";"+"</td>");
+                escreve.format("<td>" + "Votos contra: " + votacoes[linha][coluna] + ";" + "</td>");
                 break;
             case 3:
-                escreve.format("<td>"+"Abstenções: " + votacoes[linha][coluna] + "."+"</td>");
+                escreve.format("<td>" + "Abstenções: " + votacoes[linha][coluna] + "." + "</td>");
                 break;
             default:
-                escreve.format("<td>"+"Erro!"+"</td>");
+                escreve.format("<td>" + "Erro!" + "</td>");
         }
     }
 }
