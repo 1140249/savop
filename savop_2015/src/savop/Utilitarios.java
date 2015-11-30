@@ -18,18 +18,24 @@ import javax.swing.JFileChooser;
  * @author RicardoMoreira(11402
  */
 public class Utilitarios {
-/*TODO *
+
     public static int calculaIdade(int[] dataHoje, int[] dataNascimento) {
-        int idade;
+        int idade = -1;
         if (dataHoje[1] > dataNascimento[1]) {
             idade = dataHoje[0] - dataNascimento[0];
             return idade;
         }
         if (dataHoje[1] == dataNascimento[1]) {
             if (dataHoje[2] >= dataNascimento[2]) {
-id
+                idade = dataHoje[0] - dataNascimento[0];
+                return idade;
             }
         }
+        if (dataHoje[1] < dataNascimento[1]) {
+            idade = dataHoje[0] - dataNascimento[0] - 1;
+            return idade;
+        }
+        return idade;
     }
 
     /*método que devolve um vetor de inteiros com ano, mes, dia nas posicoes 0,1,2*/
@@ -143,7 +149,7 @@ id
     public static void imprimeEcraCabecalhoDeputados(int paginaAtual, int totalPaginas) {
         System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
         System.out.println("\n|| ID    || NOME                          || PARTIDO || DATA NASC   ||\n"
-            + "----------------------------------------------------------------------");
+                + "----------------------------------------------------------------------");
     }
 
     /**
@@ -155,7 +161,7 @@ id
     public static void imprimeEcraCabecalhoVotacoes(int paginaAtual, int totalPaginas) {
         System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
         System.out.println("\n|| ID    || NOME                          || PARTIDO || VOTO        ||\n"
-            + "----------------------------------------------------------------------");
+                + "----------------------------------------------------------------------");
     }
 
     /**
@@ -164,10 +170,10 @@ id
      */
     public static void imprimeInstrucoes() {
         System.out.println("\n"
-            + "----------------------------------------------------------------------"
-            + "\nPágina seguinte: pressione \"ENTER\""
-            + "\nPágina específica: insira \"Número Página\" + pressione \"ENTER\""
-            + "\nTerminar: insira \"F\" + pressione \"ENTER\"");
+                + "----------------------------------------------------------------------"
+                + "\nPágina seguinte: pressione \"ENTER\""
+                + "\nPágina específica: insira \"Número Página\" + pressione \"ENTER\""
+                + "\nTerminar: insira \"F\" + pressione \"ENTER\"");
     }
 
     /**
@@ -491,12 +497,12 @@ id
         int opcao;
         do {
             System.out.println("\n\nInsira opção, para o campo a alterar:"
-                + "\n1 - ID"
-                + "\n2 - Nome"
-                + "\n3 - Partido"
-                + "\n4 - Data Nascimento"
-                + "\n"
-                + "\n5 - Terminar");
+                    + "\n1 - ID"
+                    + "\n2 - Nome"
+                    + "\n3 - Partido"
+                    + "\n4 - Data Nascimento"
+                    + "\n"
+                    + "\n5 - Terminar");
             Scanner ler = new Scanner(System.in);
             while (!ler.hasNextInt()) {
                 ler.nextLine();
@@ -700,13 +706,12 @@ id
     }
 
     /*Método auxiliar para criar uma matriz vazia de resultados por faixa etária. A matriz tem dimensão 4x4 e é prenchida a 0 em toda a dimensão com a exceção da primeira coluna que recebe o valor correspondente à linha em que se encontra*/
-    public static int[][] criarMatrizVaziaResultadosVotacoesFaixaEtaria(String[] vetorPartidos) {
-        int numeroPartidos = vetorPartidos.length;
+    public static int[][] criarMatrizVaziaResultadosVotacoesFaixaEtaria() {
         int[][] matriz = new int[4][4];
         for (int i = 0; i < 4; i++) {
             matriz[i][0] = i;
         }
-        for (int i = 0; i < numeroPartidos; i++) {
+        for (int i = 0; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
                 matriz[i][j] = 0;
             }
@@ -740,22 +745,23 @@ id
         matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
     }
 
-    /*TODO necessita métodos auxiliares primeiro antes de se concluir
-     public static void calculaResultadosVotacoesFaixaEtaria (int[][] matrizResultadosVotacoesFaixaEtaria, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
-     for (int i = 0; i < numeroVotacoes; i++) {
-     String id = votacoes[i][0];
-     String voto = votacoes[i][1];
-     String partido = Utilitarios.retornaPartidoPorID(id, deputados, numeroDeputados, SAVOP.PARTIDOS);
-     int linhaPartido = Utilitarios.retornaLinhaPartidoByNome(partido, SAVOP.PARTIDOS);
-     int colunaVoto = tipoVoto(voto);
-     matrizResultadosVotacoes[linhaPartido][colunaVoto]++;
-     }
-     matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][1] = somaColuna(matrizResultadosVotacoes, 1, 0, matrizResultadosVotacoes.length - 2);
-     matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][2] = somaColuna(matrizResultadosVotacoes, 2, 0, matrizResultadosVotacoes.length - 2);
-     matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
-     }
+    public static void calculaResultadosVotacoesFaixaEtaria(int[][] matrizResultadosVotacoesFaixaEtaria, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
+        for (int i = 0; i < numeroVotacoes; i++) {
+            String id = votacoes[i][0];
+            int linhaDeputado = Utilitarios.encontraDeputadoPorID(id, deputados, numeroDeputados);
+            String voto = votacoes[i][1];
+            int[] dataNascimento = Utilitarios.converteData(deputados[linhaDeputado][3]);
+            int[] dataHoje = Utilitarios.devolveDataAtual();
+            int idade = Utilitarios.calculaIdade(dataHoje, dataNascimento);
+            int linha = Utilitarios.devolveLinhaFaixaEtaria(idade);
+            int colunaVoto = tipoVoto(voto);
+            matrizResultadosVotacoesFaixaEtaria[linha][colunaVoto]++;
+        }
+        matrizResultadosVotacoesFaixaEtaria[3][1] = somaColuna(matrizResultadosVotacoesFaixaEtaria, 1, 0, 2);
+        matrizResultadosVotacoesFaixaEtaria[3][2] = somaColuna(matrizResultadosVotacoesFaixaEtaria, 2, 0, 2);
+        matrizResultadosVotacoesFaixaEtaria[3][3] = somaColuna(matrizResultadosVotacoesFaixaEtaria, 3, 0, 2);
+    }
 
-     */
     public static int somaColuna(int[][] matriz, int coluna, int linhaInicio, int LinhaFim) {
         int soma = 0;
         for (int i = linhaInicio; i <= LinhaFim; i++) {
@@ -803,6 +809,45 @@ id
                     quantidadeEspacos = 14;
                 } else {
                     quantidadeEspacos = 20 - (partidos[votacoes[linha][coluna - 1]].length());
+                }
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf("Votos a favor: " + votacoes[linha][coluna] + ";");
+                break;
+            case 2:
+                quantidadeEspacos = 10 - (Integer.toString(votacoes[linha][coluna - 1]).length());
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf("Votos contra: " + votacoes[linha][coluna] + ";");
+                break;
+            case 3:
+                quantidadeEspacos = 11 - (Integer.toString(votacoes[linha][coluna - 1]).length());
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf("Abstenções: " + votacoes[linha][coluna] + ".");
+                break;
+            default:
+                System.out.println("Erro!");
+        }
+
+    }
+
+    public static void imprimeConteudoCelulaVotosFaixaEtaria(int linha, int coluna, int[][] votacoes) {
+        int quantidadeEspacos;
+        switch (coluna) {
+            case 0:
+                if (linha == 0) {
+                    System.out.printf("Menores de 35 anos: ");
+                } else if (linha == 1) {
+                    System.out.printf("Entre 35 e 60 anos: ");
+                } else if (linha == 2) {
+                    System.out.printf("Maiores de 60 anos: ");
+                } else {
+                    System.out.printf("Totais;");
+                }
+                break;
+            case 1:
+                if (linha == 3) {
+                    quantidadeEspacos = 18;
+                } else {
+                    quantidadeEspacos = 5;
                 }
                 imprimeEspacos(quantidadeEspacos);
                 System.out.printf("Votos a favor: " + votacoes[linha][coluna] + ";");
@@ -904,6 +949,17 @@ id
                 break;
             default:
                 escreve.format("<td>" + "Erro!" + "</td>");
+        }
+    }
+
+    public static int devolveLinhaFaixaEtaria(int idade) {
+        if (idade < 35) {
+            return 0;
+        }
+        if (idade <= 60) {
+            return 1;
+        } else {
+            return 2;
         }
     }
 }

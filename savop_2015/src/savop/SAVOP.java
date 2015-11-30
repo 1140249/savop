@@ -41,18 +41,19 @@ public class SAVOP {
         String[][] deputados = new String[230][4];
         String[][] votacoes = new String[230][2];
         int[][] matrizResultadosVotacoes;
+        int[][] matrizResultadosVotacoesFaixaEtaria;
         int opcao;
         do {
             System.out.println("\nInsira opção: "
-                + "\n1 - Ler ficheiro Deputados e guardar na memória principal"
-                + "\n2 - Mostrar listagem Deputados paginada"
-                + "\n3 - Alterar informação deputado"
-                + "\n4 - Ler ficheiro de votação e carregá-lo na memória principal"
-                + "\n5 - Visualisar votação em memória ordenada por ID deputado"
-                + "\n6 - Visualizar votação em memória compilada por resultados e escrita dos mesmo para ficheiro"
-                + "\n7 - Visualisar votação em memória compilada por faixa etária"
-                + "\n8 - Visualizar votação em memória compilada por resultados em página HTML"
-                + "\n9 - Terminar o programa"
+                    + "\n1 - Ler ficheiro Deputados e guardar na memória principal"
+                    + "\n2 - Mostrar listagem Deputados paginada"
+                    + "\n3 - Alterar informação deputado"
+                    + "\n4 - Ler ficheiro de votação e carregá-lo na memória principal"
+                    + "\n5 - Visualisar votação em memória ordenada por ID deputado"
+                    + "\n6 - Visualizar votação em memória compilada por resultados e escrita dos mesmo para ficheiro"
+                    + "\n7 - Visualisar votação em memória compilada por faixa etária"
+                    + "\n8 - Visualizar votação em memória compilada por resultados em página HTML"
+                    + "\n9 - Terminar o programa"
             );
 
             while (!ler.hasNextInt()) {
@@ -131,6 +132,17 @@ public class SAVOP {
 
                 case 7:
                     /*Visualizar votação em função da faixa etária*/
+                    if (!FICHEIRO_DEPUTADOS_CARREGADO) {
+                        System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
+                    } else {
+                        if (!SAVOP.FICHEIRO_VOTACAO_CARREGADO) {
+                            System.out.println("Ficheiro de votações ainda não foi carregado! Selecione opção \"4 - Ler ficheiro de votação e carregá-lo na memória principal\" antes de utilizar a corrente opção.");
+                        } else {
+                            matrizResultadosVotacoesFaixaEtaria = Utilitarios.criarMatrizVaziaResultadosVotacoesFaixaEtaria();
+                            Utilitarios.calculaResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
+                            apresentaEcraResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria);
+                        }
+                    }
                     break;
                 case 8:
                     /*Visualizar em HTML os resultados da última votação introduzida*/
@@ -524,6 +536,21 @@ public class SAVOP {
                 Utilitarios.imprimeConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS);
             }
             if (i == matrizResultadosVotacoes.length - 2) {
+                System.out.println("");
+            }
+        }
+        System.out.println("");
+    }
+
+    public static void apresentaEcraResultadosVotacoesFaixaEtaria(int[][] matrizResultadosVotacoesFaixaEtaria) {
+        String nomeFicheiro = Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
+        System.out.println("\nVotação de: " + nomeFicheiro + " por faixa etária\n");
+        for (int i = 0; i < matrizResultadosVotacoesFaixaEtaria.length; i++) {
+            System.out.println("");
+            for (int j = 0; j < matrizResultadosVotacoesFaixaEtaria[0].length; j++) {
+                Utilitarios.imprimeConteudoCelulaVotosFaixaEtaria(i, j, matrizResultadosVotacoesFaixaEtaria);
+            }
+            if (i == matrizResultadosVotacoesFaixaEtaria.length - 2) {
                 System.out.println("");
             }
         }
