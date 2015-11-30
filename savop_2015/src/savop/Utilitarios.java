@@ -7,11 +7,9 @@ package savop;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Formatter;
 import java.util.Scanner;
-import javax.swing.JFileChooser;
 
 /**
  *
@@ -19,6 +17,15 @@ import javax.swing.JFileChooser;
  */
 public class Utilitarios {
 
+    /**
+     *
+     * @param dataHoje
+     * @param dataNascimento
+     * @return idade Método que deverá receber dois vetores de inteiros, em que
+     * às três primeiras posições corresponda, respetivamente, ano, mês, dia. O
+     * primeiro vetor será para a data atual e o segundo para a data de
+     * nascimento. Retorna a idade correspondente à diferença dos dois.
+     */
     public static int calculaIdade(int[] dataHoje, int[] dataNascimento) {
         int idade = -1;
         if (dataHoje[1] > dataNascimento[1]) {
@@ -38,7 +45,11 @@ public class Utilitarios {
         return idade;
     }
 
-    /*método que devolve um vetor de inteiros com ano, mes, dia nas posicoes 0,1,2*/
+    /**
+     *
+     * @return data atual Método que devolve a data atual num vetor de inteiros
+     * com ano, mes, dia nas posicoes 0,1,2
+     */
     public static int[] devolveDataAtual() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -51,6 +62,13 @@ public class Utilitarios {
         return data;
     }
 
+    /**
+     *
+     * @param data
+     * @return data Método que recebendo como parâmetro uma string no formato
+     * "aaaammdd", devolve um vetor de inteiros com 3 posições, com os valores
+     * correspondentes, na mesma ordem.
+     */
     public static int[] converteData(String data) {
         int[] dataConvertida = new int[3];
         String ano = data.substring(0, 3);
@@ -67,9 +85,14 @@ public class Utilitarios {
 
     /**
      *
+     * @param matrizVotacoes
+     * @param numeroVotacoes
+     * @return Matriz votações ordenada alafabeticamente Método que recebendo a
+     * matriz de votações, ordena alfabeticamente a mesma pela coluna onde se
+     * encontra o ID
      */
     public static String[][] ordenaAlfaMatrizVotacoesColuna(String[][] matrizVotacoes, int numeroVotacoes) {
-        boolean naoOrdenou = true;
+        boolean naoOrdenou;
         do {
             naoOrdenou = true;
             for (int i = 0; i < numeroVotacoes - 1; i++) {
@@ -87,6 +110,15 @@ public class Utilitarios {
         return matrizVotacoes;
     }
 
+    /**
+     *
+     * @param deputados
+     * @param matrizVotos
+     * @param id
+     * @return Vetor com informação de voto do deputado Método que devolve a
+     * informação de voto do deputado a que corresponde o id recebido como
+     * parâmetro
+     */
     public static String[] devolveInfoVotosByID(String[][] deputados, String[][] matrizVotos, String id) {
         int linha = 0;
         String[] impressao = new String[4];
@@ -100,7 +132,6 @@ public class Utilitarios {
         while (!id.equalsIgnoreCase(deputados[linha][0]) && linha < SAVOP.NUMERO_DEPUTADOS) {
             linha++;
         }
-
         String[] primeiroUltimo = obtemPrimeiroUltimoNome(deputados[linha][1]);
         String nomePrimeiroUltimo = primeiroUltimo[0].concat(" ").concat(primeiroUltimo[1]);
         impressao[1] = nomePrimeiroUltimo;
@@ -108,6 +139,13 @@ public class Utilitarios {
         return impressao;
     }
 
+    /**
+     *
+     * @param deputados
+     * @param matrizVotos
+     * @return Matriz com votação completa ordenada por ID
+     *
+     */
     public static String[][] devolveMatrizCompletaVotacaoOrdenada(String deputados[][], String[][] matrizVotos) {
         String[][] matrizVotosOrdenada = ordenaAlfaMatrizVotacoesColuna(matrizVotos, SAVOP.NUMERO_VOTACOES);
         String[][] matrizCompletaOrdenada = new String[matrizVotosOrdenada.length][4];
@@ -119,9 +157,15 @@ public class Utilitarios {
             matrizCompletaOrdenada[i][3] = resultadoLinha[3];
         }
         return matrizCompletaOrdenada;
-
     }
 
+    /**
+     *
+     * @param nomeCompleto
+     * @return Método que recebendo uma String como parâmetro retorna um vetor
+     * de tamanho 2 em que na primeira posição coloca a primeira palavra e na
+     * segunda posição a última palavra dessa String.
+     */
     public static String[] obtemPrimeiroUltimoNome(String nomeCompleto) {
         String[] nomes = nomeCompleto.split(" ");
         String primeiro;
@@ -149,7 +193,7 @@ public class Utilitarios {
     public static void imprimeEcraCabecalhoDeputados(int paginaAtual, int totalPaginas) {
         System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
         System.out.println("\n|| ID    || NOME                          || PARTIDO || DATA NASC   ||\n"
-                + "----------------------------------------------------------------------");
+            + "----------------------------------------------------------------------");
     }
 
     /**
@@ -161,7 +205,7 @@ public class Utilitarios {
     public static void imprimeEcraCabecalhoVotacoes(int paginaAtual, int totalPaginas) {
         System.out.println("Página: " + paginaAtual + "/" + totalPaginas);
         System.out.println("\n|| ID    || NOME                          || PARTIDO || VOTO        ||\n"
-                + "----------------------------------------------------------------------");
+            + "----------------------------------------------------------------------");
     }
 
     /**
@@ -170,10 +214,10 @@ public class Utilitarios {
      */
     public static void imprimeInstrucoes() {
         System.out.println("\n"
-                + "----------------------------------------------------------------------"
-                + "\nPágina seguinte: pressione \"ENTER\""
-                + "\nPágina específica: insira \"Número Página\" + pressione \"ENTER\""
-                + "\nTerminar: insira \"F\" + pressione \"ENTER\"");
+            + "----------------------------------------------------------------------"
+            + "\nPágina seguinte: pressione \"ENTER\""
+            + "\nPágina específica: insira \"Número Página\" + pressione \"ENTER\""
+            + "\nTerminar: insira \"F\" + pressione \"ENTER\"");
     }
 
     /**
@@ -277,7 +321,7 @@ public class Utilitarios {
      * @param id
      * @param deputados
      * @param maxProcura
-     * @return valida que o "id" recebido como parâmetro ainda não se encontra
+     * @return Valida que o "id" recebido como parâmetro ainda não se encontra
      * presente na listagem "deputados" enviada como parâmetro até à linha
      * indicada como parâmetro na variável "maxProcura". Devolve false caso não
      * passe no teste. True para o inverso.
@@ -295,7 +339,7 @@ public class Utilitarios {
     }
 
     /**
-     * método inativado dado o método de leitura do ficheiro de deputados passar
+     * Método inativado dado o método de leitura do ficheiro de deputados passar
      * a requerer apenas o ficheiro local e não o ficheiro selecionado pelo
      * utilizador
      *
@@ -412,8 +456,8 @@ public class Utilitarios {
     }
 
     /**
-     * @param quantidadeEspacos Método auxiliar para imprimir tantos espaços
-     * quantos o número passado como parâmetro.
+     * @param quantidadeEspacos Método auxiliar para imprimir para o ecrã tantos
+     * espaços quantos o número passado como parâmetro.
      */
     public static void imprimeEspacos(int quantidadeEspacos) {
         for (int i = 0; i < quantidadeEspacos; i++) {
@@ -421,14 +465,25 @@ public class Utilitarios {
         }
     }
 
+    /**
+     *
+     * @param quantidadeEspacos
+     * @param ficheiro
+     * @param escrever Método auxiliar para imprimir tantos espaços quantos o
+     * número passado como parâmetro num ficheiro.
+     */
     public static void imprimeEspacosFicheiro(int quantidadeEspacos, File ficheiro, Formatter escrever) {
         for (int i = 0; i < quantidadeEspacos; i++) {
             escrever.format(" ");
         }
     }
 
-
-    /*Método auxiliar que devolve true para sim, false para não, consoante a resposta do utilizador à oergunta fornecida como parâmetro*/
+    /**
+     *
+     * @param pergunta
+     * @return Método auxiliar que devolve true para sim, false para não,
+     * consoante a resposta do utilizador à pergunta fornecida como parâmetro
+     */
     public static boolean confirmaSimNao(String pergunta) {
         String resposta;
         do {
@@ -446,7 +501,12 @@ public class Utilitarios {
         return true;
     }
 
-    /*Método auxiliar que devolve a resposta do utilizador numa String, a uma pergunta enviada como parâmetro*/
+    /**
+     *
+     * @param pergunta
+     * @return Método auxiliar que devolve a resposta do utilizador numa String,
+     * a uma pergunta enviada como parâmetro
+     */
     public static String obtemInput(String pergunta) {
         System.out.println(pergunta);
         Scanner ler = new Scanner(System.in);
@@ -454,7 +514,13 @@ public class Utilitarios {
         return input;
     }
 
-    /*Método auxiliar para obter o campo correspondente à coluna. Devolve ID para 0, Nome para 1, Partido para 2 e Data Nascimento para 3. Devolve String vazia para qualquer outro valor.*/
+    /**
+     *
+     * @param coluna
+     * @return Método auxiliar para obter o campo correspondente à coluna na
+     * matriz Deputados. Devolve ID para 0, Nome para 1, Partido para 2 e Data
+     * Nascimento para 3. Devolve String vazia para qualquer outro valor.
+     */
     public static String obtemNomeCampoDeputados(int coluna) {
         switch (coluna) {
             case 0:
@@ -470,7 +536,12 @@ public class Utilitarios {
         }
     }
 
-    /*Método auxiliar para obter o valor a ser pesquisado na coluna inserida como parâmetro*/
+    /**
+     *
+     * @param coluna
+     * @return Método auxiliar para obter o valor a ser pesquisado na coluna
+     * inserida como parâmetro
+     */
     public static String obtemValorPesquisa(int coluna) {
         String campo = Utilitarios.obtemNomeCampoDeputados(coluna);
         System.out.println("\nInsira valor a pesquisar na coluna \"" + campo + "\":");
@@ -479,7 +550,15 @@ public class Utilitarios {
         return input;
     }
 
-    /*Método para encontrar qual o índice da linha na matriz de deputados que corresponde ao ID dado como parâmetro. Caso não encontrem, retorna -1*/
+    /**
+     *
+     * @param id
+     * @param deputados
+     * @param numDeputados
+     * @return Método para encontrar qual o índice da linha na matriz de
+     * deputados que corresponde ao ID dado como parâmetro. Caso não encontrem,
+     * retorna -1
+     */
     public static int encontraDeputadoPorID(String id, String[][] deputados, int numDeputados) {
         int posicao = 0;
         while (!id.equalsIgnoreCase(deputados[posicao][0]) && posicao < SAVOP.NUMERO_DEPUTADOS) {
@@ -492,17 +571,23 @@ public class Utilitarios {
         }
     }
 
-    /*Método auxiliar para obter, através da interação com o utilizador, qual a coluna onde efetuar alterações. Devolve -1 caso o utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para nome, "2" para partido e "3" para data de nascimento*/
+    /**
+     *
+     * @return Método auxiliar para obter, através da interação com o
+     * utilizador, qual a coluna onde efetuar alterações. Devolve -1 caso o
+     * utilizador escolha a opcão "terminar". Devolve "0" para ID, "1" para
+     * nome, "2" para partido e "3" para data de nascimento.
+     */
     public static int obtemColunaAlterarDeputados() {
         int opcao;
         do {
             System.out.println("\n\nInsira opção, para o campo a alterar:"
-                    + "\n1 - ID"
-                    + "\n2 - Nome"
-                    + "\n3 - Partido"
-                    + "\n4 - Data Nascimento"
-                    + "\n"
-                    + "\n5 - Terminar");
+                + "\n1 - ID"
+                + "\n2 - Nome"
+                + "\n3 - Partido"
+                + "\n4 - Data Nascimento"
+                + "\n"
+                + "\n5 - Terminar");
             Scanner ler = new Scanner(System.in);
             while (!ler.hasNextInt()) {
                 ler.nextLine();
@@ -528,7 +613,13 @@ public class Utilitarios {
         return -1;
     }
 
-    /*Método que elimina da matriz de votacoes as linhas cujos IDs sejam inválidos. Avisa o utilizador das linhas removidas.*/
+    /**
+     *
+     * @param votacoes
+     * @param deputados
+     * @return Método que elimina da matriz de votações as linhas cujos IDs
+     * sejam inválidos. Avisa o utilizador das linhas removidas.
+     */
     public static boolean eliminaErrosVotacoes(String[][] votacoes, String[][] deputados) {
         boolean erros = false;
         int contador = 0;
@@ -552,7 +643,13 @@ public class Utilitarios {
         return erros;
     }
 
-    /*Método auxiliar que devolve um vetor de Strings com todos os partidos existentes na matriz de deputados*/
+    /**
+     *
+     * @param deputados
+     * @param numeroDeputados
+     * @return Método auxiliar que devolve um vetor de Strings com todos os
+     * partidos existentes na matriz de deputados
+     */
     public static String[] retornaVetorPartidos(String[][] deputados, int numeroDeputados) {
         String[] vazia = {};
         if (numeroDeputados <= 0) {
@@ -584,7 +681,15 @@ public class Utilitarios {
         return partidos;
     }
 
-    /*Devolve um vetor de inteiros que contém a quantidade de deputados existentes de cada partido do vetor de pertidos enviado como parâmetro. A ordem dos resultados é a mesma da ordem do vetor de partidos*/
+    /**
+     *
+     * @param vetorPartidos
+     * @param deputados
+     * @param totalDeputados
+     * @return Devolve um vetor de inteiros que contém a quantidade de deputados
+     * existentes de cada partido do vetor de partidos enviado como parâmetro. A
+     * ordem dos resultados é a mesma da ordem do vetor de partidos.
+     */
     public static int[] contaTotalDeputadosPorPartido(String[] vetorPartidos, String[][] deputados, int totalDeputados) {
         int totalPartidos = vetorPartidos.length;
         int[] totalDeputadosPorPartido = new int[totalPartidos];
@@ -601,7 +706,13 @@ public class Utilitarios {
         return totalDeputadosPorPartido;
     }
 
-    /*Método para ordenar por número de deputados e, em caso de empate, por ordem alfabética, o vetor de partidos*/
+    /**
+     *
+     * @param vetorPartidos
+     * @param deputados
+     * @param totalDeputados Método para ordenar por número de deputados e, em
+     * caso de empate, por ordem alfabética, o vetor de partidos.
+     */
     public static void ordenaVetorPartidosPorTotalDeputados(String[] vetorPartidos, String[][] deputados, int totalDeputados) {
         vetorPartidos = ordenaVetorAlfabeticamente(vetorPartidos);
         int[] totalDeputadosPorPartido = contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
@@ -627,7 +738,12 @@ public class Utilitarios {
         System.arraycopy(vetorPartidosOrdenado, 0, vetorPartidos, 0, vetorPartidos.length);
     }
 
-    /*Método auxiliar para ordenar um vetor por ordem alfabética crescente*/
+    /**
+     *
+     * @param vetor
+     * @return Devolve o vetor recebido como parâmetro ordenado alfabeticamente
+     * por ordem crescente.
+     */
     public static String[] ordenaVetorAlfabeticamente(String[] vetor) {
         int tamanhoVetor = vetor.length;
         if (tamanhoVetor < 2) {
@@ -647,8 +763,14 @@ public class Utilitarios {
         } while (alterou);
         return vetor;
     }
-    /*Método que retorna uma nova matriz igual à recebida como parâmetro mas sem a linha correspondente à linha recebida como parâmetro*/
 
+    /**
+     *
+     * @param linha
+     * @param matriz
+     * @return Método que retorna uma nova matriz igual à recebida como
+     * parâmetro mas sem a linha correspondente à linha recebida como parâmetro
+     */
     public static String[][] removeLinhaMatriz(int linha, String[][] matriz) {
         int colunas = matriz[0].length;
         int linhas = matriz.length;
@@ -668,10 +790,16 @@ public class Utilitarios {
         return novaMatriz;
     }
 
-
-    /*Método auxiliar que devolve uma String referente ao nome do partido do
-     * deputado com o ID enviado como parâmetro. Retorna uma String "-1", caso
-     * não seja encontrado nenhum deputado com o ID enviado como parâmetro
+    /**
+     *
+     * @param id
+     * @param deputados
+     * @param numeroDeputados
+     * @param partidos
+     * @return Método auxiliar que devolve uma String referente ao nome do
+     * partido do deputado com o ID enviado como parâmetro. Retorna uma String
+     * "-1", caso não seja encontrado nenhum deputado com o ID enviado como
+     * parâmetro
      */
     public static String retornaPartidoPorID(String id, String[][] deputados, int numeroDeputados, String[] partidos) {
         int linhaDoId = Utilitarios.encontraDeputadoPorID(id, deputados, numeroDeputados);
@@ -690,7 +818,20 @@ public class Utilitarios {
         return partido;
     }
 
-    /*Método para criar uma matriz de 4 colunas e x linhas, sendo x o total de partidos+1. A primeira coluna representa a posicao do partido no vetor partidos. É portanto preenchida com os valores 0,1,2, etc. até ao total de linhas antes da última linha. A última linha desta mesma coluna não tem significado nenhum a não ser para identificar que é o "total". Recebe assim o valor de -1. Todas as outras células recebem o valor de 0, sendo que a 2.ª coluna representa os votos a favor, a 3.ª coluna os contra e a 4.ª as asbstenções. A última linha de cada uma destas colunas representa o total da soma dos elementos respetivos da coluna, sendo portanto preenchida igualmente com o valor 0*/
+    /**
+     *
+     * @param vetorPartidos
+     * @return Método para criar uma matriz de 4 colunas e x linhas, sendo x o
+     * total de partidos+1. A primeira coluna representa a posicao do partido no
+     * vetor partidos. É portanto preenchida com os valores 0,1,2, etc. até ao
+     * total de linhas antes da última linha. A última linha desta mesma coluna
+     * não tem significado nenhum a não ser para identificar que é o "total".
+     * Recebe assim o valor de -1. Todas as outras células recebem o valor de 0,
+     * sendo que a 2.ª coluna representa os votos a favor, a 3.ª coluna os
+     * contra e a 4.ª as abstenções. A última linha de cada uma destas colunas
+     * representa o total da soma dos elementos respetivos da coluna, sendo
+     * portanto preenchida igualmente com o valor 0
+     */
     public static int[][] criarMatrizVaziaResultadosVotacoes(String[] vetorPartidos) {
         int numeroPartidos = vetorPartidos.length;
         int[][] matriz = new int[numeroPartidos + 1][4];
@@ -705,7 +846,13 @@ public class Utilitarios {
         return matriz;
     }
 
-    /*Método auxiliar para criar uma matriz vazia de resultados por faixa etária. A matriz tem dimensão 4x4 e é prenchida a 0 em toda a dimensão com a exceção da primeira coluna que recebe o valor correspondente à linha em que se encontra*/
+    /**
+     *
+     * @return Método auxiliar para criar uma matriz vazia de resultados por
+     * faixa etária. A matriz tem dimensão 4x4 e é prenchida a 0 em toda a
+     * dimensão com a exceção da primeira coluna que recebe o valor
+     * correspondente à linha em que se encontra
+     */
     public static int[][] criarMatrizVaziaResultadosVotacoesFaixaEtaria() {
         int[][] matriz = new int[4][4];
         for (int i = 0; i < 4; i++) {
@@ -719,7 +866,14 @@ public class Utilitarios {
         return matriz;
     }
 
-    /*Método auxiliar para, através do nome do partido fornecido como parâmetro, encontrar qual a sua posição no vetor de vetor de partidos. caso não encontre o partido, devolve -1*/
+    /**
+     *
+     * @param nomePartido
+     * @param partidos
+     * @return Método auxiliar para, através do nome do partido fornecido como
+     * parâmetro, encontrar qual a sua posição no vetor de vetor de partidos.
+     * caso não encontre o partido, devolve -1
+     */
     public static int retornaLinhaPartidoByNome(String nomePartido, String[] partidos) {
         int contador = 0;
         while (contador < partidos.length && !nomePartido.equalsIgnoreCase(partidos[contador])) {
@@ -731,6 +885,15 @@ public class Utilitarios {
         return contador;
     }
 
+    /**
+     *
+     * @param matrizResultadosVotacoes
+     * @param votacoes
+     * @param numeroVotacoes
+     * @param deputados
+     * @param numeroDeputados Método auxiliar que preenche a matriz de
+     * resultados das votações.
+     */
     public static void calculaResultadosVotacoes(int[][] matrizResultadosVotacoes, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
         for (int i = 0; i < numeroVotacoes; i++) {
             String id = votacoes[i][0];
@@ -745,6 +908,15 @@ public class Utilitarios {
         matrizResultadosVotacoes[matrizResultadosVotacoes.length - 1][3] = somaColuna(matrizResultadosVotacoes, 3, 0, matrizResultadosVotacoes.length - 2);
     }
 
+    /**
+     *
+     * @param matrizResultadosVotacoesFaixaEtaria
+     * @param votacoes
+     * @param numeroVotacoes
+     * @param deputados
+     * @param numeroDeputados Método auxiliar que preenche a matriz de
+     * resultados das votações por faixa etária.
+     */
     public static void calculaResultadosVotacoesFaixaEtaria(int[][] matrizResultadosVotacoesFaixaEtaria, String[][] votacoes, int numeroVotacoes, String[][] deputados, int numeroDeputados) {
         for (int i = 0; i < numeroVotacoes; i++) {
             String id = votacoes[i][0];
@@ -762,6 +934,16 @@ public class Utilitarios {
         matrizResultadosVotacoesFaixaEtaria[3][3] = somaColuna(matrizResultadosVotacoesFaixaEtaria, 3, 0, 2);
     }
 
+    /**
+     *
+     * @param matriz
+     * @param coluna
+     * @param linhaInicio
+     * @param LinhaFim
+     * @return Método auxiliar que devolve o resultado da soma de uma coluna,
+     * sendo necessário especificar qual a coluna a somar e qual a linha inicial
+     * e a linha final.
+     */
     public static int somaColuna(int[][] matriz, int coluna, int linhaInicio, int LinhaFim) {
         int soma = 0;
         for (int i = linhaInicio; i <= LinhaFim; i++) {
@@ -769,8 +951,16 @@ public class Utilitarios {
         }
         return soma;
     }
-    /*Método auxiliar que devolve 1 caso o voto sejam "s" (sim), devolve 2 caso o voto sejam "n" (nao), devolve 3 caso o voto sejam "a" (abstencão), devolve -1 caso o voto seja uma string diferente das anteriores*/
 
+    /**
+     *
+     * @param voto
+     * @return Método auxiliar que devolve 1 caso o voto seja "s" (sim), devolve
+     * 2 caso o voto seja "n" (nao), devolve 3 caso o voto seja "a" (abstencão),
+     * devolve -1 caso o voto seja uma string diferente das anteriores. Este
+     * número representa igualmente a coluna a que corresponde o tipo de voto na
+     * tabela de resultados de votações.
+     */
     public static int tipoVoto(String voto) {
         voto = voto.toLowerCase();
         switch (voto) {
@@ -788,11 +978,9 @@ public class Utilitarios {
     /**
      * @param linha
      * @param coluna
-     * @param deputados Método que imprime para o ecrã o conteúdo da linha e
-     * coluna dada como parâmetro no formato adequado da coluna, dada como
-     * parâmetro. Este método é útil para apresentar de uma forma correta o
-     * conteúdo da matriz deputados alinhado com as tabulações do cabeçalho do
-     * mesmo.
+     * @param votacoes
+     * @param partidos Método auxiliar que imprime para o ecrã o conteúdo da
+     * tabela de votações, recebida como parâmetro.
      */
     public static void imprimeConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos) {
         int quantidadeEspacos;
@@ -829,6 +1017,13 @@ public class Utilitarios {
 
     }
 
+    /**
+     *
+     * @param linha
+     * @param coluna
+     * @param votacoes Método auxiliar que imprime para o ecrã o conteúdo da
+     * tabela de votações por faixa etária, recebida como parâmetro.
+     */
     public static void imprimeConteudoCelulaVotosFaixaEtaria(int linha, int coluna, int[][] votacoes) {
         int quantidadeEspacos;
         switch (coluna) {
@@ -868,6 +1063,17 @@ public class Utilitarios {
 
     }
 
+    /**
+     *
+     * @param linha
+     * @param coluna
+     * @param votacoes
+     * @param partidos
+     * @param ficheiro
+     * @param escreve
+     * @throws FileNotFoundException Método auxiliar que imprime para um
+     * ficheiro o conteúdo da tabela de votações, recebida como parâmetro.
+     */
     public static void escreveFicheiroConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
         int quantidadeEspacos;
         switch (coluna) {
@@ -902,7 +1108,13 @@ public class Utilitarios {
         }
     }
 
-    /*Método auxiliar para, à String entregue como parâmetro, retirar a extensão correspondente ao tipo de ficheiro. Devolve o nome sem essa mesma extensão*/
+    /**
+     *
+     * @param nomeFicheiro
+     * @return Método auxiliar para, à String entregue como parâmetro, retirar a
+     * extensão correspondente ao tipo de ficheiro. Devolve o nome sem essa
+     * mesma extensão
+     */
     public static String removerExtensaoFicheiro(String nomeFicheiro) {
         if (!nomeFicheiro.contains(".")) {
             return nomeFicheiro;
@@ -928,8 +1140,19 @@ public class Utilitarios {
         return nomeFicheiro;
     }
 
+    /**
+     *
+     * @param linha
+     * @param coluna
+     * @param votacoes
+     * @param partidos
+     * @param ficheiro
+     * @param escreve
+     * @throws FileNotFoundException Método auxiliar que imprime para um
+     * ficheiro do tipo HTML o conteúdo da tabela de votações, recebida como
+     * parâmetro.
+     */
     public static void escreveHTMLConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
-        int quantidadeEspacos;
         switch (coluna) {
             case 0:
                 if (linha != (votacoes.length - 1)) {
@@ -952,6 +1175,13 @@ public class Utilitarios {
         }
     }
 
+    /**
+     *
+     * @param idade
+     * @return Método auxiliar que devolve 0, 1 ou 2 consoante a idade recebida
+     * como parâmetro seja menor que 35, entre 35 e 60 ou mais de 60,
+     * respetivamente.
+     */
     public static int devolveLinhaFaixaEtaria(int idade) {
         if (idade < 35) {
             return 0;
