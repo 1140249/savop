@@ -107,7 +107,7 @@ public class SAVOP {
             switch (opcao) {
                 case 1:
                     /*Ler ficheiro deputados e armazená-la na memória principal*/
-                    NUMERO_DEPUTADOS = lerDeputados(deputados, logErros, escrever);
+                    NUMERO_DEPUTADOS = lerFicheiroDeputados(deputados, logErros, escrever);
                     PARTIDOS = Utilitarios.retornaVetorPartidos(deputados, NUMERO_DEPUTADOS);
                     Utilitarios.ordenaVetorPartidosPorTotalDeputados(PARTIDOS, deputados, NUMERO_DEPUTADOS);
                     System.out.println("Ficheiro deputados carregado com sucesso!");
@@ -118,7 +118,7 @@ public class SAVOP {
                     if (!FICHEIRO_DEPUTADOS_CARREGADO) {
                         System.out.println("\n\"O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder visualizar a listagem de deputadas paginada.");
                     } else {
-                        mostraDeputadosPaginado(deputados, NUMERO_DEPUTADOS);
+                        apresentaDeputadosPaginado(deputados, NUMERO_DEPUTADOS);
                     }
                     break;
                 case 3:
@@ -135,11 +135,11 @@ public class SAVOP {
                     if (!FICHEIRO_DEPUTADOS_CARREGADO) {
                         System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
                     } else {
-                        int ficheiroExiste = lerVotacoes(votacoes);
+                        int ficheiroExiste = lerFicheiroVotacoes(votacoes);
                         if(ficheiroExiste!=-1){
                         NUMERO_VOTACOES = ficheiroExiste;
                         FICHEIRO_VOTACAO_CARREGADO = true;
-                        Utilitarios.eliminaErrosVotacoes(votacoes, deputados);
+                        Utilitarios.eliminaLinhasErrosMatrizVotacoes(votacoes, deputados);
                         System.out.println("Ficheiro votações carregado com sucesso!");
                         } 
                     }
@@ -153,8 +153,8 @@ public class SAVOP {
                         if (!SAVOP.FICHEIRO_VOTACAO_CARREGADO) {
                             System.out.println("Ficheiro de votações ainda não foi carregado! Selecione opção \"4 - Ler ficheiro de votação e carregá-lo na memória principal\" antes de utilizar a corrente opção.");
                         } else {
-                            String matrizOrdenada[][] = Utilitarios.devolveMatrizCompletaVotacaoOrdenada(deputados, votacoes);
-                            mostraVotacoesPaginado(matrizOrdenada, NUMERO_VOTACOES);
+                            String matrizOrdenada[][] = Utilitarios.retornaMatrizResultadosVotacoesOrdenada(deputados, votacoes);
+                            apresentaVotacoesPaginado(matrizOrdenada, NUMERO_VOTACOES);
                         }
                     }
                     break;
@@ -166,11 +166,11 @@ public class SAVOP {
                         if (!SAVOP.FICHEIRO_VOTACAO_CARREGADO) {
                             System.out.println("Ficheiro de votações ainda não foi carregado! Selecione opção \"4 - Ler ficheiro de votação e carregá-lo na memória principal\" antes de utilizar a corrente opção.");
                         } else {
-                            matrizResultadosVotacoes = Utilitarios.criarMatrizVaziaResultadosVotacoes(PARTIDOS);
-                            Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
-                            apresentaEcraResultadosVotacoes(matrizResultadosVotacoes);
-                            apresentaFicheiroResultadosVotacoes(matrizResultadosVotacoes);
-                            System.out.println("\n\nFicheiro Resultados" + Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".txt criado com sucesso!");
+                            matrizResultadosVotacoes = Utilitarios.retornaMatrizVaziaResultadosVotacoes(PARTIDOS);
+                            Utilitarios.preencheMatrizResultadosVotacoes(matrizResultadosVotacoes, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
+                            apresentaResultadosVotacoes(matrizResultadosVotacoes);
+                            escreveFicheiroTextoResultadosVotacoes(matrizResultadosVotacoes);
+                            System.out.println("\n\nFicheiro Resultados" + Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".txt criado com sucesso!");
                         }
                     }
                     break;
@@ -183,9 +183,9 @@ public class SAVOP {
                         if (!SAVOP.FICHEIRO_VOTACAO_CARREGADO) {
                             System.out.println("Ficheiro de votações ainda não foi carregado! Selecione opção \"4 - Ler ficheiro de votação e carregá-lo na memória principal\" antes de utilizar a corrente opção.");
                         } else {
-                            matrizResultadosVotacoesFaixaEtaria = Utilitarios.criarMatrizVaziaResultadosVotacoesFaixaEtaria();
-                            Utilitarios.calculaResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
-                            apresentaEcraResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria);
+                            matrizResultadosVotacoesFaixaEtaria = Utilitarios.retornaMatrizVaziaResultadosVotacoesFaixaEtaria();
+                            Utilitarios.preencheMatrizResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
+                            apresentaResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria);
                         }
                     }
                     break;
@@ -197,10 +197,10 @@ public class SAVOP {
                         if (!SAVOP.FICHEIRO_VOTACAO_CARREGADO) {
                             System.out.println("Ficheiro de votações ainda não foi carregado! Selecione opção \"4 - Ler ficheiro de votação e carregá-lo na memória principal\" antes de utilizar a corrente opção.");
                         } else {
-                            matrizResultadosVotacoes = Utilitarios.criarMatrizVaziaResultadosVotacoes(PARTIDOS);
-                            Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
-                            apresentaHTMLResultadosVotacoes(matrizResultadosVotacoes);
-                            System.out.println("\n\nFicheiro Resultados" + Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".html criado com sucesso!");
+                            matrizResultadosVotacoes = Utilitarios.retornaMatrizVaziaResultadosVotacoes(PARTIDOS);
+                            Utilitarios.preencheMatrizResultadosVotacoes(matrizResultadosVotacoes, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
+                            escreveFicheiroHTMLResultadosVotacoes(matrizResultadosVotacoes);
+                            System.out.println("\n\nFicheiro Resultados" + Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".html criado com sucesso!");
                         }
                     }
                     break;
@@ -224,7 +224,7 @@ public class SAVOP {
      * "Deputados.txt". Devolve um inteiro que representa o número de deputados.
      * @throws FileNotFoundException
      */
-    public static int lerDeputados(String[][] deputados, File logErros, Formatter escrever) throws FileNotFoundException {
+    public static int lerFicheiroDeputados(String[][] deputados, File logErros, Formatter escrever) throws FileNotFoundException {
         String[] conteudoFicheiro = Utilitarios.lerFicheiro(FILE_DEPUTADOS);
         String[][] deputadosTemp = guardarDeputados(conteudoFicheiro, logErros, escrever);
         System.arraycopy(deputadosTemp, 0, deputados, 0, deputadosTemp.length);
@@ -289,12 +289,12 @@ public class SAVOP {
      * elementos a mostrar por página, basta alterar o valor da constante
      * MAX_LINHAS_PAGINA.
      */
-    public static void mostraDeputadosPaginado(String[][] deputados, int numeroDeputados) {
+    public static void apresentaDeputadosPaginado(String[][] deputados, int numeroDeputados) {
         int paginaAtual = 1;
-        int totalPaginas = Utilitarios.devolveNumeroPaginas(numeroDeputados);
+        int totalPaginas = Utilitarios.retornaNumeroPaginas(numeroDeputados);
         System.out.println("\nTotal de páginas: " + totalPaginas);
         System.out.println("Total de resultados por página: " + MAX_LINHAS_PAGINA);
-        int[] iniciosPagina = Utilitarios.devolveIniciosPagina(deputados, numeroDeputados);
+        int[] iniciosPagina = Utilitarios.retornaIniciosPagina(deputados, numeroDeputados);
         String acao;
         int inicPrimeira = 0;
         int limPrimeira = MAX_LINHAS_PAGINA - 1;
@@ -382,10 +382,10 @@ public class SAVOP {
         int linhaDeputado = -1;
         boolean continuaPesquisa = false;
         do {
-            String idDeputado = Utilitarios.obtemInput("\nInsira qual o ID do deputado que pretende alterar:");
-            int linha = Utilitarios.encontraDeputadoPorID(idDeputado, deputados, NUMERO_DEPUTADOS);
+            String idDeputado = Utilitarios.obtemInputPergunta("\nInsira qual o ID do deputado que pretende alterar:");
+            int linha = Utilitarios.retornaDeputadoPorID(idDeputado, deputados, NUMERO_DEPUTADOS);
             if (linha == -1) {
-                if (Utilitarios.confirmaSimNao("\nNão foi encontrado nenhum registo com o ID fornecido. Pretende fazer nova pesquisa?")) {
+                if (Utilitarios.validaRespostaSim("\nNão foi encontrado nenhum registo com o ID fornecido. Pretende fazer nova pesquisa?")) {
                     continuaPesquisa = true;
                 } else {
                     continuaPesquisa = false;
@@ -448,12 +448,12 @@ public class SAVOP {
                         }
                     }
 
-                    if (Utilitarios.confirmaSimNao("\n\nPretende gravar alterações?")) {
+                    if (Utilitarios.validaRespostaSim("\n\nPretende gravar alterações?")) {
                         deputados[linhaDeputado][colunaAlterar] = novoValor;
                         continuaAlterar = false;
                     } else {
                         System.out.println("\nAlterações não gravadas!");
-                        if (Utilitarios.confirmaSimNao("\nPretende fazer novas alterações?")) {
+                        if (Utilitarios.validaRespostaSim("\nPretende fazer novas alterações?")) {
                             continuaAlterar = true;
                         } else {
                             System.out.println("\nAlteração de dados concluída!");
@@ -473,8 +473,8 @@ public class SAVOP {
      * @throws FileNotFoundException Método que carrega em memória os dados das
      * votações do ficheiro recebido como parâmetro.
      */
-    public static int lerVotacoes(String[][] votacoes) throws FileNotFoundException {
-        String nomeFicheiro = Utilitarios.obtemInput("Insira o nome do ficheiro:");
+    public static int lerFicheiroVotacoes(String[][] votacoes) throws FileNotFoundException {
+        String nomeFicheiro = Utilitarios.obtemInputPergunta("Insira o nome do ficheiro:");
         File existe = new File(nomeFicheiro);
         if(existe.exists()){
         String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
@@ -512,15 +512,15 @@ public class SAVOP {
      * a mostrar por página, basta alterar o valor da constante
      * MAX_LINHAS_PAGINA.
      */
-    public static void mostraVotacoesPaginado(String[][] matrizCompletaOrdenada, int numeroVotos) {
+    public static void apresentaVotacoesPaginado(String[][] matrizCompletaOrdenada, int numeroVotos) {
         int paginaAtual = 1;
-        int totalPaginas = Utilitarios.devolveNumeroPaginas(numeroVotos);
+        int totalPaginas = Utilitarios.retornaNumeroPaginas(numeroVotos);
         if (totalPaginas == 0) {
             System.out.println("\nNão existem dados para mostrar. Faça uma leitura prévia de dados (Opção 1 do menu principal) através de um ficheiro válido e com elementos válidos.");
         } else {
             System.out.println("\nTotal de páginas: " + totalPaginas);
             System.out.println("Total de resultados por página: " + MAX_LINHAS_PAGINA);
-            int[] iniciosPagina = Utilitarios.devolveIniciosPagina(matrizCompletaOrdenada, numeroVotos);
+            int[] iniciosPagina = Utilitarios.retornaIniciosPagina(matrizCompletaOrdenada, numeroVotos);
             String acao;
             int inicPrimeira = 0;
             int limPrimeira = MAX_LINHAS_PAGINA - 1;
@@ -602,8 +602,8 @@ public class SAVOP {
      * @param matrizResultadosVotacoes Método que apresenta no ecrã o resultado
      * das votações.
      */
-    public static void apresentaEcraResultadosVotacoes(int[][] matrizResultadosVotacoes) {
-        String nomeFicheiro = Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
+    public static void apresentaResultadosVotacoes(int[][] matrizResultadosVotacoes) {
+        String nomeFicheiro = Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
         System.out.println("\nVotação de: " + nomeFicheiro + "\n");
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
             System.out.println("");
@@ -622,8 +622,8 @@ public class SAVOP {
      * @param matrizResultadosVotacoesFaixaEtaria Método que apresenta no ecrã o
      * resultado das votações por faixa etária.
      */
-    public static void apresentaEcraResultadosVotacoesFaixaEtaria(int[][] matrizResultadosVotacoesFaixaEtaria) {
-        String nomeFicheiro = Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
+    public static void apresentaResultadosVotacoesFaixaEtaria(int[][] matrizResultadosVotacoesFaixaEtaria) {
+        String nomeFicheiro = Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
         System.out.println("\nVotação de: " + nomeFicheiro + " por faixa etária\n");
         for (int i = 0; i < matrizResultadosVotacoesFaixaEtaria.length; i++) {
             System.out.println("");
@@ -643,11 +643,11 @@ public class SAVOP {
      * @throws FileNotFoundException Método que apresenta num ficheiro de texto
      * o resultado das votações por faixa etária.
      */
-    public static void apresentaFicheiroResultadosVotacoes(int[][] matrizResultadosVotacoes) throws FileNotFoundException {
-        String nomeFicheiro = "Resultados" + Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".txt";
+    public static void escreveFicheiroTextoResultadosVotacoes(int[][] matrizResultadosVotacoes) throws FileNotFoundException {
+        String nomeFicheiro = "Resultados" + Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".txt";
         File ficheiro = new File(nomeFicheiro);
         Formatter escrever = new Formatter(ficheiro);
-        escrever.format("\nVotação de: " + Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + "\n");
+        escrever.format("\nVotação de: " + Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + "\n");
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
             escrever.format("\n");
             for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
@@ -667,13 +667,13 @@ public class SAVOP {
      * @throws FileNotFoundException Método que apresenta num ficheiro HTML o
      * resultado das votações por faixa etária.
      */
-    public static void apresentaHTMLResultadosVotacoes(int[][] matrizResultadosVotacoes) throws FileNotFoundException {
-        String nomeFicheiro = "Resultados" + Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".html";
+    public static void escreveFicheiroHTMLResultadosVotacoes(int[][] matrizResultadosVotacoes) throws FileNotFoundException {
+        String nomeFicheiro = "Resultados" + Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO) + ".html";
         File ficheiro = new File(nomeFicheiro);
         Formatter escrever = new Formatter(ficheiro);
-        PaginaHTML.iniciarPagina(escrever, "Resultados " + Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO));
+        PaginaHTML.iniciarPagina(escrever, "Resultados " + Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO));
 
-        String conteudo = "Votação de: " + Utilitarios.removerExtensaoFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
+        String conteudo = "Votação de: " + Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
         PaginaHTML.cabecalho(escrever, 1, conteudo);
         PaginaHTML.iniciarTabela(escrever);
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {

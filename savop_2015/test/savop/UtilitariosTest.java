@@ -42,27 +42,27 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of devolveDataAtual method, of class Utilitarios.
+     * Test of retornaVetorDataAtual method, of class Utilitarios.
      */
     @Test
-    public void testDevolveDataAtual() {
+    public void testRetornaVetorDataAtual() {
         System.out.println("devolveDataAtual");
         int[] expResult = null;
-        int[] result = Utilitarios.devolveDataAtual();
+        int[] result = Utilitarios.retornaVetorDataAtual();
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of converteData method, of class Utilitarios.
+     * Test of retornaVetorDataPorString method, of class Utilitarios.
      */
     @Test
-    public void testConverteData() {
+    public void testRetornaVetorDataPorString() {
         System.out.println("converteData");
         String data = "";
         int[] expResult = null;
-        int[] result = Utilitarios.converteData(data);
+        int[] result = Utilitarios.retornaVetorDataPorString(data);
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -93,29 +93,29 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of devolveIniciosPagina method, of class Utilitarios.
+     * Test of retornaIniciosPagina method, of class Utilitarios.
      */
     @Test
-    public void testDevolveIniciosPagina() {
+    public void testRetornaIniciosPagina() {
         System.out.println("devolveIniciosPagina");
         String[][] deputados = null;
         int numeroDeputados = 0;
         int[] expResult = null;
-        int[] result = Utilitarios.devolveIniciosPagina(deputados, numeroDeputados);
+        int[] result = Utilitarios.retornaIniciosPagina(deputados, numeroDeputados);
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of devolveNumeroPaginas method, of class Utilitarios.
+     * Test of retornaNumeroPaginas method, of class Utilitarios.
      */
     @Test
-    public void testDevolveNumeroPaginas() {
+    public void testRetornaNumeroPaginas() {
         System.out.println("devolveNumeroPaginas");
         int numeroDeputados = 0;
         int expResult = 0;
-        int result = Utilitarios.devolveNumeroPaginas(numeroDeputados);
+        int result = Utilitarios.retornaNumeroPaginas(numeroDeputados);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -191,56 +191,56 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of ordenaAlfaMatrizVotacoesColuna method, of class Utilitarios.
+     * Test of ordenaMatrizVotacoesPorAlfabetoNaColunaID method, of class Utilitarios.
      */
     @Test
-    public void testOrdenaAlfaMatrizVotacoesColuna() {
+    public void testOrdenaMatrizVotacoesPorAlfabetoNaColunaID() {
         System.out.println("ordenaAlfaMatrizColuna");
         String[][] matriz = {{"c", "3"}, {"b", "2"}, {"a", "1"}};
         String[][] expResult = {{"a", "1"}, {"b", "2"}, {"c", "3"}};
-        String[][] result = Utilitarios.ordenaAlfaMatrizVotacoesColuna(matriz, SAVOP.NUMERO_VOTACOES);
+        String[][] result = Utilitarios.ordenaMatrizVotacoesPorAlfabetoNaColunaID(matriz, SAVOP.NUMERO_VOTACOES);
         assertArrayEquals(expResult, result);
     }
 
     /**
-     * Test of devolveInfoVotosByID method, of class Utilitarios.
+     * Test of retornaDadosVotosPorID method, of class Utilitarios.
      */
     @Test
-    public void testDevolveInfoVotosByID() {
+    public void testRetornaDadosVotosPorID() {
         System.out.println("devolveInfoVotosByID");
         String[][] deputados = null;
         String[][] matrizVotos = null;
         String id = "";
         String[] expResult = null;
-        String[] result = Utilitarios.devolveInfoVotosByID(deputados, matrizVotos, id);
+        String[] result = Utilitarios.retornaDadosVotosPorID(deputados, matrizVotos, id);
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of devolveMatrizCompletaVotacaoOrdenada method, of class
-     * Utilitarios.
+     * Test of retornaMatrizResultadosVotacoesOrdenada method, of class
+ Utilitarios.
      */
     @Test
-    public void testDevolveMatrizCompletaVotacaoOrdenada() {
+    public void testRetornaMatrizResultadosVotacoesOrdenada() {
         System.out.println("devolveMatrizCompletaVotacaoOrdenada");
         String[][] deputados = {{"PRT01", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT02", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT03", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT04", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT05", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT06", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT07", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT08", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT09", "Jorge Silva Gomes", "PartidoA", "19701212"}, {"PRT10", "Jorge Silva Gomes", "PartidoA", "19701212"}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}};
         String[][] matrizVotos = {{"PRT20S"}, {"PRT19S"}, {"PRT03S"}, {"PRT04S"}, {"PRT05S"}, {"PRT06S"}, {"PRT07S"}, {"PRT08S"}, {"PRT09S"}, {"PRT10N"}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}};
         String[][] expResult = {{"PRT03S"}, {"PRT04S"}, {"PRT05S"}, {"PRT06S"}, {"PRT07S"}, {"PRT08S"}, {"PRT09S"}, {"PRT10N"}, {"PRT19S"}, {"PRT20S"}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}, {null}};
-        String[][] result = Utilitarios.devolveMatrizCompletaVotacaoOrdenada(deputados, matrizVotos);
+        String[][] result = Utilitarios.retornaMatrizResultadosVotacoesOrdenada(deputados, matrizVotos);
         assertArrayEquals(expResult, result);
     }
 
     /**
-     * Test of obtemPrimeiroUltimoNome method, of class Utilitarios.
+     * Test of retornaPrimeiroUltimoNome method, of class Utilitarios.
      */
     @Test
-    public void testObtemPrimeiroUltimoNome() {
+    public void testRetornaPrimeiroUltimoNome() {
         System.out.println("obtemPrimeiroUltimoNome");
         String nomeCompleto = "Jorge Silva Gomes";
         String[] expResult = {"Jorge", "Gomes"};
-        String[] result = Utilitarios.obtemPrimeiroUltimoNome(nomeCompleto);
+        String[] result = Utilitarios.retornaPrimeiroUltimoNome(nomeCompleto);
         assertArrayEquals(expResult, result);
     }
 
@@ -297,72 +297,72 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of confirmaSimNao method, of class Utilitarios.
+     * Test of validaRespostaSim method, of class Utilitarios.
      */
     @Test
-    public void testConfirmaSimNao() {
+    public void testValidaRespostaSim() {
         System.out.println("confirmaSimNao");
         String pergunta = "";
         boolean expResult = false;
-        boolean result = Utilitarios.confirmaSimNao(pergunta);
+        boolean result = Utilitarios.validaRespostaSim(pergunta);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of obtemInput method, of class Utilitarios.
+     * Test of obtemInputPergunta method, of class Utilitarios.
      */
     @Test
-    public void testObtemInput() {
+    public void testObtemInputPergunta() {
         System.out.println("obtemInput");
         String pergunta = "";
         String expResult = "";
-        String result = Utilitarios.obtemInput(pergunta);
+        String result = Utilitarios.obtemInputPergunta(pergunta);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of obtemNomeCampoDeputados method, of class Utilitarios.
+     * Test of retornaNomeCampoDeputadosPorColuna method, of class Utilitarios.
      */
     @Test
-    public void testObtemNomeCampoDeputados() {
+    public void testRetornaNomeCampoDeputadosPorColuna() {
         System.out.println("obtemNomeCampoDeputados");
         int coluna = 0;
         String expResult = "";
-        String result = Utilitarios.obtemNomeCampoDeputados(coluna);
+        String result = Utilitarios.retornaNomeCampoDeputadosPorColuna(coluna);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of obtemValorPesquisa method, of class Utilitarios.
+     * Test of obtemInputPesquisaColuna method, of class Utilitarios.
      */
     @Test
-    public void testObtemValorPesquisa() {
+    public void testObtemInputPesquisaColuna() {
         System.out.println("obtemValorPesquisa");
         int coluna = 0;
         String expResult = "";
-        String result = Utilitarios.obtemValorPesquisa(coluna);
+        String result = Utilitarios.obtemInputPesquisaColuna(coluna);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of encontraDeputadoPorID method, of class Utilitarios.
+     * Test of retornaDeputadoPorID method, of class Utilitarios.
      */
     @Test
-    public void testEncontraDeputadoPorID() {
+    public void testRetornaDeputadoPorID() {
         System.out.println("encontraDeputadoPorID");
         String id = "";
         String[][] deputados = null;
         int numDeputados = 0;
         int expResult = 0;
-        int result = Utilitarios.encontraDeputadoPorID(id, deputados, numDeputados);
+        int result = Utilitarios.retornaDeputadoPorID(id, deputados, numDeputados);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -382,15 +382,15 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of eliminaErrosVotacoes method, of class Utilitarios.
+     * Test of eliminaLinhasErrosMatrizVotacoes method, of class Utilitarios.
      */
     @Test
-    public void testEliminaErrosVotacoes() {
+    public void testEliminaLinhasErrosMatrizVotacoes() {
         System.out.println("eliminaErrosVotacoes");
         String[][] votacoes = null;
         String[][] deputados = null;
         boolean expResult = false;
-        boolean result = Utilitarios.eliminaErrosVotacoes(votacoes, deputados);
+        boolean result = Utilitarios.eliminaLinhasErrosMatrizVotacoes(votacoes, deputados);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -444,60 +444,60 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of criarMatrizVaziaResultadosVotacoes method, of class Utilitarios.
+     * Test of retornaMatrizVaziaResultadosVotacoes method, of class Utilitarios.
      */
     @Test
-    public void testCriarMatrizVaziaResultadosVotacoes() {
+    public void testRetornaMatrizVaziaResultadosVotacoes() {
         System.out.println("criarMatrizVaziaResultadosVotacoes");
         String [] vetorPartidos = {};
         int[][] expResult = null;
-        int[][] result = Utilitarios.criarMatrizVaziaResultadosVotacoes(vetorPartidos);
+        int[][] result = Utilitarios.retornaMatrizVaziaResultadosVotacoes(vetorPartidos);
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of retornaLinhaPartidoByNome method, of class Utilitarios.
+     * Test of retornaLinhaPartidoPorNome method, of class Utilitarios.
      */
     @Test
-    public void testRetornaLinhaPartidoByNome() {
+    public void testRetornaLinhaPartidoPorNome() {
         System.out.println("retornaLinhaPartidoByNome");
         String nomePartido = "ABC";
         String[] partidos = {"ab","cda","AB"};
         Utilitarios instance = new Utilitarios();
         int expResult = -1;
-        int result = instance.retornaLinhaPartidoByNome(nomePartido, partidos);
+        int result = instance.retornaLinhaPartidoPorNome(nomePartido, partidos);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of calculaResultadosVotacoes method, of class Utilitarios.
+     * Test of preencheMatrizResultadosVotacoes method, of class Utilitarios.
      */
     @Test
-    public void testCalculaResultadosVotacoes() {
+    public void testPreencheMatrizResultadosVotacoes() {
         System.out.println("calculaResultadosVotacoes");
         int[][] matrizResultadosVotacoes = null;
         String[][] votacoes = null;
         int numeroVotacoes = 0;
         String[][] deputados = null;
         int numeroDeputados = 0;
-        Utilitarios.calculaResultadosVotacoes(matrizResultadosVotacoes, votacoes, numeroVotacoes, deputados, numeroDeputados);
+        Utilitarios.preencheMatrizResultadosVotacoes(matrizResultadosVotacoes, votacoes, numeroVotacoes, deputados, numeroDeputados);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of contaTotalDeputadosPorPartido method, of class Utilitarios.
+     * Test of retornaTotalDeputadosPorPartido method, of class Utilitarios.
      */
     @Test
-    public void testContaTotalDeputadosPorPartido() {
+    public void testRetornaTotalDeputadosPorPartido() {
         System.out.println("contaTotalDeputadosPorPartido");
         int totalDeputados = 10;
         String[] vetorPartidos = {"a","b","c"};
         String[][] deputados = {{"PRT01", "Jorge Silva Gomes", "a", "19701212"}, {"PRT02", "Jorge Silva Gomes", "b", "19701212"}, {"PRT03", "Jorge Silva Gomes", "a", "19701212"}, {"PRT04", "Jorge Silva Gomes", "b", "19701212"}, {"PRT05", "Jorge Silva Gomes", "c", "19701212"}, {"PRT06", "Jorge Silva Gomes", "b", "19701212"}, {"PRT07", "Jorge Silva Gomes", "c", "19701212"}, {"PRT08", "Jorge Silva Gomes", "c", "19701212"}, {"PRT09", "Jorge Silva Gomes", "a", "19701212"}, {"PRT10", "Jorge Silva Gomes", "b", "19701212"}};
         int[] expResult = {3,4,3};
-        int[] result = Utilitarios.contaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
+        int[] result = Utilitarios.retornaTotalDeputadosPorPartido(vetorPartidos, deputados, totalDeputados);
         assertArrayEquals(expResult, result);
     }
 
@@ -519,14 +519,14 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of tipoVoto method, of class Utilitarios.
+     * Test of retornaColunaVoto method, of class Utilitarios.
      */
     @Test
-    public void testTipoVoto() {
+    public void testRetornaColunaVoto() {
         System.out.println("tipoVoto");
         String voto = "";
         int expResult = 0;
-        int result = Utilitarios.tipoVoto(voto);
+        int result = Utilitarios.retornaColunaVoto(voto);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -545,14 +545,14 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of ordenaVetorAlfabeticamente method, of class Utilitarios.
+     * Test of ordenaVetorPorAlfabeto method, of class Utilitarios.
      */
     @Test
-    public void testOrdenaVetorAlfabeticamente() {
+    public void testOrdenaVetorPorAlfabeto() {
         System.out.println("ordenaVetorAlfabeticamente");
         String[] vetor = {"c","b","d","a"};
         String[] expResult = {"a","b","c","d"};
-        String[] result = Utilitarios.ordenaVetorAlfabeticamente(vetor);
+        String[] result = Utilitarios.ordenaVetorPorAlfabeto(vetor);
         assertArrayEquals(expResult, result);
     }
 
@@ -617,14 +617,14 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of removerExtensaoFicheiro method, of class Utilitarios.
+     * Test of removeExtensaoNomeFicheiro method, of class Utilitarios.
      */
     @Test
-    public void testRemoverExtensaoFicheiro() {
+    public void testRemoveExtensaoNomeFicheiro() {
         System.out.println("removerExtensaoFicheiro");
         String nomeFicheiro = "abc.txt";
         String expResult = "abc";
-        String result = Utilitarios.removerExtensaoFicheiro(nomeFicheiro);
+        String result = Utilitarios.removeExtensaoNomeFicheiro(nomeFicheiro);
         assertEquals(expResult, result);
     }
 
