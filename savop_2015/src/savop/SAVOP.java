@@ -136,12 +136,12 @@ public class SAVOP {
                         System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
                     } else {
                         int ficheiroExiste = lerFicheiroVotacoes(votacoes);
-                        if(ficheiroExiste!=-1){
-                        NUMERO_VOTACOES = ficheiroExiste;
-                        FICHEIRO_VOTACAO_CARREGADO = true;
-                        Utilitarios.eliminaLinhasErrosMatrizVotacoes(votacoes, deputados);
-                        System.out.println("Ficheiro votações carregado com sucesso!");
-                        } 
+                        if (ficheiroExiste != -1) {
+                            NUMERO_VOTACOES = ficheiroExiste;
+                            FICHEIRO_VOTACAO_CARREGADO = true;
+                            Utilitarios.eliminaLinhasErrosMatrizVotacoes(votacoes, deputados);
+                            System.out.println("Ficheiro votações carregado com sucesso!");
+                        }
                     }
                     break;
 
@@ -449,6 +449,22 @@ public class SAVOP {
                     }
 
                     if (Utilitarios.validaRespostaSim("\n\nPretende gravar alterações?")) {
+                        boolean valorValido;
+                        switch (colunaAlterar) {
+                            case 0:
+                                valorValido = Utilitarios.validaID(novoValor, COD_REGIOES);
+                                break;
+                            case 1:
+                                valorValido = Utilitarios.validaNomeDeputado(novoValor);
+                                break;
+                            case 2:
+                                valorValido = Utilitarios.validaNomePartido(novoValor);
+                                break;
+                            case 3:
+                                /*TODO*/
+                                break;
+                        }
+
                         deputados[linhaDeputado][colunaAlterar] = novoValor;
                         continuaAlterar = false;
                     } else {
@@ -476,11 +492,11 @@ public class SAVOP {
     public static int lerFicheiroVotacoes(String[][] votacoes) throws FileNotFoundException {
         String nomeFicheiro = Utilitarios.obtemInputPergunta("Insira o nome do ficheiro:");
         File existe = new File(nomeFicheiro);
-        if(existe.exists()){
-        String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
-        System.arraycopy(preencheMatrizVotacoes(conteudoFicheiro, conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
-        SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO = nomeFicheiro;
-        return conteudoFicheiro.length;
+        if (existe.exists()) {
+            String[] conteudoFicheiro = Utilitarios.lerFicheiro(nomeFicheiro);
+            System.arraycopy(preencheMatrizVotacoes(conteudoFicheiro, conteudoFicheiro.length), 0, votacoes, 0, conteudoFicheiro.length);
+            SAVOP.NOME_FICHEIRO_VOTACOES_CARREGADO = nomeFicheiro;
+            return conteudoFicheiro.length;
         } else {
             System.out.println("\nNão existe nenhum ficheiro carregado com o nome introduzido. Insira por favor o nome de um ficheiro válido!");
             return -1;
@@ -651,7 +667,7 @@ public class SAVOP {
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
             escrever.format("\n");
             for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
-                Utilitarios.escreveFicheiroConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS, ficheiro, escrever);
+                Utilitarios.escreveFicheiroTextoConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS, ficheiro, escrever);
             }
             if (i == matrizResultadosVotacoes.length - 2) {
                 escrever.format("\n");
@@ -679,7 +695,7 @@ public class SAVOP {
         for (int i = 0; i < matrizResultadosVotacoes.length; i++) {
             escrever.format("<tr>");
             for (int j = 0; j < matrizResultadosVotacoes[0].length; j++) {
-                Utilitarios.escreveHTMLConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS, ficheiro, escrever);
+                Utilitarios.escreveFicheiroHTMLConteudoCelulaVotos(i, j, matrizResultadosVotacoes, PARTIDOS, ficheiro, escrever);
             }
             escrever.format("</tr>%n");
         }

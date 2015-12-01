@@ -394,7 +394,7 @@ public class Utilitarios {
      * através do método length aplicado ao vetor retornado
      * @throws FileNotFoundException
      */
-    public static boolean[] linhasVaziasFicheiro(String ficheiro) throws FileNotFoundException {
+    public static boolean[] retornaPosicoesLinhasVaziasFicheiro(String ficheiro) throws FileNotFoundException {
         Scanner ler1 = new Scanner(new File(ficheiro));
         int totalLinhas = 0;
         while (ler1.hasNextLine()) {
@@ -1074,7 +1074,7 @@ public class Utilitarios {
      * @throws FileNotFoundException Método auxiliar que imprime para um
      * ficheiro o conteúdo da tabela de votações, recebida como parâmetro.
      */
-    public static void escreveFicheiroConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
+    public static void escreveFicheiroTextoConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
         int quantidadeEspacos;
         switch (coluna) {
             case 0:
@@ -1152,7 +1152,7 @@ public class Utilitarios {
      * ficheiro do tipo HTML o conteúdo da tabela de votações, recebida como
      * parâmetro.
      */
-    public static void escreveHTMLConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
+    public static void escreveFicheiroHTMLConteudoCelulaVotos(int linha, int coluna, int[][] votacoes, String[] partidos, File ficheiro, Formatter escreve) throws FileNotFoundException {
         switch (coluna) {
             case 0:
                 if (linha != (votacoes.length - 1)) {
@@ -1192,4 +1192,49 @@ public class Utilitarios {
             return 2;
         }
     }
+
+    /**
+     *
+     * @param nomeDeputado
+     * @return Método auxiliar que contém uma expressão regular para validar
+     * nomes. Devolve true caso o nome seja válido. Devolve false no caso
+     * contrário. Nota: \\p{L} é uma propriedade do Unicode que faz match com
+     * qualquer letra de qualquer língua.
+     */
+    public static boolean validaNomeDeputado(String nomeDeputado) {
+        if (nomeDeputado.matches("^[\\p{L} .'-]+$")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param nomePartido
+     * @return Método auxiliar que procura o nome do partido dado como parâmetro
+     * e verifica se o mesmo existe no vetor de partidos. Devolve true caso
+     * encontre. False no caso contrário. Não é case sensitive.
+     */
+    public static boolean validaNomePartido(String nomePartido) {
+        for (int i = 0; i < SAVOP.PARTIDOS.length; i++) {
+            if (nomePartido.equalsIgnoreCase(SAVOP.PARTIDOS[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+     
+    /** TODO
+     *
+     * @param nomePartido
+     * @return Método auxiliar que procura o nome do partido dado como parâmetro
+     * e verifica se o mesmo existe no vetor de partidos. Devolve true caso
+     * encontre. False no caso contrário. Não é case sensitive.
+     */
+    /*
+    public static boolean validaDataNascimento(){
+    
+    }
+    */
 }

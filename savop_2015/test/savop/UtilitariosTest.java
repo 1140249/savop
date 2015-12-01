@@ -245,14 +245,14 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of linhasVaziasFicheiro method, of class Utilitarios.
+     * Test of retornaPosicoesLinhasVaziasFicheiro method, of class Utilitarios.
      */
     @Test
-    public void testLinhasVaziasFicheiro() throws Exception {
+    public void testRetornaPosicoesLinhasVaziasFicheiro() throws Exception {
         System.out.println("linhasVaziasFicheiro");
         String ficheiro = "teste_linhas_vazias.txt";
         boolean[] expResult = {false, true, true, false};
-        boolean[] result = Utilitarios.linhasVaziasFicheiro(ficheiro);
+        boolean[] result = Utilitarios.retornaPosicoesLinhasVaziasFicheiro(ficheiro);
         Assert.assertTrue(Arrays.equals(expResult, result));
     }
 
@@ -600,7 +600,7 @@ public class UtilitariosTest {
     }
 
     /**
-     * Test of escreveFicheiroConteudoCelulaVotos method, of class Utilitarios.
+     * Test of escreveFicheiroTextoConteudoCelulaVotos method, of class Utilitarios.
      */
     @Test
     public void testEscreveFicheiroConteudoCelulaVotos() throws Exception {
@@ -611,7 +611,7 @@ public class UtilitariosTest {
         String[] partidos = null;
         File ficheiro = null;
         Formatter escreve = null;
-        Utilitarios.escreveFicheiroConteudoCelulaVotos(linha, coluna, votacoes, partidos, ficheiro, escreve);
+        Utilitarios.escreveFicheiroTextoConteudoCelulaVotos(linha, coluna, votacoes, partidos, ficheiro, escreve);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -627,5 +627,124 @@ public class UtilitariosTest {
         String result = Utilitarios.removeExtensaoNomeFicheiro(nomeFicheiro);
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of retornaIdade method, of class Utilitarios.
+     */
+    @Test
+    public void testRetornaIdade() {
+        System.out.println("retornaIdade");
+        int[] dataHoje = null;
+        int[] dataNascimento = null;
+        int expResult = 0;
+        int result = Utilitarios.retornaIdade(dataHoje, dataNascimento);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of retornaMatrizVaziaResultadosVotacoesFaixaEtaria method, of class Utilitarios.
+     */
+    @Test
+    public void testRetornaMatrizVaziaResultadosVotacoesFaixaEtaria() {
+        System.out.println("retornaMatrizVaziaResultadosVotacoesFaixaEtaria");
+        int[][] expResult = null;
+        int[][] result = Utilitarios.retornaMatrizVaziaResultadosVotacoesFaixaEtaria();
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of preencheMatrizResultadosVotacoesFaixaEtaria method, of class Utilitarios.
+     */
+    @Test
+    public void testPreencheMatrizResultadosVotacoesFaixaEtaria() {
+        System.out.println("preencheMatrizResultadosVotacoesFaixaEtaria");
+        int[][] matrizResultadosVotacoesFaixaEtaria = null;
+        String[][] votacoes = null;
+        int numeroVotacoes = 0;
+        String[][] deputados = null;
+        int numeroDeputados = 0;
+        Utilitarios.preencheMatrizResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria, votacoes, numeroVotacoes, deputados, numeroDeputados);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of imprimeConteudoCelulaVotosFaixaEtaria method, of class Utilitarios.
+     */
+    @Test
+    public void testImprimeConteudoCelulaVotosFaixaEtaria() {
+        System.out.println("imprimeConteudoCelulaVotosFaixaEtaria");
+        int linha = 0;
+        int coluna = 0;
+        int[][] votacoes = null;
+        Utilitarios.imprimeConteudoCelulaVotosFaixaEtaria(linha, coluna, votacoes);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of escreveFicheiroTextoConteudoCelulaVotos method, of class Utilitarios.
+     */
+    @Test
+    public void testEscreveFicheiroTextoConteudoCelulaVotos() throws Exception {
+        System.out.println("escreveFicheiroTextoConteudoCelulaVotos");
+        int linha = 0;
+        int coluna = 0;
+        int[][] votacoes = null;
+        String[] partidos = null;
+        File ficheiro = null;
+        Formatter escreve = null;
+        Utilitarios.escreveFicheiroTextoConteudoCelulaVotos(linha, coluna, votacoes, partidos, ficheiro, escreve);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of escreveFicheiroHTMLConteudoCelulaVotos method, of class Utilitarios.
+     */
+    @Test
+    public void testEscreveFicheiroHTMLConteudoCelulaVotos() throws Exception {
+        System.out.println("escreveFicheiroHTMLConteudoCelulaVotos");
+        int linha = 0;
+        int coluna = 0;
+        int[][] votacoes = null;
+        String[] partidos = null;
+        File ficheiro = null;
+        Formatter escreve = null;
+        Utilitarios.escreveFicheiroHTMLConteudoCelulaVotos(linha, coluna, votacoes, partidos, ficheiro, escreve);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of retornaLinhaFaixaEtaria method, of class Utilitarios.
+     */
+    @Test
+    public void testRetornaLinhaFaixaEtaria() {
+        System.out.println("retornaLinhaFaixaEtaria");
+        int idade = 0;
+        int expResult = 0;
+        int result = Utilitarios.retornaLinhaFaixaEtaria(idade);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of validaNomeDeputado method, of class Utilitarios.
+     */
+    @Test
+    public void testValidaNomeDeputado() {
+        System.out.println("validaNomeDeputado");
+        String nome = "aásna ajak a";
+        boolean expResult = true;
+        boolean result = Utilitarios.validaNomeDeputado(nome);
+        assertEquals(expResult, result);
+    }
+   
 
 }
