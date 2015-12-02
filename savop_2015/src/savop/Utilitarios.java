@@ -1223,18 +1223,89 @@ public class Utilitarios {
         }
         return false;
     }
-    
-     
-    /** TODO
+
+    /**
+     * TODO
      *
      * @param nomePartido
      * @return Método auxiliar que procura o nome do partido dado como parâmetro
      * e verifica se o mesmo existe no vetor de partidos. Devolve true caso
      * encontre. False no caso contrário. Não é case sensitive.
      */
-    /*
-    public static boolean validaDataNascimento(){
-    
+    public static boolean validaDataNascimento(String data) {
+        String[] caracteresData = data.split("");
+
+        /*valida tamanho da String*/
+        if (caracteresData.length != 8) {
+            return false;
+        }
+
+        /*valida que o vetor de strings apenas contém algarismos*/
+        int contador = 0;
+        while (contador < caracteresData.length) {
+            if (!validaNumero(caracteresData[contador])) {
+                return false;
+            }
+            contador++;
+        }
+
+        /*atribui cada uma das posições do vetor para o valor coorespondente*/
+        /*valida que o ano de nascimento do deputado é entre 1900 e 1997*/
+        int ano = Integer.parseInt(caracteresData[0].concat(caracteresData[1]).concat(caracteresData[2]).concat(caracteresData[3]));
+        if (ano < 1900 || ano > 2000) {
+            return false;
+        }
+
+        /*valida que o mês de nascimento do deputado é entre 01 e 12*/
+        int mes = Integer.parseInt(caracteresData[4].concat(caracteresData[5]));
+        if (mes < 1 || mes > 12) {
+            return false;
+        }
+
+        /*valida que o dia de nascimento do deputado é entre 01 e 31, consoante meses e anos bissextos*/
+        int dia = Integer.parseInt(caracteresData[6].concat(caracteresData[7]));
+        if (dia < 1 || dia > 31) {
+            return false;
+        }
+        if ((mes == 2 || mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30) {
+            return false;
+        }
+
+        if (validaAnoBissexto(ano)) {
+            if (mes == 2 && dia > 29) {
+                return false;
+            }
+        } else {
+            if (mes == 2 && dia > 28) {
+                return false;
+            }
+        }
+        
+        return true;
     }
-    */
+
+    /*Método auxiliar que retorna true caso a String recebida como parâmetro seja um número. Retorna false caso o método parseInt lance a exceção NumberFormatException. Serve para verificar se a String dada como parâmetro é um número. */
+    public static boolean validaNumero(String str) {
+        try {
+            int numero = Integer.parseInt(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    /*Método auxiliar que retorna true caso o ano pas
+     sado como parâmetro seja um ano bissexto*/
+    public static boolean validaAnoBissexto(int ano) {
+        if (ano % 4 != 0) {
+            return false;
+        } else if (ano % 400 == 0) {
+            return true;
+        } else if (ano % 100 == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

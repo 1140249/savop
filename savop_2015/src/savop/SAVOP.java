@@ -449,7 +449,7 @@ public class SAVOP {
                     }
 
                     if (Utilitarios.validaRespostaSim("\n\nPretende gravar alterações?")) {
-                        boolean valorValido;
+                        boolean valorValido=true;
                         switch (colunaAlterar) {
                             case 0:
                                 valorValido = Utilitarios.validaID(novoValor, COD_REGIOES);
@@ -461,12 +461,17 @@ public class SAVOP {
                                 valorValido = Utilitarios.validaNomePartido(novoValor);
                                 break;
                             case 3:
-                                /*TODO*/
+                                valorValido = Utilitarios.validaDataNascimento(novoValor);
                                 break;
                         }
 
-                        deputados[linhaDeputado][colunaAlterar] = novoValor;
-                        continuaAlterar = false;
+                        if (valorValido) {
+                            deputados[linhaDeputado][colunaAlterar] = novoValor;
+                            continuaAlterar = false;
+                        } else {
+                            System.out.println("Inseriu valor inválido!");
+                        }
+                        /*TODO*/
                     } else {
                         System.out.println("\nAlterações não gravadas!");
                         if (Utilitarios.validaRespostaSim("\nPretende fazer novas alterações?")) {

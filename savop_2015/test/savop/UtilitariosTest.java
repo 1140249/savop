@@ -745,6 +745,32 @@ public class UtilitariosTest {
         boolean result = Utilitarios.validaNomeDeputado(nome);
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of validaNomePartido method, of class Utilitarios.
+     */
+    @Test
+    public void testValidaNomePartido() {
+        System.out.println("validaNomePartido");
+        String nomePartido = "";
+        boolean expResult = false;
+        boolean result = Utilitarios.validaNomePartido(nomePartido);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of validaDataNascimento method, of class Utilitarios.
+     */
+    @Test
+    public void testValidaDataNascimento() {
+        System.out.println("validaDataNascimento");
+        String data = "palavra";
+        boolean expResult = true;
+        boolean result = Utilitarios.validaDataNascimento(data);
+        assertEquals(expResult, result);
+    }
    
 
 }
