@@ -380,6 +380,7 @@ public class SAVOP {
     public static void alteraDadosDeputado(String[][] deputados, int numeroDeputados) {
         int linhaDeputado = -1;
         boolean continuaPesquisa = false;
+        /*Continuar a pesquisar deputado enquanto utilizador pretender ou quando for encontrado um deputado válido*/
         do {
             String idDeputado = Utilitarios.obtemInputPergunta("\nInsira qual o ID do deputado que pretende alterar:");
             int linha = Utilitarios.retornaDeputadoPorID(idDeputado, deputados, NUMERO_DEPUTADOS);
@@ -395,6 +396,8 @@ public class SAVOP {
                 continuaPesquisa = false;
             }
         } while (continuaPesquisa);
+
+        /*se a linha do deputado for inválida (-1) termina. Senão prossegue com a alteração dos dados*/
         if (linhaDeputado == -1) {
             System.out.println("\nOpção de alteração de dados de deputado terminada!");
         } else {
@@ -403,8 +406,11 @@ public class SAVOP {
             for (int i = 0; i < 4; i++) {
                 Utilitarios.imprimeConteudoCelulaDeputados(linhaDeputado, i, deputados);
             }
-            boolean continuaAlterar = false;
+
+            /*enquanto */
+            boolean continuaAlterar;
             do {
+                continuaAlterar = false;
                 Scanner ler = new Scanner(System.in);
                 String novoValor = "nada preenchido";
                 int colunaAlterar = Utilitarios.obtemColunaAlterarDeputados();
@@ -450,6 +456,9 @@ public class SAVOP {
                         switch (colunaAlterar) {
                             case 0:
                                 valorValido = Utilitarios.validaID(novoValor, COD_REGIOES);
+                                if (valorValido) {
+                                    valorValido = Utilitarios.validaIDUnico(novoValor, deputados, SAVOP.NUMERO_DEPUTADOS);
+                                }
                                 break;
                             case 1:
                                 valorValido = Utilitarios.validaNomeDeputado(novoValor);
@@ -464,6 +473,7 @@ public class SAVOP {
 
                         if (valorValido) {
                             deputados[linhaDeputado][colunaAlterar] = novoValor;
+                            System.out.println("Alteração de dados com sucesso!");
                             continuaAlterar = false;
                         } else {
                             Utilitarios.imprimeMensagemErro(colunaAlterar);

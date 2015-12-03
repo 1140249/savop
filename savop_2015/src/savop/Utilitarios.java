@@ -272,9 +272,10 @@ public class Utilitarios {
     public static boolean validaID(String id, String[] COD_REGIOES) {
         boolean[] idValido = {true, true, true, true};
 
-        /*valida tamanho String ID*/
+        /*valida tamanho String ID - se não houverem 5 caracters, não faz sentido avançar noutras validações pelo que faz return "false"*/
         if (id.length() != 5) {
             idValido[0] = false;
+            return false;
         }
 
         /*valida que os 3 primeiros caracteres correspondem ao código de um distrito válido, existente numa constante dada como parâmetro que contém a listagem de distritos válidos. não distingue maiúsculas e minúsculas*/
