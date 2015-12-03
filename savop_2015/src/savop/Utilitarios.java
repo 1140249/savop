@@ -930,6 +930,7 @@ public class Utilitarios {
             int colunaVoto = retornaColunaVoto(voto);
             matrizResultadosVotacoesFaixaEtaria[linha][colunaVoto]++;
         }
+        /*preenchimento da linha dos totais*/
         matrizResultadosVotacoesFaixaEtaria[3][1] = somaColuna(matrizResultadosVotacoesFaixaEtaria, 1, 0, 2);
         matrizResultadosVotacoesFaixaEtaria[3][2] = somaColuna(matrizResultadosVotacoesFaixaEtaria, 2, 0, 2);
         matrizResultadosVotacoesFaixaEtaria[3][3] = somaColuna(matrizResultadosVotacoesFaixaEtaria, 3, 0, 2);
@@ -1363,6 +1364,20 @@ public class Utilitarios {
                 System.out.printf(vetor[i]);
             }
         }
+    }
+
+    public static int[][] retornaMatrizVotacoesFaixaEtariaPercentagens(int[][] matrizVotacoesFaixaEtariaAbsoluto) {
+        double totalVotacoes = (double) SAVOP.NUMERO_VOTACOES;
+        int[][] matrizPercentagens = new int[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 1; j < 4; j++) {
+                matrizPercentagens[i][j] = (int) (((double) matrizVotacoesFaixaEtariaAbsoluto[i][j] / totalVotacoes) * 100);
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            matrizPercentagens[i][0] = i;
+        }
+        return matrizPercentagens;
     }
 
 }

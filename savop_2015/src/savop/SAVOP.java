@@ -84,6 +84,7 @@ public class SAVOP {
         String[][] votacoes = new String[230][2];
         int[][] matrizResultadosVotacoes;
         int[][] matrizResultadosVotacoesFaixaEtaria;
+        int[][] matrizResultadosVotacoesFaixaEtariaPercentagem;
         int opcao;
         do {
             System.out.println("\nInsira opção: "
@@ -176,7 +177,7 @@ public class SAVOP {
                     break;
 
                 case 7:
-                    /*Visualizar resultados da votação em função da faixa etária*/
+                    /*Visualizar resultados da votação em função da faixa etária, por percentagem*/
                     if (!FICHEIRO_DEPUTADOS_CARREGADO) {
                         System.out.println("O ficheiro de deputados ainda não foi carregado. Insira a opção \"1 - Ler ficheiro Deputados e guardar na memória principal\" primeiro, para poder fazer a alteração de dados.");
                     } else {
@@ -185,7 +186,8 @@ public class SAVOP {
                         } else {
                             matrizResultadosVotacoesFaixaEtaria = Utilitarios.retornaMatrizVaziaResultadosVotacoesFaixaEtaria();
                             Utilitarios.preencheMatrizResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
-                            apresentaResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria);
+                            matrizResultadosVotacoesFaixaEtariaPercentagem=Utilitarios.retornaMatrizVotacoesFaixaEtariaPercentagens(matrizResultadosVotacoesFaixaEtaria);
+                            apresentaResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtariaPercentagem);
                         }
                     }
                     break;
@@ -653,7 +655,7 @@ public class SAVOP {
     /**
      *
      * @param matrizResultadosVotacoesFaixaEtaria Método que apresenta no ecrã o
-     * resultado das votações por faixa etária.
+     * resultado das votações por faixa etária, em percentagem de votos.
      */
     public static void apresentaResultadosVotacoesFaixaEtaria(int[][] matrizResultadosVotacoesFaixaEtaria) {
         String nomeFicheiro = Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
