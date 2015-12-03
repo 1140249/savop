@@ -1280,7 +1280,7 @@ public class Utilitarios {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1305,6 +1305,46 @@ public class Utilitarios {
             return false;
         } else {
             return true;
+        }
+    }
+
+    /*Método para mandar mensagem de erro de acordo com tipo de erro, para o método alterar dados deputado*/
+    public static void imprimeMensagemErro(int tipoErro) {
+        switch (tipoErro) {
+            /*ID*/
+            case 0:
+                System.out.println("\nValor inválido! O ID deve ser no formato \"LLLAA\" em que:"
+                    + "\n\"LLL\" são as letras que representam o círculo eleitoral"
+                    + "\n\"AA\" são os algarismos que representam o número do deputado"
+                    + "\nNomes de círculos eleitorais válidos: ");
+                imprimeConteudoVetor(SAVOP.COD_REGIOES, SAVOP.COD_REGIOES.length);
+                break;
+            /*ID deputado*/
+            case 1:
+                System.out.println("\nValor inválido! O nome do deputado não pode conter caracteres especiais ou algarismos.");
+                break;
+            /*Partido deputado*/
+            case 2:
+                System.out.println("\nValor inválido! O nome do Partido deve pertencer a um dos seguintes partidos: ");
+                imprimeConteudoVetor(SAVOP.PARTIDOS, SAVOP.PARTIDOS.length);
+                break;
+            /*Data nascimento*/
+            case 3:
+                System.out.println("\nValor inválido! A data deve ser no formato \"AAAAMMDD\".");
+                break;
+            default:
+                System.out.println("Erro!");
+        }
+    }
+
+    /*Método auxiliar para imprimir o conteúdo de um vetor de Strings em linha, para o ecrã, separando os seus elementos por vírgulas*/
+    public static void imprimeConteudoVetor(String[] vetor, int posicaoParaImprimir) {
+        for (int i = 0; i < posicaoParaImprimir; i++) {
+            if (i < posicaoParaImprimir - 1) {
+                System.out.printf(vetor[i] + ", ");
+            } else {
+                System.out.printf(vetor[i]);
+            }
         }
     }
 

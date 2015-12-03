@@ -396,7 +396,6 @@ public class SAVOP {
                 continuaPesquisa = false;
             }
         } while (continuaPesquisa);
-
         if (linhaDeputado == -1) {
             System.out.println("\nOpção de alteração de dados de deputado terminada!");
         } else {
@@ -447,9 +446,8 @@ public class SAVOP {
                             Utilitarios.imprimeConteudoCelulaDeputados(0, colunaAlterar, deputadosTemp);
                         }
                     }
-
                     if (Utilitarios.validaRespostaSim("\n\nPretende gravar alterações?")) {
-                        boolean valorValido=true;
+                        boolean valorValido = true;
                         switch (colunaAlterar) {
                             case 0:
                                 valorValido = Utilitarios.validaID(novoValor, COD_REGIOES);
@@ -469,9 +467,15 @@ public class SAVOP {
                             deputados[linhaDeputado][colunaAlterar] = novoValor;
                             continuaAlterar = false;
                         } else {
-                            System.out.println("Inseriu valor inválido!");
+                            Utilitarios.imprimeMensagemErro(colunaAlterar);
+                            System.out.println("\nAlterações não gravadas!");
+                            if (Utilitarios.validaRespostaSim("\nPretende fazer novas alterações?")) {
+                                continuaAlterar = true;
+                            } else {
+                                System.out.println("\nAlteração de dados concluída!");
+                                continuaAlterar = false;
+                            }
                         }
-                        /*TODO*/
                     } else {
                         System.out.println("\nAlterações não gravadas!");
                         if (Utilitarios.validaRespostaSim("\nPretende fazer novas alterações?")) {
@@ -481,7 +485,6 @@ public class SAVOP {
                             continuaAlterar = false;
                         }
                     }
-
                 }
             } while (continuaAlterar);
         }
