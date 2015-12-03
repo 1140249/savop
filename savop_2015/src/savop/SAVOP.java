@@ -84,7 +84,7 @@ public class SAVOP {
         String[][] votacoes = new String[230][2];
         int[][] matrizResultadosVotacoes;
         int[][] matrizResultadosVotacoesFaixaEtaria;
-        int[][] matrizResultadosVotacoesFaixaEtariaPercentagem;
+        double [][] matrizResultadosVotacoesFaixaEtariaPercentagem;
         int opcao;
         do {
             System.out.println("\nInsira opção: "
@@ -187,7 +187,7 @@ public class SAVOP {
                             matrizResultadosVotacoesFaixaEtaria = Utilitarios.retornaMatrizVaziaResultadosVotacoesFaixaEtaria();
                             Utilitarios.preencheMatrizResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtaria, votacoes, NUMERO_VOTACOES, deputados, NUMERO_DEPUTADOS);
                             matrizResultadosVotacoesFaixaEtariaPercentagem=Utilitarios.retornaMatrizVotacoesFaixaEtariaPercentagens(matrizResultadosVotacoesFaixaEtaria);
-                            apresentaResultadosVotacoesFaixaEtaria(matrizResultadosVotacoesFaixaEtariaPercentagem);
+                            apresentaResultadosVotacoesFaixaEtariaPercentagem(matrizResultadosVotacoesFaixaEtariaPercentagem);
                         }
                     }
                     break;
@@ -657,13 +657,13 @@ public class SAVOP {
      * @param matrizResultadosVotacoesFaixaEtaria Método que apresenta no ecrã o
      * resultado das votações por faixa etária, em percentagem de votos.
      */
-    public static void apresentaResultadosVotacoesFaixaEtaria(int[][] matrizResultadosVotacoesFaixaEtaria) {
+    public static void apresentaResultadosVotacoesFaixaEtariaPercentagem(double [][] matrizResultadosVotacoesFaixaEtaria) {
         String nomeFicheiro = Utilitarios.removeExtensaoNomeFicheiro(NOME_FICHEIRO_VOTACOES_CARREGADO);
-        System.out.println("\nVotação de: " + nomeFicheiro + " por faixa etária\n");
+        System.out.println("\nVotação de: " + nomeFicheiro + " por faixa etária, em percentagem\n");
         for (int i = 0; i < matrizResultadosVotacoesFaixaEtaria.length; i++) {
             System.out.println("");
             for (int j = 0; j < matrizResultadosVotacoesFaixaEtaria[0].length; j++) {
-                Utilitarios.imprimeConteudoCelulaVotosFaixaEtaria(i, j, matrizResultadosVotacoesFaixaEtaria);
+                Utilitarios.imprimeConteudoCelulaVotosFaixaEtariaPercentagem(i, j, matrizResultadosVotacoesFaixaEtaria);
             }
             if (i == matrizResultadosVotacoesFaixaEtaria.length - 2) {
                 System.out.println("");

@@ -1069,6 +1069,53 @@ public class Utilitarios {
      *
      * @param linha
      * @param coluna
+     * @param votacoes Método auxiliar que imprime para o ecrã o conteúdo da
+     * tabela de votações por faixa etária, recebida como parâmetro, para
+     * valores em percentagem.
+     */
+    public static void imprimeConteudoCelulaVotosFaixaEtariaPercentagem(int linha, int coluna, double[][] votacoes) {
+        int quantidadeEspacos;
+        switch (coluna) {
+            case 0:
+                if (linha == 0) {
+                    System.out.printf("Menores de 35 anos: ");
+                } else if (linha == 1) {
+                    System.out.printf("Entre 35 e 60 anos: ");
+                } else if (linha == 2) {
+                    System.out.printf("Maiores de 60 anos: ");
+                } else {
+                    System.out.printf("Totais;");
+                }
+                break;
+            case 1:
+                if (linha == 3) {
+                    quantidadeEspacos = 18;
+                } else {
+                    quantidadeEspacos = 5;
+                }
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf("Votos a favor: " + votacoes[linha][coluna] + ";");
+                break;
+            case 2:
+                quantidadeEspacos = 10 - (Double.toString(votacoes[linha][coluna - 1]).length());
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf("Votos contra: " + votacoes[linha][coluna] + ";");
+                break;
+            case 3:
+                quantidadeEspacos = 11 - (Double.toString(votacoes[linha][coluna - 1]).length());
+                imprimeEspacos(quantidadeEspacos);
+                System.out.printf("Abstenções: " + votacoes[linha][coluna] + ".");
+                break;
+            default:
+                System.out.println("Erro!");
+        }
+
+    }
+
+    /**
+     *
+     * @param linha
+     * @param coluna
      * @param votacoes
      * @param partidos
      * @param ficheiro
@@ -1366,12 +1413,21 @@ public class Utilitarios {
         }
     }
 
-    public static int[][] retornaMatrizVotacoesFaixaEtariaPercentagens(int[][] matrizVotacoesFaixaEtariaAbsoluto) {
+    /**
+     *
+     * @param MatrizVotacoesFaixaEtariaAbsoluto
+     * @return retornaMatrizVotacoesFaixaEtariaPercentagens Retorna, a partir da
+     * matriz em valores absolutos, a matriz em valores percentuais das votações
+     * por faixa etária
+     *
+     */
+    public static double[][] retornaMatrizVotacoesFaixaEtariaPercentagens(int[][] matrizVotacoesFaixaEtariaAbsoluto) {
         double totalVotacoes = (double) SAVOP.NUMERO_VOTACOES;
-        int[][] matrizPercentagens = new int[4][4];
+        double[][] matrizPercentagens = new double[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
-                matrizPercentagens[i][j] = (int) (((double) matrizVotacoesFaixaEtariaAbsoluto[i][j] / totalVotacoes) * 100);
+                matrizPercentagens[i][j] = (double) Math.round(((double) matrizVotacoesFaixaEtariaAbsoluto[i][j] / totalVotacoes * 100) * 10d) / 10d;
+
             }
         }
         for (int i = 0; i < 4; i++) {
