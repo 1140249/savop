@@ -371,7 +371,6 @@ public class SAVOP {
 
     }
 
-    /*TODO pode ser melhorada a validação dos dados introduzidos pelo utilizador*/
     /**
      *
      * @param deputados

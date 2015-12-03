@@ -1225,12 +1225,9 @@ public class Utilitarios {
     }
 
     /**
-     * TODO
-     *
-     * @param nomePartido
-     * @return Método auxiliar que procura o nome do partido dado como parâmetro
-     * e verifica se o mesmo existe no vetor de partidos. Devolve true caso
-     * encontre. False no caso contrário. Não é case sensitive.
+     * @param data
+     * @return Método auxiliar que valida que a String dada como parâmetro
+     * corresponde a uma data válida
      */
     public static boolean validaDataNascimento(String data) {
         String[] caracteresData = data.split("");
@@ -1249,7 +1246,7 @@ public class Utilitarios {
             contador++;
         }
 
-        /*atribui cada uma das posições do vetor para o valor coorespondente*/
+        /*atribui cada uma das posições do vetor para o valor correspondente:*/
         /*valida que o ano de nascimento do deputado é entre 1900 e 1997*/
         int ano = Integer.parseInt(caracteresData[0].concat(caracteresData[1]).concat(caracteresData[2]).concat(caracteresData[3]));
         if (ano < 1900 || ano > 2000) {
@@ -1270,7 +1267,6 @@ public class Utilitarios {
         if ((mes == 2 || mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30) {
             return false;
         }
-
         if (validaAnoBissexto(ano)) {
             if (mes == 2 && dia > 29) {
                 return false;
@@ -1280,11 +1276,17 @@ public class Utilitarios {
                 return false;
             }
         }
-
         return true;
     }
 
-    /*Método auxiliar que retorna true caso a String recebida como parâmetro seja um número. Retorna false caso o método parseInt lance a exceção NumberFormatException. Serve para verificar se a String dada como parâmetro é um número. */
+    /**
+     *
+     * @param String
+     * @return Método auxiliar que retorna true caso a String recebida como
+     * parâmetro seja um número. Retorna false caso o método parseInt lance a
+     * exceção NumberFormatException. Serve para verificar se a String dada como
+     * parâmetro é um número.
+     */
     public static boolean validaNumero(String str) {
         try {
             int numero = Integer.parseInt(str);
@@ -1294,8 +1296,12 @@ public class Utilitarios {
         return true;
     }
 
-    /*Método auxiliar que retorna true caso o ano pas
-     sado como parâmetro seja um ano bissexto*/
+    /**
+     *
+     * @param ano
+     * @return Método auxiliar que retorna true caso o ano pas sado como
+     * parâmetro seja um ano bissexto
+     */
     public static boolean validaAnoBissexto(int ano) {
         if (ano % 4 != 0) {
             return false;
@@ -1308,7 +1314,11 @@ public class Utilitarios {
         }
     }
 
-    /*Método para mandar mensagem de erro de acordo com tipo de erro, para o método alterar dados deputado*/
+    /**
+     *
+     * @param tipoErro Método para mandar mensagem de erro de acordo com tipo de
+     * erro, para o método alterar dados deputado
+     */
     public static void imprimeMensagemErro(int tipoErro) {
         switch (tipoErro) {
             /*ID*/
@@ -1337,7 +1347,13 @@ public class Utilitarios {
         }
     }
 
-    /*Método auxiliar para imprimir o conteúdo de um vetor de Strings em linha, para o ecrã, separando os seus elementos por vírgulas*/
+    /**
+     *
+     * @param vetor
+     * @param posicaoParaImprimir Método auxiliar para imprimir o conteúdo de um
+     * vetor de Strings em linha, para o ecrã, separando os seus elementos por
+     * vírgulas
+     */
     public static void imprimeConteudoVetor(String[] vetor, int posicaoParaImprimir) {
         for (int i = 0; i < posicaoParaImprimir; i++) {
             if (i < posicaoParaImprimir - 1) {
